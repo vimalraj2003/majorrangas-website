@@ -279,20 +279,44 @@
             </div>
           </div>
 
-          <!-- Banner Image -->
+          <!-- Slider Images -->
           <div class="settings-card full-width-card">
-            <h3>🖼️ Hero Banner Image</h3>
-            <p style="color:var(--gray);font-size:0.8rem;margin-bottom:14px">Upload your image to <a href="https://imgbb.com" target="_blank" style="color:var(--gold)">imgbb.com</a> (free) → copy Direct Link → paste below. Changes every week easily.</p>
-            <div class="form-group">
-              <label>Banner Image URL (right side of homepage)</label>
-              <input type="text" id="set-bannerImage" placeholder="https://i.ibb.co/your-image.jpg" oninput="previewBannerImage(this.value)">
-            </div>
-            <div style="margin-top:12px;border:1px solid var(--border);border-radius:6px;overflow:hidden;height:200px;background:#111;display:flex;align-items:center;justify-content:center">
-              <img id="bannerImagePreview" src="" alt="" style="max-height:200px;max-width:100%;object-fit:cover;display:none">
-              <div id="bannerImageEmpty" style="color:#444;font-size:0.82rem;text-align:center">
-                <div style="font-size:2rem;margin-bottom:8px">🖼️</div>
-                <div>Paste image URL above to preview</div>
+            <h3>🖼️ Slider Banner Images (4 Slides)</h3>
+            <p style="color:var(--gray);font-size:0.8rem;margin-bottom:16px">Upload images to <a href="https://imgbb.com" target="_blank" style="color:var(--gold)">imgbb.com</a> (free) → copy <strong>Direct Link</strong> → paste below. Change weekly anytime!</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div>
+                <div class="form-group"><label>Slide 1 — Image URL</label><input type="text" id="set-img1" placeholder="https://i.ibb.co/..." oninput="prevImg('prev1',this.value)"></div>
+                <div class="form-group"><label>Slide 1 — Title Line 1 (white)</label><input type="text" id="set-s1t1" placeholder="Taste of"></div>
+                <div class="form-group"><label>Slide 1 — Title Line 2 (gold italic)</label><input type="text" id="set-s1t2" placeholder="Our Homeland"></div>
+                <div id="prev1" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 1 Preview</div>
               </div>
+              <div>
+                <div class="form-group"><label>Slide 2 — Image URL</label><input type="text" id="set-img2" placeholder="https://i.ibb.co/..." oninput="prevImg('prev2',this.value)"></div>
+                <div class="form-group"><label>Slide 2 — Title Line 1 (white)</label><input type="text" id="set-s2t1" placeholder="Fresh From"></div>
+                <div class="form-group"><label>Slide 2 — Title Line 2 (gold italic)</label><input type="text" id="set-s2t2" placeholder="Chennai Kitchen"></div>
+                <div id="prev2" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 2 Preview</div>
+              </div>
+              <div>
+                <div class="form-group"><label>Slide 3 — Image URL</label><input type="text" id="set-img3" placeholder="https://i.ibb.co/..." oninput="prevImg('prev3',this.value)"></div>
+                <div class="form-group"><label>Slide 3 — Title Line 1 (white)</label><input type="text" id="set-s3t1" placeholder="Authentic"></div>
+                <div class="form-group"><label>Slide 3 — Title Line 2 (gold italic)</label><input type="text" id="set-s3t2" placeholder="South Indian"></div>
+                <div id="prev3" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 3 Preview</div>
+              </div>
+              <div>
+                <div class="form-group"><label>Slide 4 — Image URL</label><input type="text" id="set-img4" placeholder="https://i.ibb.co/..." oninput="prevImg('prev4',this.value)"></div>
+                <div class="form-group"><label>Slide 4 — Title Line 1 (white)</label><input type="text" id="set-s4t1" placeholder="Traditional"></div>
+                <div class="form-group"><label>Slide 4 — Title Line 2 (gold italic)</label><input type="text" id="set-s4t2" placeholder="Recipes Always"></div>
+                <div id="prev4" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 4 Preview</div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px">
+              <label>Autoplay Speed (seconds per slide)</label>
+              <select id="set-autoplay">
+                <option value="3">3 seconds</option>
+                <option value="5" selected>5 seconds</option>
+                <option value="7">7 seconds</option>
+                <option value="10">10 seconds</option>
+              </select>
             </div>
           </div>
 
@@ -633,7 +657,19 @@ async function loadSettingsData(){
     if(s.featured_category){document.getElementById('set-featuredCat').value=s.featured_category;}
     if(s.show_story_section){document.getElementById('set-showStory').value=s.show_story_section;}
     if(s.story_text){document.getElementById('set-storyText').value=s.story_text;}
-    if(s.banner_image_url){document.getElementById('set-bannerImage').value=s.banner_image_url;if(s.banner_image_url.trim())previewBannerImage(s.banner_image_url);}
+    if(s.banner_image_1){document.getElementById('set-img1').value=s.banner_image_1;prevImg('prev1',s.banner_image_1);}
+    if(s.banner_image_2){document.getElementById('set-img2').value=s.banner_image_2;prevImg('prev2',s.banner_image_2);}
+    if(s.banner_image_3){document.getElementById('set-img3').value=s.banner_image_3;prevImg('prev3',s.banner_image_3);}
+    if(s.banner_image_4){document.getElementById('set-img4').value=s.banner_image_4;prevImg('prev4',s.banner_image_4);}
+    if(s.banner_slide_1_title)document.getElementById('set-s1t1').value=s.banner_slide_1_title;
+    if(s.banner_slide_1_subtitle)document.getElementById('set-s1t2').value=s.banner_slide_1_subtitle;
+    if(s.banner_slide_2_title)document.getElementById('set-s2t1').value=s.banner_slide_2_title;
+    if(s.banner_slide_2_subtitle)document.getElementById('set-s2t2').value=s.banner_slide_2_subtitle;
+    if(s.banner_slide_3_title)document.getElementById('set-s3t1').value=s.banner_slide_3_title;
+    if(s.banner_slide_3_subtitle)document.getElementById('set-s3t2').value=s.banner_slide_3_subtitle;
+    if(s.banner_slide_4_title)document.getElementById('set-s4t1').value=s.banner_slide_4_title;
+    if(s.banner_slide_4_subtitle)document.getElementById('set-s4t2').value=s.banner_slide_4_subtitle;
+    if(s.slider_autoplay_seconds)document.getElementById('set-autoplay').value=s.slider_autoplay_seconds;
     var sub=s.banner_headline?s.banner_headline.split('\n')[0]:'';
     document.getElementById('set-heroSubtitle') && (document.getElementById('set-heroSubtitle').value=s.hero_subtitle||'');
     document.getElementById('saveStatus').textContent='Settings loaded ✓';
@@ -641,13 +677,12 @@ async function loadSettingsData(){
   }catch(e){}
 }
 
-function previewBannerImage(url){
-  var img=document.getElementById('bannerImagePreview');
-  var empty=document.getElementById('bannerImageEmpty');
+function prevImg(boxId,url){
+  var box=document.getElementById(boxId);
+  if(!box)return;
   if(url&&url.trim()){
-    img.src=url;img.style.display='block';empty.style.display='none';
-    img.onerror=function(){img.style.display='none';empty.style.display='block';};
-  }else{img.style.display='none';empty.style.display='block';}
+    box.innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.textContent='Invalid URL'">';
+  }else{box.textContent='No image set';}
   document.getElementById('saveStatus').textContent='Unsaved changes';
   document.getElementById('saveStatus').className='save-status';
 }
@@ -691,7 +726,19 @@ async function saveBannerSettings(){
     featured_category:document.getElementById('set-featuredCat').value,
     show_story_section:document.getElementById('set-showStory').value,
     story_text:document.getElementById('set-storyText').value,
-    banner_image_url:document.getElementById('set-bannerImage').value
+    banner_image_1:document.getElementById('set-img1').value,
+    banner_image_2:document.getElementById('set-img2').value,
+    banner_image_3:document.getElementById('set-img3').value,
+    banner_image_4:document.getElementById('set-img4').value,
+    banner_slide_1_title:document.getElementById('set-s1t1').value,
+    banner_slide_1_subtitle:document.getElementById('set-s1t2').value,
+    banner_slide_2_title:document.getElementById('set-s2t1').value,
+    banner_slide_2_subtitle:document.getElementById('set-s2t2').value,
+    banner_slide_3_title:document.getElementById('set-s3t1').value,
+    banner_slide_3_subtitle:document.getElementById('set-s3t2').value,
+    banner_slide_4_title:document.getElementById('set-s4t1').value,
+    banner_slide_4_subtitle:document.getElementById('set-s4t2').value,
+    slider_autoplay_seconds:document.getElementById('set-autoplay').value
   };
   try{
     var res=await fetch(API+'/api/settings',{method:'PUT',headers:authH(),body:JSON.stringify(payload)});
