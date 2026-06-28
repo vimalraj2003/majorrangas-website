@@ -3,734 +3,689 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Major Rangas — Authentic South Indian Snacks, Sweets & Podis</title>
-  <meta name="description" content="Authentic South Indian snacks, sweets and podis from Chennai. Murukku, Thattai, Laddu, Idly Podi and more. Order online with free delivery.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <title>Admin — Major Rangas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ── HERO BANNER ── */
-    .hero-banner {
-      background: #0D0D0D;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 100px 20px 60px;
-      position: relative;
-      overflow: hidden;
-    }
+    :root{--bg:#0D0D0D;--bg2:#1A1A1A;--gold:#C9A84C;--gold-light:#E5C976;--white:#FFFFFF;--gray:#888;--border:#2A2A2A;--green:#4CAF50;--red:#F44336;--blue:#2196F3;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;}
+    a{text-decoration:none;color:inherit;}
+    .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+    .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px;width:360px;text-align:center;}
+    .login-box h1{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.8rem;margin-bottom:8px;}
+    .login-box p{color:var(--gray);font-size:0.85rem;margin-bottom:28px;}
+    .inp{width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:0.9rem;margin-bottom:14px;outline:none;}
+    .inp:focus{border-color:var(--gold);}
+    .btn-gold{width:100%;background:var(--gold);color:var(--bg);border:none;padding:13px;border-radius:6px;font-weight:700;font-size:0.95rem;cursor:pointer;}
+    .btn-gold:hover{background:var(--gold-light);}
+    .err{color:#ff6b6b;font-size:0.82rem;margin-top:8px;}
+    .app{display:none;}
+    .app.show{display:flex;min-height:100vh;}
+    .sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);padding:20px 0;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
+    .sidebar-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);}
+    .sidebar-logo h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;}
+    .sidebar-logo p{color:var(--gray);font-size:0.7rem;margin-top:2px;}
+    .sidebar-nav{padding:16px 0;flex:1;}
+    .nav-group-title{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;padding:12px 20px 6px;}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:var(--gray);cursor:pointer;transition:all 0.2s;font-size:0.88rem;border-left:2px solid transparent;}
+    .nav-item:hover,.nav-item.active{color:var(--gold);background:rgba(201,168,76,0.06);border-left-color:var(--gold);}
+    .nav-item .icon{font-size:1rem;width:18px;text-align:center;}
+    .sidebar-bottom{padding:16px 20px;border-top:1px solid var(--border);}
+    .logout-btn{width:100%;padding:8px;background:none;border:1px solid var(--border);color:var(--gray);border-radius:4px;cursor:pointer;font-size:0.82rem;}
+    .logout-btn:hover{border-color:var(--red);color:var(--red);}
+    .main{flex:1;overflow-y:auto;}
+    .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;}
+    .topbar h2{font-size:1.05rem;color:var(--white);}
+    .content{padding:28px;}
+    .page{display:none;}
+    .page.active{display:block;}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+    .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;}
+    .stat-label{color:var(--gray);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+    .stat-value{font-size:1.8rem;font-weight:700;font-family:'Playfair Display',serif;}
+    .stat-gold{color:var(--gold);}
+    .table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:24px;}
+    .table-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+    .table-header h3{font-size:0.95rem;}
+    table{width:100%;border-collapse:collapse;}
+    th{background:#111;color:var(--gold);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;padding:12px 16px;text-align:left;font-weight:600;}
+    td{padding:12px 16px;border-bottom:1px solid var(--border);color:#CCC;font-size:0.85rem;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(255,255,255,0.02);}
+    .badge{padding:3px 10px;border-radius:10px;font-size:0.7rem;font-weight:600;}
+    .badge-placed{background:rgba(201,168,76,0.15);color:var(--gold);}
+    .badge-confirmed{background:rgba(33,150,243,0.15);color:#64B5F6;}
+    .badge-shipped{background:rgba(156,39,176,0.15);color:#CE93D8;}
+    .badge-delivered{background:rgba(76,175,80,0.15);color:#81C784;}
+    .badge-cancelled{background:rgba(244,67,54,0.15);color:#EF9A9A;}
+    .badge-paid{background:rgba(76,175,80,0.15);color:#81C784;}
+    .badge-pending{background:rgba(255,152,0,0.15);color:#FFB74D;}
+    .badge-active{background:rgba(76,175,80,0.12);color:#81C784;}
+    .badge-inactive{background:rgba(244,67,54,0.12);color:#EF9A9A;}
+    .btn-sm{padding:5px 12px;border-radius:4px;font-size:0.78rem;cursor:pointer;border:none;font-weight:600;}
+    .btn-blue{background:rgba(33,150,243,0.15);color:#64B5F6;}
+    .btn-red{background:rgba(244,67,54,0.15);color:#EF9A9A;}
+    .btn-green{background:rgba(76,175,80,0.15);color:#81C784;}
+    .btn-gold-sm{background:var(--gold);color:var(--bg);padding:8px 20px;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem;}
+    .btn-gold-sm:hover{background:var(--gold-light);}
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;}
+    .modal-overlay.open{display:flex;}
+    .modal{background:var(--bg2);border:1px solid #333;border-radius:10px;padding:28px;width:500px;max-height:85vh;overflow-y:auto;}
+    .modal h3{font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:20px;}
+    .form-group{margin-bottom:14px;}
+    .form-group label{display:block;color:var(--gray);font-size:0.78rem;margin-bottom:5px;letter-spacing:0.5px;}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.88rem;outline:none;font-family:'Inter',sans-serif;}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
+    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .modal-actions{display:flex;gap:10px;margin-top:20px;}
+    .modal-actions button{flex:1;padding:11px;border:none;border-radius:5px;cursor:pointer;font-weight:600;font-size:0.88rem;}
+    .modal-save{background:var(--gold);color:var(--bg);}
+    .modal-cancel{background:var(--border);color:var(--gray);}
+    select option{background:var(--bg2);}
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--gold);color:var(--bg);padding:12px 20px;border-radius:5px;font-weight:600;font-size:0.85rem;z-index:999;transform:translateY(80px);opacity:0;transition:all 0.3s;}
+    .toast.show{transform:translateY(0);opacity:1;}
 
-    /* Subtle gold glow background */
-    .hero-banner::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Decorative border lines */
-    .hero-banner::after {
-      content: '';
-      position: absolute;
-      inset: 20px;
-      border: 1px solid rgba(201,168,76,0.08);
-      pointer-events: none;
-    }
-
-    /* Top announcement bar */
-    .announce-bar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: var(--gold);
-      color: var(--black);
-      text-align: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 8px 20px;
-      z-index: 200;
-    }
-
-    /* Push navbar below announce bar */
-    .navbar { top: 36px; }
-
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 28px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-eyebrow-line {
-      width: 50px;
-      height: 1px;
-      background: var(--gold-dark);
-    }
-    .hero-eyebrow span {
-      color: var(--gold);
-      font-size: 0.75rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-    }
-
-    .hero-headline {
-      font-family: var(--font-serif);
-      font-size: clamp(3rem, 7vw, 6rem);
-      color: var(--white);
-      line-height: 1.05;
-      margin-bottom: 10px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-headline .line-gold {
-      color: var(--gold);
-      display: block;
-    }
-
-    .hero-sub {
-      color: #888;
-      font-size: 0.95rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-desc {
-      color: #999;
-      font-size: 1rem;
-      line-height: 1.8;
-      max-width: 500px;
-      margin: 0 auto 40px;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Category pills */
-    .hero-cats {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 36px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-cat-pill {
-      border: 1px solid rgba(201,168,76,0.3);
-      color: #AAAAAA;
-      padding: 8px 22px;
-      border-radius: 30px;
-      font-size: 0.82rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.25s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .hero-cat-pill:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(201,168,76,0.06);
-    }
-    .hero-cat-pill.active {
-      background: var(--gold);
-      color: var(--black);
-      border-color: var(--gold);
-      font-weight: 600;
-    }
-
-    .hero-cta-row {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Stats row */
-    .hero-stats {
-      display: flex;
-      gap: 0;
-      margin-top: 60px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      width: 100%;
-      max-width: 700px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-stat {
-      flex: 1;
-      padding: 20px 10px;
-      text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.06);
-    }
-    .hero-stat:last-child { border-right: none; }
-    .hero-stat-val {
-      font-family: var(--font-serif);
-      font-size: 1.6rem;
-      color: var(--gold);
-      font-weight: 700;
-      display: block;
-    }
-    .hero-stat-label {
-      color: #666;
-      font-size: 0.7rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    /* Scroll indicator */
-    .scroll-hint {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      z-index: 2;
-    }
-    .scroll-hint span {
-      color: #444;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .scroll-arrow {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.2); }
-    }
-
-    /* ── MARQUEE BAND ── */
-    .marquee-band {
-      background: var(--gold);
-      padding: 12px 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .marquee-inner {
-      display: inline-flex;
-      animation: marquee 20s linear infinite;
-      gap: 0;
-    }
-    .marquee-item {
-      color: var(--black);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 0 30px;
-    }
-    .marquee-dot {
-      color: rgba(0,0,0,0.3);
-      padding: 0 4px;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* ── PRODUCT SHOWCASE ── */
-    .showcase {
-      background: #0a0a0a;
-      padding: 80px 0;
-    }
-    .showcase-header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    .showcase-tag {
-      color: var(--gold);
-      font-size: 0.72rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 12px;
-    }
-    .showcase-title {
-      font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      color: var(--white);
-    }
-
-    /* Filter tabs */
-    .showcase-filters {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-    .sf-btn {
-      padding: 7px 20px;
-      border: 1px solid #222;
-      background: transparent;
-      color: #666;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.2s;
-    }
-    .sf-btn:hover { border-color: var(--gold); color: var(--gold); }
-    .sf-btn.active { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 600; }
-
-    /* Product grid */
-    .showcase-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1px;
-      background: #111;
-    }
-    .showcase-item {
-      background: #0a0a0a;
-      padding: 28px 20px;
-      cursor: pointer;
-      transition: all 0.25s;
-      position: relative;
-      overflow: hidden;
-    }
-    .showcase-item::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 2px;
-      background: var(--gold);
-      transition: width 0.3s;
-    }
-    .showcase-item:hover { background: #111; }
-    .showcase-item:hover::before { width: 100%; }
-    .showcase-item-img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: 4px;
-      margin-bottom: 16px;
-      background: #151515;
-    }
-    .showcase-item-placeholder {
-      width: 100%;
-      aspect-ratio: 1;
-      background: #151515;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      margin-bottom: 16px;
-    }
-    .showcase-item-cat {
-      color: var(--gold);
-      font-size: 0.65rem;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .showcase-item-name {
-      color: var(--white);
-      font-family: var(--font-serif);
-      font-size: 1rem;
-      margin-bottom: 4px;
-      line-height: 1.3;
-    }
-    .showcase-item-weight { color: #555; font-size: 0.78rem; margin-bottom: 12px; }
-    .showcase-item-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .showcase-item-price { color: var(--gold); font-size: 1.1rem; font-weight: 600; font-family: var(--font-serif); }
-    .showcase-item-price-old { color: #444; font-size: 0.78rem; text-decoration: line-through; margin-left: 6px; }
-    .showcase-add-btn {
-      background: transparent;
-      border: 1px solid #2a2a2a;
-      color: #666;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .showcase-add-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
-
-    /* Out of stock */
-    .oos-badge {
-      font-size: 0.65rem;
-      color: #444;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    /* Load more */
-    .load-more-wrap { text-align: center; padding: 50px 0 20px; }
-    .load-more-btn {
-      background: transparent;
-      border: 1px solid #333;
-      color: #888;
-      padding: 12px 40px;
-      font-size: 0.82rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-      border-radius: 2px;
-    }
-    .load-more-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ── WHY US MINIMAL ── */
-    .why-minimal {
-      background: var(--black);
-      border-top: 1px solid #111;
-      border-bottom: 1px solid #111;
-    }
-    .why-minimal-grid {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      divide: divide;
-    }
-    .why-minimal-item {
-      padding: 40px 30px;
-      border-right: 1px solid #111;
-      text-align: center;
-    }
-    .why-minimal-item:last-child { border-right: none; }
-    .why-minimal-icon { font-size: 1.8rem; margin-bottom: 14px; }
-    .why-minimal-title { color: var(--white); font-size: 0.88rem; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.5px; }
-    .why-minimal-desc { color: #555; font-size: 0.8rem; line-height: 1.7; }
-
-    @media (max-width: 768px) {
-      .hero-banner { padding: 80px 20px 50px; }
-      .announce-bar { font-size: 0.7rem; padding: 6px 10px; }
-      .navbar { top: 30px; }
-      .hero-stats { flex-wrap: wrap; }
-      .hero-stat { min-width: 45%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
-      .why-minimal-grid { grid-template-columns: 1fr 1fr; }
-      .why-minimal-item { border-bottom: 1px solid #111; }
-    }
+    /* ── BANNER SETTINGS ── */
+    .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .settings-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:22px;}
+    .settings-card h3{color:var(--gold);font-size:0.9rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);font-family:'Playfair Display',serif;}
+    .theme-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px;}
+    .theme-opt{border:2px solid var(--border);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.2s;}
+    .theme-opt.selected{border-color:var(--gold);}
+    .theme-swatch{width:32px;height:32px;border-radius:50%;margin:0 auto 6px;}
+    .theme-opt span{font-size:0.72rem;color:var(--gray);}
+    .preview-box{background:#111;border:1px solid var(--border);border-radius:6px;padding:16px;margin-top:16px;text-align:center;}
+    .preview-box .prev-bar{border-radius:2px;padding:6px;font-size:0.65rem;font-weight:700;letter-spacing:1.5px;margin-bottom:10px;}
+    .preview-box .prev-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:4px;}
+    .preview-box .prev-sub{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
+    .full-width-card{grid-column:1/-1;}
+    .save-bar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;z-index:5;}
+    .save-status{color:var(--gray);font-size:0.82rem;}
+    .save-status.saved{color:#81C784;}
   </style>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
-<div class="announce-bar">
-  🚚 Free Shipping on Orders Above ₹500 &nbsp;·&nbsp; Fresh Made in Chennai &nbsp;·&nbsp; Pan India Delivery
-</div>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <span class="logo-main">MAJOR RANGAS</span>
-      <span class="logo-sub">Authentic South Indian</span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="products.html">All Products</a></li>
-      <li><a href="products.html?cat=Snacks">Snacks</a></li>
-      <li><a href="products.html?cat=Sweets">Sweets</a></li>
-      <li><a href="products.html?cat=Podis">Podis</a></li>
-      <li><a href="track.html">Track Order</a></li>
-    </ul>
-    <div class="nav-right">
-      <button class="cart-btn" onclick="openCart()">🛒 <span class="cart-count" id="cartCount">0</span></button>
-      <button class="hamburger" onclick="toggleMenu()">☰</button>
-    </div>
-  </div>
-</nav>
-
-<!-- ── HERO BANNER ── -->
-<section class="hero-banner">
-  <div class="hero-eyebrow">
-    <div class="hero-eyebrow-line"></div>
-    <span>Chennai's Finest Since Generations</span>
-    <div class="hero-eyebrow-line"></div>
-  </div>
-
-  <h1 class="hero-headline">
-    Authentic
-    <span class="line-gold">South Indian</span>
-    Flavours
-  </h1>
-
-  <p class="hero-sub">Snacks · Sweets · Podis</p>
-
-  <p class="hero-desc">
-    Crafted with traditional recipes, fresh ingredients, and the love of a Chennai kitchen. No preservatives. No compromises.
-  </p>
-
-  <div class="hero-cats">
-    <a href="products.html?cat=Snacks" class="hero-cat-pill">Snacks</a>
-    <a href="products.html?cat=Sweets" class="hero-cat-pill">Sweets</a>
-    <a href="products.html?cat=Podis" class="hero-cat-pill">Podis</a>
-  </div>
-
-  <div class="hero-cta-row">
-    <a href="products.html" class="btn-primary" style="padding:14px 40px;font-size:0.88rem;letter-spacing:1.5px;text-transform:uppercase">Shop Now</a>
-    <a href="track.html" class="btn-outline" style="padding:14px 32px;font-size:0.88rem;letter-spacing:1.5px;text-transform:uppercase">Track Order</a>
-  </div>
-
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <span class="hero-stat-val">43+</span>
-      <div class="hero-stat-label">Products</div>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-val">₹500</span>
-      <div class="hero-stat-label">Free Shipping</div>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-val">100%</span>
-      <div class="hero-stat-label">Authentic</div>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-val">Pan India</span>
-      <div class="hero-stat-label">Delivery</div>
-    </div>
-  </div>
-
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-arrow"></div>
-  </div>
-</section>
-
-<!-- ── MARQUEE BAND ── -->
-<div class="marquee-band">
-  <div class="marquee-inner" id="marqueeInner">
-    <span class="marquee-item">Free Shipping Above ₹500</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">Fresh Made in Chennai</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">No Preservatives</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">Pan India Delivery</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">43+ Authentic Products</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">Trademark Registered Brand</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">Free Shipping Above ₹500</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">Fresh Made in Chennai</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">No Preservatives</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">Pan India Delivery</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">43+ Authentic Products</span>
-    <span class="marquee-dot">✦</span>
-    <span class="marquee-item">Trademark Registered Brand</span>
-    <span class="marquee-dot">✦</span>
+<!-- LOGIN -->
+<div class="login-page" id="loginPage">
+  <div class="login-box">
+    <h1>MAJOR RANGAS</h1>
+    <p>Admin Panel — Secure Login</p>
+    <input class="inp" type="email" id="loginEmail" placeholder="Email" value="vimalraj.cse@gmail.com">
+    <input class="inp" type="password" id="loginPassword" placeholder="Password">
+    <button class="btn-gold" onclick="login()">Login →</button>
+    <div class="err" id="loginErr"></div>
   </div>
 </div>
 
-<!-- ── PRODUCT SHOWCASE ── -->
-<section class="showcase">
-  <div class="container">
-    <div class="showcase-header">
-      <span class="showcase-tag">Our Collection</span>
-      <h2 class="showcase-title">Shop by Category</h2>
+<!-- APP -->
+<div class="app" id="app">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <h2>MAJOR RANGAS</h2>
+      <p>Admin Panel</p>
     </div>
-    <div class="showcase-filters">
-      <button class="sf-btn active" onclick="filterShowcase('All', this)">All</button>
-      <button class="sf-btn" onclick="filterShowcase('Snacks', this)">Snacks</button>
-      <button class="sf-btn" onclick="filterShowcase('Sweets', this)">Sweets</button>
-      <button class="sf-btn" onclick="filterShowcase('Podis', this)">Podis</button>
+    <div class="sidebar-nav">
+      <div class="nav-group-title">Main</div>
+      <div class="nav-item active" onclick="showPage('dashboard',this)"><span class="icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="showPage('orders',this)"><span class="icon">📦</span> Orders</div>
+      <div class="nav-item" onclick="showPage('products',this)"><span class="icon">🛍️</span> Products</div>
+      <div class="nav-item" onclick="showPage('inventory',this)"><span class="icon">📋</span> Inventory</div>
+      <div class="nav-group-title">Customise</div>
+      <div class="nav-item" onclick="showPage('banner',this)"><span class="icon">🎨</span> Banner & Theme</div>
+      <div class="nav-item" onclick="showPage('announcement',this)"><span class="icon">📢</span> Announcement</div>
     </div>
-    <div class="showcase-grid" id="showcaseGrid">
-      <div style="grid-column:1/-1;text-align:center;padding:60px;color:#444;font-size:0.9rem">Loading products...</div>
-    </div>
-    <div class="load-more-wrap">
-      <button class="load-more-btn" onclick="window.location.href='products.html'">View All Products</button>
+    <div class="sidebar-bottom">
+      <div style="color:var(--gray);font-size:0.75rem;margin-bottom:8px" id="adminName"></div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
   </div>
-</section>
 
-<!-- ── WHY US ── -->
-<section class="why-minimal">
-  <div class="container">
-    <div class="why-minimal-grid">
-      <div class="why-minimal-item">
-        <div class="why-minimal-icon">🏡</div>
-        <div class="why-minimal-title">Homemade Taste</div>
-        <div class="why-minimal-desc">Traditional recipes passed down through generations</div>
+  <div class="main">
+    <div class="topbar">
+      <h2 id="pageTitle">Dashboard</h2>
+      <div style="color:var(--gray);font-size:0.78rem">Major Rangas Admin</div>
+    </div>
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value" id="statOrders">—</div></div>
+          <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value stat-gold" id="statRevenue">—</div></div>
+          <div class="stat-card"><div class="stat-label">Active Products</div><div class="stat-value" id="statProducts">—</div></div>
+          <div class="stat-card"><div class="stat-label">Pending Orders</div><div class="stat-value stat-gold" id="statPending">—</div></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header"><h3>Recent Orders</h3><button class="btn-sm btn-blue" onclick="showPage('orders',null)">View All</button></div>
+          <table><thead><tr><th>Order #</th><th>Customer</th><th>Amount</th><th>Payment</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="recentOrdersTable"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
       </div>
-      <div class="why-minimal-item">
-        <div class="why-minimal-icon">🌿</div>
-        <div class="why-minimal-title">No Preservatives</div>
-        <div class="why-minimal-desc">Fresh ingredients, natural flavours only</div>
+
+      <!-- ORDERS -->
+      <div class="page" id="page-orders">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>All Orders</h3>
+            <select onchange="filterOrders(this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--white);padding:6px 12px;border-radius:4px;font-size:0.82rem">
+              <option value="">All Status</option>
+              <option value="placed">Placed</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <table><thead><tr><th>Order #</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="ordersTable"><tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
       </div>
-      <div class="why-minimal-item">
-        <div class="why-minimal-icon">📦</div>
-        <div class="why-minimal-title">Pan India Delivery</div>
-        <div class="why-minimal-desc">Authentic Chennai taste delivered across India</div>
+
+      <!-- PRODUCTS -->
+      <div class="page" id="page-products">
+        <div class="table-wrap">
+          <div class="table-header"><h3>Products</h3><button class="btn-sm btn-green" onclick="openAddProduct()">+ Add Product</button></div>
+          <table><thead><tr><th>Name</th><th>Category</th><th>MRP</th><th>Sale Price</th><th>Stock</th><th>SKU</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="productsTable"><tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
       </div>
-      <div class="why-minimal-item">
-        <div class="why-minimal-icon">✅</div>
-        <div class="why-minimal-title">Quality Assured</div>
-        <div class="why-minimal-desc">Every batch freshly made and quality checked</div>
+
+      <!-- INVENTORY -->
+      <div class="page" id="page-inventory">
+        <div class="table-wrap">
+          <div class="table-header"><h3>Stock Levels</h3></div>
+          <table><thead><tr><th>Product</th><th>Category</th><th>SKU</th><th>Stock</th><th>Status</th><th>Update</th></tr></thead>
+          <tbody id="inventoryTable"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
       </div>
+
+      <!-- BANNER & THEME -->
+      <div class="page" id="page-banner">
+        <div class="settings-grid">
+
+          <!-- Theme Color -->
+          <div class="settings-card">
+            <h3>🎨 Website Theme</h3>
+            <div class="form-group">
+              <label>Background Color Theme</label>
+              <div class="theme-picker">
+                <div class="theme-opt selected" id="theme-brown" onclick="selectTheme('brown')">
+                  <div class="theme-swatch" style="background:#1C1208;border:2px solid #C9A84C"></div>
+                  <span>Warm Brown</span>
+                </div>
+                <div class="theme-opt" id="theme-black" onclick="selectTheme('black')">
+                  <div class="theme-swatch" style="background:#0D0D0D;border:2px solid #333"></div>
+                  <span>Pure Black</span>
+                </div>
+                <div class="theme-opt" id="theme-green" onclick="selectTheme('green')">
+                  <div class="theme-swatch" style="background:#0a1208;border:2px solid #C9A84C"></div>
+                  <span>Dark Green</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Banner Text -->
+          <div class="settings-card">
+            <h3>🏷️ Hero Banner Text</h3>
+            <div class="form-group">
+              <label>Headline Line 1 (white text)</label>
+              <input type="text" id="set-heroLine1" placeholder="e.g. Taste of">
+            </div>
+            <div class="form-group">
+              <label>Headline Line 2 (gold italic)</label>
+              <input type="text" id="set-heroLine2" placeholder="e.g. Our Homeland">
+            </div>
+            <div class="form-group">
+              <label>Sub Caption (small text below)</label>
+              <input type="text" id="set-heroSubtitle" placeholder="e.g. Snacks · Sweets · Podis">
+            </div>
+            <div class="form-group">
+              <label>Description Text</label>
+              <textarea id="set-heroDesc" rows="3" placeholder="Short description under headline..."></textarea>
+            </div>
+          </div>
+
+          <!-- Featured Category -->
+          <div class="settings-card">
+            <h3>⭐ Featured Category</h3>
+            <div class="form-group">
+              <label>Highlight Category on Homepage</label>
+              <select id="set-featuredCat">
+                <option value="All">All (Show Everything)</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Sweets">Sweets</option>
+                <option value="Podis">Podis</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-top:8px">
+              <label>Show Brand Story Section</label>
+              <select id="set-showStory">
+                <option value="true">Yes — Show Story</option>
+                <option value="false">No — Hide Story</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Story Text -->
+          <div class="settings-card">
+            <h3>📖 Brand Story Text</h3>
+            <div class="form-group">
+              <label>Story Description</label>
+              <textarea id="set-storyText" rows="5" placeholder="Your brand story..."></textarea>
+            </div>
+          </div>
+
+          <!-- Live Preview -->
+          <div class="settings-card full-width-card">
+            <h3>👁️ Live Preview</h3>
+            <div class="preview-box" id="livePreview">
+              <div class="prev-bar" id="prev-bar" style="background:#C9A84C;color:#1C1208">FREE SHIPPING ABOVE ₹500</div>
+              <div style="background:#1C1208;padding:20px;border-radius:4px;margin-top:8px">
+                <div style="color:rgba(201,168,76,0.5);font-size:0.65rem;letter-spacing:3px;margin-bottom:8px">CHENNAI'S FINEST SINCE GENERATIONS</div>
+                <div class="prev-title" id="prev-line1" style="color:#F5E6C8">Taste of</div>
+                <div class="prev-title" id="prev-line2" style="color:#C9A84C;font-style:italic">Our Homeland</div>
+                <div class="prev-sub" id="prev-sub" style="color:rgba(201,168,76,0.5);margin-top:6px">SNACKS · SWEETS · PODIS</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="save-bar">
+          <div class="save-status" id="saveStatus">Unsaved changes</div>
+          <button class="btn-gold-sm" onclick="saveBannerSettings()">Save & Apply to Website →</button>
+        </div>
+      </div>
+
+      <!-- ANNOUNCEMENT -->
+      <div class="page" id="page-announcement">
+        <div class="settings-card" style="max-width:600px">
+          <h3>📢 Announcement Bar</h3>
+          <div class="form-group">
+            <label>Announcement Text (shows at very top of website)</label>
+            <input type="text" id="set-announcement" placeholder="e.g. FREE SHIPPING ON ORDERS ABOVE ₹500">
+          </div>
+          <div style="margin-top:8px">
+            <div style="background:#C9A84C;color:#1C1208;padding:8px;text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:2px;border-radius:4px" id="announcementPreview">
+              FREE SHIPPING ON ORDERS ABOVE ₹500
+            </div>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn-gold-sm" onclick="saveAnnouncementSettings()">Save Announcement →</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</section>
-
-<!-- CART SIDEBAR -->
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-sidebar" id="cartSidebar">
-  <div class="cart-header">
-    <h3>Your Cart</h3>
-    <button onclick="closeCart()">✕</button>
-  </div>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-footer" id="cartFooter"></div>
 </div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h3 class="gold">MAJOR RANGAS</h3>
-        <p>Authentic South Indian snacks, sweets & podis from Chennai. Crafted with love, delivered with care.</p>
-        <p class="footer-gstin">GSTIN: 33AFNFS9165E1ZM</p>
-      </div>
-      <div class="footer-links">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="products.html">All Products</a></li>
-          <li><a href="products.html?cat=Snacks">Snacks</a></li>
-          <li><a href="products.html?cat=Sweets">Sweets</a></li>
-          <li><a href="products.html?cat=Podis">Podis</a></li>
-          <li><a href="track.html">Track Order</a></li>
-        </ul>
-      </div>
-      <div class="footer-contact">
-        <h4>Contact</h4>
-        <p>📍 Chennai, Tamil Nadu</p>
-        <p>📧 contact@majorrangas.com</p>
-        <p>🌐 majorrangas.com</p>
-      </div>
+<!-- MODALS -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <h3>Update Order Status</h3>
+    <input type="hidden" id="modalOrderId">
+    <div class="form-group"><label>Order Status</label>
+      <select id="modalOrderStatus">
+        <option value="placed">Placed</option><option value="confirmed">Confirmed</option>
+        <option value="processing">Processing</option><option value="shipped">Shipped</option>
+        <option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
+      </select>
     </div>
-    <div class="footer-bottom">
-      <p>© 2024 Major Rangas. All rights reserved. | Made in Chennai 🙏</p>
+    <div class="form-group"><label>Tracking Number</label><input type="text" id="modalTracking" placeholder="e.g. BD12345678IN"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('orderModal')">Cancel</button>
+      <button class="modal-save" onclick="updateOrderStatus()">Update</button>
     </div>
   </div>
-</footer>
+</div>
 
-<script src="js/config.js"></script>
-<script src="js/cart.js"></script>
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <h3 id="productModalTitle">Add Product</h3>
+    <input type="hidden" id="productId">
+    <div class="form-group"><label>Product Name *</label><input id="pName" type="text"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Category *</label>
+        <select id="pCategory"><option value="Snacks">Snacks</option><option value="Sweets">Sweets</option><option value="Podis">Podis</option></select>
+      </div>
+      <div class="form-group"><label>Sub Category</label><input id="pSubCategory" type="text"></div>
+    </div>
+    <div class="form-group"><label>Short Description</label><textarea id="pDescription" rows="2"></textarea></div>
+    <div class="form-group"><label>Ingredients</label><input id="pIngredients" type="text"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>MRP (₹) *</label><input id="pMrp" type="number"></div>
+      <div class="form-group"><label>Sale Price (₹)</label><input id="pSalePrice" type="number"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Weight *</label><input id="pWeight" type="number"></div>
+      <div class="form-group"><label>Unit</label><select id="pUnit"><option value="g">g</option><option value="kg">kg</option><option value="pcs">pcs</option></select></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Stock Qty *</label><input id="pStock" type="number"></div>
+      <div class="form-group"><label>SKU Code</label><input id="pSku" type="text"></div>
+    </div>
+    <div class="form-group"><label>Image URL</label><input id="pImage" type="text"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Active</label><select id="pActive"><option value="true">Yes</option><option value="false">No</option></select></div>
+      <div class="form-group"><label>Featured</label><select id="pFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('productModal')">Cancel</button>
+      <button class="modal-save" onclick="saveProduct()">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="stockModal">
+  <div class="modal" style="width:360px">
+    <h3>Update Stock</h3>
+    <input type="hidden" id="stockProductId">
+    <div class="form-group"><label id="stockProductName" style="color:var(--white);font-size:0.95rem"></label></div>
+    <div class="form-group"><label>New Stock Quantity</label><input id="stockQty" type="number" min="0"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal('stockModal')">Cancel</button>
+      <button class="modal-save" onclick="updateStock()">Update</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-var allProducts = [];
-var productMap = {};
-var currentFilter = 'All';
-var visibleCount = 12;
+var API = 'https://majorrangas-backend-production.up.railway.app';
+var token = localStorage.getItem('mr_admin_token');
+var adminInfo = JSON.parse(localStorage.getItem('mr_admin_info') || '{}');
+var currentTheme = 'brown';
+var currentSettings = {};
 
-function getEmoji(cat) {
-  return cat === 'Sweets' ? '🍬' : cat === 'Podis' ? '🌶️' : '🥨';
+function showToast(msg,isErr){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=isErr?'#F44336':'var(--gold)';
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},3000);
 }
 
-function createShowcaseItem(p) {
-  var price = parseFloat(p.sale_price || p.mrp);
-  var mrp = parseFloat(p.mrp);
-  var hasDiscount = p.sale_price && parseFloat(p.sale_price) < mrp;
-  var inStock = p.stock_qty > 0;
-  var emoji = getEmoji(p.category);
-
-  var imgHtml = p.image_primary
-    ? '<img class="showcase-item-img" src="' + p.image_primary + '" alt="' + p.name + '" loading="lazy" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'
-      + '<div class="showcase-item-placeholder" style="display:none">' + emoji + '</div>'
-    : '<div class="showcase-item-placeholder">' + emoji + '</div>';
-
-  var priceOld = hasDiscount ? '<span class="showcase-item-price-old">₹' + mrp.toFixed(0) + '</span>' : '';
-  var actionHtml = inStock
-    ? '<button class="showcase-add-btn" onclick="event.stopPropagation();handleAdd(' + p.id + ')" title="Add to Cart">+</button>'
-    : '<span class="oos-badge">Out of Stock</span>';
-
-  return '<div class="showcase-item" onclick="window.location.href=\'product.html?id=' + p.id + '\'">'
-    + imgHtml
-    + '<div class="showcase-item-cat">' + p.category + '</div>'
-    + '<div class="showcase-item-name">' + p.name + '</div>'
-    + '<div class="showcase-item-weight">' + (p.weight ? p.weight + p.unit : '') + '</div>'
-    + '<div class="showcase-item-bottom">'
-    + '<div><span class="showcase-item-price">₹' + price.toFixed(0) + '</span>' + priceOld + '</div>'
-    + actionHtml
-    + '</div>'
-    + '</div>';
+async function login(){
+  var email=document.getElementById('loginEmail').value;
+  var pass=document.getElementById('loginPassword').value;
+  document.getElementById('loginErr').textContent='';
+  try{
+    var res=await fetch(API+'/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+    var data=await res.json();
+    if(!data.success){document.getElementById('loginErr').textContent=data.error||'Login failed';return;}
+    token=data.token; adminInfo=data.admin;
+    localStorage.setItem('mr_admin_token',token);
+    localStorage.setItem('mr_admin_info',JSON.stringify(adminInfo));
+    initApp();
+  }catch(e){document.getElementById('loginErr').textContent='Connection failed';}
 }
 
-function handleAdd(id) {
-  var p = productMap[id];
-  if (!p) return;
-  addToCart({
-    id: p.id, name: p.name,
-    mrp: parseFloat(p.sale_price || p.mrp),
-    image_primary: p.image_primary,
-    weight: p.weight, unit: p.unit, category: p.category
+function initApp(){
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('app').classList.add('show');
+  document.getElementById('adminName').textContent=adminInfo.name||'Admin';
+  loadDashboard();
+  loadSettingsData();
+}
+
+function logout(){localStorage.removeItem('mr_admin_token');localStorage.removeItem('mr_admin_info');location.reload();}
+function authH(){return{'Content-Type':'application/json','Authorization':'Bearer '+token};}
+
+function showPage(page,el){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+  document.getElementById('page-'+page).classList.add('active');
+  if(el)el.classList.add('active');
+  var titles={dashboard:'Dashboard',orders:'Orders',products:'Products',inventory:'Inventory',banner:'Banner & Theme',announcement:'Announcement Bar'};
+  document.getElementById('pageTitle').textContent=titles[page]||page;
+  if(page==='dashboard')loadDashboard();
+  if(page==='orders')loadOrders();
+  if(page==='products')loadProducts();
+  if(page==='inventory')loadInventory();
+}
+
+// ── DASHBOARD ──
+async function loadDashboard(){
+  try{
+    var[sRes,oRes]=await Promise.all([
+      fetch(API+'/api/admin/stats',{headers:authH()}),
+      fetch(API+'/api/admin/orders?limit=8',{headers:authH()})
+    ]);
+    var stats=await sRes.json(); var orders=await oRes.json();
+    if(stats.success){
+      document.getElementById('statOrders').textContent=stats.stats.total_orders;
+      document.getElementById('statRevenue').textContent='₹'+stats.stats.total_revenue.toLocaleString('en-IN');
+      document.getElementById('statProducts').textContent=stats.stats.active_products;
+      document.getElementById('statPending').textContent=stats.stats.pending_orders;
+    }
+    if(orders.success){
+      document.getElementById('recentOrdersTable').innerHTML=orders.orders.map(function(o){
+        return '<tr><td style="color:var(--gold);font-weight:600">'+o.order_number+'</td><td>'+o.customer_name+'</td><td>₹'+parseFloat(o.total_amount).toFixed(2)+'</td><td><span class="badge badge-'+o.payment_status+'">'+o.payment_status+'</span></td><td><span class="badge badge-'+o.order_status+'">'+o.order_status+'</span></td><td>'+new Date(o.created_at).toLocaleDateString('en-IN')+'</td></tr>';
+      }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">No orders yet</td></tr>';
+    }
+  }catch(e){}
+}
+
+// ── ORDERS ──
+async function loadOrders(status){
+  try{
+    var url=status?API+'/api/admin/orders?status='+status+'&limit=100':API+'/api/admin/orders?limit=100';
+    var res=await fetch(url,{headers:authH()}); var data=await res.json();
+    if(!data.success)return;
+    document.getElementById('ordersTable').innerHTML=data.orders.map(function(o){
+      var items=typeof o.items==='string'?JSON.parse(o.items):o.items;
+      return '<tr><td style="color:var(--gold);font-weight:600">'+o.order_number+'</td><td>'+o.customer_name+'</td><td>'+o.customer_phone+'</td><td>'+items.length+' items</td><td>₹'+parseFloat(o.total_amount).toFixed(2)+'</td><td><span class="badge badge-'+o.payment_status+'">'+o.payment_status+'</span></td><td><span class="badge badge-'+o.order_status+'">'+o.order_status+'</span></td><td>'+new Date(o.created_at).toLocaleDateString('en-IN')+'</td><td style="display:flex;gap:6px"><button class="btn-sm btn-blue" onclick="openOrderModal('+o.id+',\''+o.order_status+'\',\''+( o.tracking_number||'')+'\')">Update</button><a href="'+API+'/api/invoice/'+o.order_number+'" target="_blank" class="btn-sm btn-green" style="display:inline-block">Invoice</a></td></tr>';
+    }).join('')||'<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No orders</td></tr>';
+  }catch(e){}
+}
+function filterOrders(s){loadOrders(s);}
+function openOrderModal(id,status,tracking){document.getElementById('modalOrderId').value=id;document.getElementById('modalOrderStatus').value=status;document.getElementById('modalTracking').value=tracking||'';document.getElementById('orderModal').classList.add('open');}
+async function updateOrderStatus(){
+  var id=document.getElementById('modalOrderId').value;
+  var status=document.getElementById('modalOrderStatus').value;
+  var tracking=document.getElementById('modalTracking').value;
+  try{
+    var res=await fetch(API+'/api/admin/orders/'+id+'/status',{method:'PUT',headers:authH(),body:JSON.stringify({order_status:status,tracking_number:tracking})});
+    var data=await res.json();
+    if(data.success){showToast('Order updated!');closeModal('orderModal');loadOrders();}else showToast('Update failed',true);
+  }catch(e){showToast('Error',true);}
+}
+
+// ── PRODUCTS ──
+async function loadProducts(){
+  try{
+    var res=await fetch(API+'/api/admin/products',{headers:authH()}); var data=await res.json();
+    if(!data.success)return;
+    document.getElementById('productsTable').innerHTML=data.products.map(function(p){
+      return '<tr><td>'+p.name+'</td><td>'+p.category+'</td><td>₹'+parseFloat(p.mrp).toFixed(2)+'</td><td>'+(p.sale_price?'₹'+parseFloat(p.sale_price).toFixed(2):'—')+'</td><td>'+p.stock_qty+'</td><td style="color:var(--gray);font-size:0.75rem">'+(p.sku||'—')+'</td><td>'+(p.is_featured?'<span class="badge" style="background:rgba(201,168,76,0.15);color:var(--gold)">Yes</span>':'—')+'</td><td><span class="badge badge-'+(p.is_active?'active':'inactive')+'">'+(p.is_active?'Active':'Hidden')+'</span></td><td style="display:flex;gap:6px"><button class="btn-sm btn-blue" onclick=\'openEditProduct('+JSON.stringify(p).replace(/\'/g,"&#39;")+')\'> Edit</button><button class="btn-sm btn-green" onclick="openStockModal('+p.id+',\''+p.name.replace(/\'/g,"\\'")+'\',' +p.stock_qty+')">Stock</button></td></tr>';
+    }).join('')||'<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No products</td></tr>';
+  }catch(e){}
+}
+function openAddProduct(){
+  document.getElementById('productModalTitle').textContent='Add Product';
+  document.getElementById('productId').value='';
+  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('pCategory').value='Snacks';
+  document.getElementById('pUnit').value='g';
+  document.getElementById('pActive').value='true';
+  document.getElementById('pFeatured').value='false';
+  document.getElementById('productModal').classList.add('open');
+}
+function openEditProduct(p){
+  document.getElementById('productModalTitle').textContent='Edit Product';
+  document.getElementById('productId').value=p.id;
+  document.getElementById('pName').value=p.name||'';
+  document.getElementById('pCategory').value=p.category||'Snacks';
+  document.getElementById('pSubCategory').value=p.sub_category||'';
+  document.getElementById('pDescription').value=p.short_description||'';
+  document.getElementById('pIngredients').value=p.ingredients||'';
+  document.getElementById('pMrp').value=p.mrp||'';
+  document.getElementById('pSalePrice').value=p.sale_price||'';
+  document.getElementById('pWeight').value=p.weight||'';
+  document.getElementById('pUnit').value=p.unit||'g';
+  document.getElementById('pStock').value=p.stock_qty||0;
+  document.getElementById('pSku').value=p.sku||'';
+  document.getElementById('pImage').value=p.image_primary||'';
+  document.getElementById('pActive').value=p.is_active?'true':'false';
+  document.getElementById('pFeatured').value=p.is_featured?'true':'false';
+  document.getElementById('productModal').classList.add('open');
+}
+async function saveProduct(){
+  var id=document.getElementById('productId').value;
+  var name=document.getElementById('pName').value.trim();
+  if(!name){showToast('Name required',true);return;}
+  var payload={
+    name,category:document.getElementById('pCategory').value,
+    sub_category:document.getElementById('pSubCategory').value,
+    short_description:document.getElementById('pDescription').value,
+    ingredients:document.getElementById('pIngredients').value,
+    mrp:document.getElementById('pMrp').value,
+    sale_price:document.getElementById('pSalePrice').value||null,
+    weight:document.getElementById('pWeight').value,
+    unit:document.getElementById('pUnit').value,
+    stock_qty:document.getElementById('pStock').value,
+    sku:document.getElementById('pSku').value,
+    image_primary:document.getElementById('pImage').value,
+    is_active:document.getElementById('pActive').value==='true',
+    is_featured:document.getElementById('pFeatured').value==='true',
+    slug:name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')
+  };
+  try{
+    var url=id?API+'/api/admin/products/'+id:API+'/api/admin/products';
+    var method=id?'PUT':'POST';
+    var res=await fetch(url,{method,headers:authH(),body:JSON.stringify(payload)});
+    var data=await res.json();
+    if(data.success){showToast(id?'Product updated!':'Product added!');closeModal('productModal');loadProducts();}
+    else showToast(data.error||'Save failed',true);
+  }catch(e){showToast('Error',true);}
+}
+
+// ── INVENTORY ──
+async function loadInventory(){
+  try{
+    var res=await fetch(API+'/api/admin/products',{headers:authH()}); var data=await res.json();
+    if(!data.success)return;
+    document.getElementById('inventoryTable').innerHTML=data.products.map(function(p){
+      var low=p.stock_qty<10; var out=p.stock_qty===0;
+      return '<tr><td>'+p.name+'</td><td>'+p.category+'</td><td style="color:var(--gray);font-size:0.75rem">'+(p.sku||'—')+'</td><td style="color:'+(out?'#F44336':low?'#FF9800':'#81C784')+';font-weight:600">'+p.stock_qty+'</td><td><span class="badge" style="background:'+(out?'rgba(244,67,54,0.15)':low?'rgba(255,152,0,0.15)':'rgba(76,175,80,0.12)')+';color:'+(out?'#EF9A9A':low?'#FFB74D':'#81C784')+'">'+(out?'Out of Stock':low?'Low Stock':'In Stock')+'</span></td><td><button class="btn-sm btn-blue" onclick="openStockModal('+p.id+',\''+p.name.replace(/\'/g,"\\'")+'\',' +p.stock_qty+')">Update</button></td></tr>';
+    }).join('');
+  }catch(e){}
+}
+function openStockModal(id,name,current){
+  document.getElementById('stockProductId').value=id;
+  document.getElementById('stockProductName').textContent=name;
+  document.getElementById('stockQty').value=current;
+  document.getElementById('stockModal').classList.add('open');
+}
+async function updateStock(){
+  var id=document.getElementById('stockProductId').value;
+  var qty=document.getElementById('stockQty').value;
+  try{
+    var res=await fetch(API+'/api/admin/products/'+id+'/stock',{method:'PUT',headers:authH(),body:JSON.stringify({stock_qty:parseInt(qty)})});
+    var data=await res.json();
+    if(data.success){showToast('Stock updated!');closeModal('stockModal');loadInventory();loadProducts();}
+    else showToast('Failed',true);
+  }catch(e){showToast('Error',true);}
+}
+
+// ── SETTINGS ──
+async function loadSettingsData(){
+  try{
+    var res=await fetch(API+'/api/settings'); var data=await res.json();
+    if(!data.success)return;
+    var s=data.settings; currentSettings=s;
+    if(s.theme_color){selectTheme(s.theme_color,true);}
+    if(s.banner_headline){
+      var parts=s.banner_headline.split('\n');
+      document.getElementById('set-heroLine1').value=parts[0]||'';
+      document.getElementById('set-heroLine2').value=parts[1]||'';
+      document.getElementById('prev-line1').textContent=parts[0]||'';
+      document.getElementById('prev-line2').textContent=parts[1]||'';
+    }
+    if(s.banner_subtext){document.getElementById('set-heroDesc').value=s.banner_subtext||'';}
+    if(s.announcement_text){
+      document.getElementById('set-announcement').value=s.announcement_text;
+      document.getElementById('announcementPreview').textContent=s.announcement_text;
+    }
+    if(s.featured_category){document.getElementById('set-featuredCat').value=s.featured_category;}
+    if(s.show_story_section){document.getElementById('set-showStory').value=s.show_story_section;}
+    if(s.story_text){document.getElementById('set-storyText').value=s.story_text;}
+    var sub=s.banner_headline?s.banner_headline.split('\n')[0]:'';
+    document.getElementById('set-heroSubtitle') && (document.getElementById('set-heroSubtitle').value=s.hero_subtitle||'');
+    document.getElementById('saveStatus').textContent='Settings loaded ✓';
+    document.getElementById('saveStatus').className='save-status saved';
+  }catch(e){}
+}
+
+function selectTheme(theme,silent){
+  currentTheme=theme;
+  document.querySelectorAll('.theme-opt').forEach(function(el){el.classList.remove('selected')});
+  var el=document.getElementById('theme-'+theme);
+  if(el)el.classList.add('selected');
+  var bgs={brown:'#1C1208',black:'#0D0D0D',green:'#0a1208'};
+  document.getElementById('livePreview').querySelector('div:last-child').style.background=bgs[theme]||'#1C1208';
+  if(!silent){
+    document.getElementById('saveStatus').textContent='Unsaved changes';
+    document.getElementById('saveStatus').className='save-status';
+  }
+}
+
+// Live preview updates
+['set-heroLine1','set-heroLine2','set-heroSubtitle'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.addEventListener('input',function(){
+    if(id==='set-heroLine1')document.getElementById('prev-line1').textContent=this.value;
+    if(id==='set-heroLine2')document.getElementById('prev-line2').textContent=this.value;
+    if(id==='set-heroSubtitle')document.getElementById('prev-sub').textContent=this.value;
+    document.getElementById('saveStatus').textContent='Unsaved changes';
+    document.getElementById('saveStatus').className='save-status';
   });
+});
+document.getElementById('set-announcement')&&document.getElementById('set-announcement').addEventListener('input',function(){
+  document.getElementById('announcementPreview').textContent=this.value||'FREE SHIPPING ABOVE ₹500';
+});
+
+async function saveBannerSettings(){
+  var line1=document.getElementById('set-heroLine1').value;
+  var line2=document.getElementById('set-heroLine2').value;
+  var payload={
+    theme_color:currentTheme,
+    banner_headline:line1+(line2?'\n'+line2:''),
+    banner_subtext:document.getElementById('set-heroDesc').value,
+    featured_category:document.getElementById('set-featuredCat').value,
+    show_story_section:document.getElementById('set-showStory').value,
+    story_text:document.getElementById('set-storyText').value
+  };
+  try{
+    var res=await fetch(API+'/api/settings',{method:'PUT',headers:authH(),body:JSON.stringify(payload)});
+    var data=await res.json();
+    if(data.success){
+      showToast('Settings saved! Website updated ✓');
+      document.getElementById('saveStatus').textContent='Saved ✓';
+      document.getElementById('saveStatus').className='save-status saved';
+    }else showToast('Save failed',true);
+  }catch(e){showToast('Error saving',true);}
 }
 
-function renderShowcase() {
-  var filtered = currentFilter === 'All'
-    ? allProducts
-    : allProducts.filter(function(p) { return p.category === currentFilter; });
-  var visible = filtered.slice(0, visibleCount);
-  var grid = document.getElementById('showcaseGrid');
-  if (visible.length === 0) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#444">No products found</div>';
-    return;
-  }
-  grid.innerHTML = visible.map(createShowcaseItem).join('');
+async function saveAnnouncementSettings(){
+  var text=document.getElementById('set-announcement').value;
+  try{
+    var res=await fetch(API+'/api/settings',{method:'PUT',headers:authH(),body:JSON.stringify({announcement_text:text})});
+    var data=await res.json();
+    if(data.success)showToast('Announcement saved!');
+    else showToast('Save failed',true);
+  }catch(e){showToast('Error',true);}
 }
 
-function filterShowcase(cat, btn) {
-  currentFilter = cat;
-  visibleCount = 12;
-  document.querySelectorAll('.sf-btn').forEach(function(b) { b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  renderShowcase();
-}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-function toggleMenu() {
-  document.querySelector('.nav-links').classList.toggle('open');
-}
-
-async function loadProducts() {
-  try {
-    var res = await fetch(CONFIG.API_URL + '/api/products');
-    var data = await res.json();
-    allProducts = data.products || [];
-    allProducts.forEach(function(p) { productMap[p.id] = p; });
-    renderShowcase();
-  } catch(e) {
-    document.getElementById('showcaseGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:#444">Failed to load products. Please refresh.</div>';
-  }
-}
-
-loadProducts();
+if(token)initApp();
 </script>
 </body>
 </html>
