@@ -1,136 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product — Major Rangas</title>
+  <title>Products — Major Rangas</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .breadcrumb { padding: 16px 0; color: var(--gray); font-size: 0.82rem; }
-    .breadcrumb a { color: var(--gray); transition: color 0.2s; }
-    .breadcrumb a:hover { color: var(--gold); }
-    .breadcrumb span { margin: 0 8px; }
-
-    .product-detail-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
-    }
-
-    /* Image Gallery */
-    .img-main {
-      width: 100%; aspect-ratio: 1; object-fit: cover;
-      border-radius: 10px; background: var(--black2);
-      border: 1px solid var(--border);
-    }
-    .img-placeholder-large {
-      width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #1a1a1a, #2a2200);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 6rem; border-radius: 10px; border: 1px solid var(--border);
-    }
-    .img-thumbs { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-    .img-thumb {
-      width: 70px; height: 70px; object-fit: cover; border-radius: 6px;
-      border: 2px solid var(--border); cursor: pointer; transition: border-color 0.2s;
-    }
-    .img-thumb:hover, .img-thumb.active { border-color: var(--gold); }
-
-    /* Product Info */
-    .product-detail-info { position: sticky; top: 80px; }
-    .product-detail-cat {
-      color: var(--gold); font-size: 0.78rem; letter-spacing: 3px;
-      text-transform: uppercase; margin-bottom: 10px;
-    }
-    .product-detail-name {
-      font-family: var(--font-serif); font-size: 2.2rem;
-      color: var(--white); margin-bottom: 6px; line-height: 1.2;
-    }
-    .product-detail-subcat { color: var(--gray); font-size: 0.85rem; margin-bottom: 20px; }
-
-    .price-block { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
-    .price-main { font-size: 2rem; color: var(--gold); font-weight: 700; font-family: var(--font-serif); }
-    .price-old { font-size: 1.1rem; color: var(--gray); text-decoration: line-through; }
-    .price-off {
-      background: rgba(201,168,76,0.15); color: var(--gold);
-      font-size: 0.8rem; padding: 3px 10px; border-radius: 12px; font-weight: 600;
-    }
-    .weight-tag { color: var(--gray); font-size: 0.88rem; margin-bottom: 24px; }
-
-    .stock-status { font-size: 0.85rem; margin-bottom: 20px; }
-    .in-stock { color: #81C784; }
-    .out-stock { color: #EF9A9A; }
-
-    /* Qty selector */
-    .qty-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-    .qty-selector { display: flex; align-items: center; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-    .qty-selector button {
-      background: var(--black2); border: none; color: var(--white);
-      width: 40px; height: 42px; font-size: 1.2rem; cursor: pointer; transition: background 0.2s;
-    }
-    .qty-selector button:hover { background: var(--gold); color: var(--black); }
-    .qty-selector span { padding: 0 18px; font-size: 1rem; font-weight: 600; border-left: 1px solid var(--border); border-right: 1px solid var(--border); height: 42px; display: flex; align-items: center; }
-    .qty-label { color: var(--gray); font-size: 0.85rem; }
-
-    .add-btn {
-      width: 100%; background: var(--gold); color: var(--black);
-      border: none; padding: 16px; border-radius: 6px; font-size: 1rem;
-      font-weight: 700; cursor: pointer; transition: all 0.2s; margin-bottom: 12px;
-      letter-spacing: 0.5px;
-    }
-    .add-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
-    .add-btn:disabled { background: #333; color: #666; cursor: not-allowed; transform: none; }
-
-    .buy-btn {
-      width: 100%; background: transparent; color: var(--gold);
-      border: 1px solid var(--gold); padding: 14px; border-radius: 6px;
-      font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-bottom: 20px;
-    }
-    .buy-btn:hover { background: rgba(201,168,76,0.1); }
-
-    /* Info box */
-    .info-box {
-      background: var(--black2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 20px; margin-bottom: 20px;
-    }
-    .info-row {
-      display: flex; justify-content: space-between; padding: 10px 0;
-      border-bottom: 1px solid var(--border); font-size: 0.88rem;
-    }
-    .info-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .info-label { color: var(--gray); }
-    .info-value { color: var(--white); font-weight: 500; text-align: right; max-width: 200px; }
-
-    /* Tabs */
-    .tabs { margin-top: 60px; }
-    .tab-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
-    .tab-btn {
-      padding: 12px 24px; background: none; border: none; color: var(--gray);
-      cursor: pointer; font-size: 0.9rem; border-bottom: 2px solid transparent;
-      margin-bottom: -1px; transition: all 0.2s;
-    }
-    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
-    .tab-content { display: none; color: #AAAAAA; line-height: 1.8; font-size: 0.92rem; }
-    .tab-content.active { display: block; }
-
-    /* Related products */
-    .related { margin-top: 70px; }
-
-    /* Trust badges */
-    .trust-row {
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 20px;
-    }
-    .trust-item {
-      background: var(--black2); border: 1px solid var(--border);
-      border-radius: 6px; padding: 12px; text-align: center;
-    }
-    .trust-item .t-icon { font-size: 1.3rem; margin-bottom: 4px; }
-    .trust-item p { color: var(--gray); font-size: 0.75rem; line-height: 1.4; }
-
-    @media (max-width: 768px) {
-      .product-detail-grid { grid-template-columns: 1fr; gap: 30px; }
-      .product-detail-info { position: static; }
-      .trust-row { grid-template-columns: repeat(3,1fr); }
-    }
-  </style>
 </head>
 <body>
 
@@ -154,105 +30,29 @@
   </div>
 </nav>
 
-<div class="container" style="padding-top:20px;padding-bottom:60px">
-
-  <!-- Breadcrumb -->
-  <div class="breadcrumb">
-    <a href="index.html">Home</a>
-    <span>›</span>
-    <a href="products.html">Products</a>
-    <span>›</span>
-    <a href="#" id="breadCat"></a>
-    <span>›</span>
-    <span id="breadName" style="color:var(--white)"></span>
+<div class="page-header">
+  <div class="container">
+    <h1 id="pageTitle">All Products</h1>
+    <p id="pageSubtitle">Authentic South Indian flavours, made fresh in Chennai</p>
   </div>
-
-  <!-- Loading -->
-  <div id="loadingState" style="text-align:center;padding:80px;color:var(--gray)">
-    Loading product...
-  </div>
-
-  <!-- Product Detail -->
-  <div id="productDetail" style="display:none">
-    <div class="product-detail-grid">
-
-      <!-- LEFT: Images -->
-      <div>
-        <img id="mainImg" class="img-main" src="" alt="" onerror="this.style.display='none';document.getElementById('imgPlaceholder').style.display='flex'">
-        <div id="imgPlaceholder" class="img-placeholder-large" style="display:none">🥨</div>
-        <div class="img-thumbs" id="imgThumbs"></div>
-      </div>
-
-      <!-- RIGHT: Info -->
-      <div class="product-detail-info">
-        <div class="product-detail-cat" id="detailCat"></div>
-        <h1 class="product-detail-name" id="detailName"></h1>
-        <div class="product-detail-subcat" id="detailSubcat"></div>
-
-        <div class="price-block">
-          <span class="price-main" id="detailPrice"></span>
-          <span class="price-old" id="detailOldPrice"></span>
-          <span class="price-off" id="detailDiscount"></span>
-        </div>
-        <div class="weight-tag" id="detailWeight"></div>
-
-        <div class="stock-status" id="stockStatus"></div>
-
-        <!-- Qty -->
-        <div class="qty-row">
-          <span class="qty-label">Quantity:</span>
-          <div class="qty-selector">
-            <button onclick="changeQty(-1)">−</button>
-            <span id="qtyVal">1</span>
-            <button onclick="changeQty(1)">+</button>
-          </div>
-        </div>
-
-        <button class="add-btn" id="addBtn" onclick="addToCartFromDetail()">Add to Cart</button>
-        <button class="buy-btn" id="buyBtn" onclick="buyNow()">Buy Now →</button>
-
-        <!-- Product Info -->
-        <div class="info-box" id="infoBox"></div>
-
-        <!-- Trust -->
-        <div class="trust-row">
-          <div class="trust-item"><div class="t-icon">🚚</div><p>Pan India Delivery</p></div>
-          <div class="trust-item"><div class="t-icon">🌿</div><p>No Preservatives</p></div>
-          <div class="trust-item"><div class="t-icon">✅</div><p>Quality Assured</p></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tabs -->
-    <div class="tabs">
-      <div class="tab-nav">
-        <button class="tab-btn active" onclick="showTab('description', this)">Description</button>
-        <button class="tab-btn" onclick="showTab('ingredients', this)">Ingredients</button>
-        <button class="tab-btn" onclick="showTab('shipping', this)">Shipping & Returns</button>
-      </div>
-      <div class="tab-content active" id="tab-description"></div>
-      <div class="tab-content" id="tab-ingredients"></div>
-      <div class="tab-content" id="tab-shipping">
-        <p><strong style="color:var(--white)">Delivery:</strong> We deliver Pan India. Orders are processed within 1-2 business days and delivered in 3-7 business days depending on location.</p>
-        <br>
-        <p><strong style="color:var(--white)">Free Shipping:</strong> On all orders above ₹500. Orders below ₹500 have a flat shipping charge of ₹60.</p>
-        <br>
-        <p><strong style="color:var(--white)">Freshness:</strong> All products are made fresh and packed in airtight packaging to ensure maximum shelf life.</p>
-        <br>
-        <p><strong style="color:var(--white)">Returns:</strong> We accept returns only for damaged or incorrect products. Please contact us within 48 hours of delivery with photos.</p>
-      </div>
-    </div>
-
-    <!-- Related Products -->
-    <div class="related">
-      <h2 class="section-title" style="text-align:left;margin-bottom:30px">You May Also Like</h2>
-      <div class="products-grid" id="relatedProducts"></div>
-    </div>
-  </div>
-
 </div>
 
-<!-- Cart Sidebar -->
+<section class="section" style="padding-top:40px">
+  <div class="container">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('All', this)">All</button>
+      <button class="filter-btn" onclick="filterProducts('Snacks', this)">🥨 Snacks</button>
+      <button class="filter-btn" onclick="filterProducts('Sweets', this)">🍬 Sweets</button>
+      <button class="filter-btn" onclick="filterProducts('Podis', this)">🌶️ Podis</button>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search products..." oninput="searchProducts(this.value)">
+    </div>
+    <div id="productCount" style="color:var(--gray);font-size:0.85rem;margin-bottom:20px"></div>
+    <div class="products-grid" id="productsGrid">
+      <div class="loading-spinner">Loading products...</div>
+    </div>
+  </div>
+</section>
+
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
   <div class="cart-header">
@@ -274,176 +74,87 @@
 <script src="js/config.js"></script>
 <script src="js/cart.js"></script>
 <script>
-let currentProduct = null;
-let qty = 1;
-
-function changeQty(delta) {
-  qty = Math.max(1, qty + delta);
-  document.getElementById('qtyVal').textContent = qty;
-}
-
-function showTab(tab, btn) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`tab-${tab}`).classList.add('active');
-  btn.classList.add('active');
-}
-
-function switchImage(src, thumb) {
-  document.getElementById('mainImg').src = src;
-  document.getElementById('mainImg').style.display = 'block';
-  document.getElementById('imgPlaceholder').style.display = 'none';
-  document.querySelectorAll('.img-thumb').forEach(t => t.classList.remove('active'));
-  thumb?.classList.add('active');
-}
-
-function addToCartFromDetail() {
-  if (!currentProduct) return;
-  const price = parseFloat(currentProduct.sale_price || currentProduct.mrp);
-  for (let i = 0; i < qty; i++) {
-    addToCart({
-      id: currentProduct.id, name: currentProduct.name,
-      mrp: price, image_primary: currentProduct.image_primary,
-      weight: currentProduct.weight, unit: currentProduct.unit,
-      category: currentProduct.category
-    });
-  }
-}
-
-function buyNow() {
-  addToCartFromDetail();
-  window.location.href = 'checkout.html';
-}
+let allProducts = [];
+let currentCategory = 'All';
 
 function createProductCard(p) {
   const price = parseFloat(p.sale_price || p.mrp);
+  const mrp = parseFloat(p.mrp);
+  const hasDiscount = p.sale_price && parseFloat(p.sale_price) < mrp;
+  const inStock = p.stock_qty > 0;
   const emoji = p.category === 'Sweets' ? '🍬' : p.category === 'Podis' ? '🌶️' : '🥨';
   return `
-    <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer">
+    <div class="product-card" onclick="window.location.href='product.html?id='+p.id" style="cursor:pointer">
       ${p.image_primary ? `<img class="product-img" src="${p.image_primary}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
       <div class="product-img-placeholder" style="display:${p.image_primary ? 'none' : 'flex'}">${emoji}</div>
       <div class="product-info">
-        <div class="product-cat">${p.category}</div>
+        <div class="product-cat">${p.category} · ${p.sub_category || ''}</div>
         <div class="product-name">${p.name}</div>
-        <div class="product-price"><span class="price-mrp">₹${price.toFixed(2)}</span></div>
-        <button class="add-to-cart" onclick="event.stopPropagation();addToCart({id:${p.id},name:'${p.name.replace(/'/g,"\\'")}',mrp:${price},image_primary:'${p.image_primary||''}',weight:${p.weight||0},unit:'${p.unit||'g'}',category:'${p.category}'})">Add to Cart</button>
+        <div class="product-weight">${p.weight ? p.weight + p.unit : ''}</div>
+        <div class="product-price">
+          <span class="price-mrp">₹${price.toFixed(2)}</span>
+          ${hasDiscount ? `<span class="price-compare">₹${mrp.toFixed(2)}</span><span class="price-save">${Math.round((1-price/mrp)*100)}% OFF</span>` : ''}
+        </div>
+        ${inStock
+          ? `<button class="add-to-cart" onclick='event.stopPropagation();addToCart(${JSON.stringify({id:p.id,name:p.name,mrp:price,image_primary:p.image_primary,weight:p.weight,unit:p.unit,category:p.category})})'>Add to Cart</button>`
+          : `<button class="add-to-cart" disabled>Out of Stock</button>`}
       </div>
     </div>`;
 }
 
-async function loadProduct() {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug') || params.get('id');
-  if (!slug) { window.location.href = 'products.html'; return; }
+function renderProducts(products) {
+  const grid = document.getElementById('productsGrid');
+  const count = document.getElementById('productCount');
+  if (products.length === 0) {
+    grid.innerHTML = '<p style="color:var(--gray);text-align:center;grid-column:1/-1;padding:60px">No products found</p>';
+    count.textContent = '';
+    return;
+  }
+  grid.innerHTML = products.map(createProductCard).join('');
+  count.textContent = `Showing ${products.length} product${products.length !== 1 ? 's' : ''}`;
+}
 
+function filterProducts(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn?.classList.add('active');
+  const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+  let filtered = allProducts.filter(p => cat === 'All' || p.category === cat);
+  if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.ingredients||'').toLowerCase().includes(search));
+  renderProducts(filtered);
+}
+
+function searchProducts(val) {
+  const search = val.toLowerCase();
+  let filtered = allProducts.filter(p => currentCategory === 'All' || p.category === currentCategory);
+  if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.ingredients||'').toLowerCase().includes(search));
+  renderProducts(filtered);
+}
+
+async function loadProducts() {
   try {
-    const res = await fetch(`${CONFIG.API_URL}/api/products/${slug}`);
+    const res = await fetch(`${CONFIG.API_URL}/api/products`);
     const data = await res.json();
-    if (!data.success) { window.location.href = 'products.html'; return; }
-
-    const p = data.product;
-    currentProduct = p;
-
-    // Update page title
-    document.title = `${p.name} — Major Rangas`;
-
-    // Breadcrumb
-    document.getElementById('breadCat').textContent = p.category;
-    document.getElementById('breadCat').href = `products.html?cat=${p.category}`;
-    document.getElementById('breadName').textContent = p.name;
-
-    // Image
-    const emoji = p.category === 'Sweets' ? '🍬' : p.category === 'Podis' ? '🌶️' : '🥨';
-    document.getElementById('imgPlaceholder').textContent = emoji;
-    if (p.image_primary) {
-      document.getElementById('mainImg').src = p.image_primary;
-      document.getElementById('mainImg').alt = p.name;
-    } else {
-      document.getElementById('mainImg').style.display = 'none';
-      document.getElementById('imgPlaceholder').style.display = 'flex';
+    allProducts = data.products || [];
+    // Check URL param for category
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('cat');
+    if (cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        if (b.textContent.includes(cat)) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+      document.getElementById('pageTitle').textContent = cat;
     }
-
-    // Thumbnails
-    const images = p.images || (p.image_primary ? [p.image_primary] : []);
-    if (images.length > 1) {
-      document.getElementById('imgThumbs').innerHTML = images.map((img, i) => `
-        <img class="img-thumb ${i===0?'active':''}" src="${img}" onclick="switchImage('${img}', this)" alt="Image ${i+1}">`
-      ).join('');
-    }
-
-    // Info
-    document.getElementById('detailCat').textContent = `${p.category} · ${p.sub_category || ''}`;
-    document.getElementById('detailName').textContent = p.name;
-    document.getElementById('detailSubcat').textContent = p.short_description || '';
-
-    const price = parseFloat(p.sale_price || p.mrp);
-    const mrp = parseFloat(p.mrp);
-    document.getElementById('detailPrice').textContent = `₹${price.toFixed(2)}`;
-    if (p.sale_price && parseFloat(p.sale_price) < mrp) {
-      document.getElementById('detailOldPrice').textContent = `₹${mrp.toFixed(2)}`;
-      document.getElementById('detailDiscount').textContent = `${Math.round((1-price/mrp)*100)}% OFF`;
-    }
-    document.getElementById('detailWeight').textContent = p.weight ? `Net Weight: ${p.weight}${p.unit}` : '';
-
-    // Stock
-    const inStock = p.stock_qty > 0;
-    document.getElementById('stockStatus').innerHTML = inStock
-      ? `<span class="in-stock">✓ In Stock (${p.stock_qty} units available)</span>`
-      : `<span class="out-stock">✗ Out of Stock</span>`;
-    document.getElementById('addBtn').disabled = !inStock;
-    document.getElementById('buyBtn').disabled = !inStock;
-
-    // Info box
-    const rows = [
-      ['Category', p.category],
-      ['Sub Category', p.sub_category || '—'],
-      ['Net Weight', p.weight ? `${p.weight}${p.unit}` : '—'],
-      ['SKU', p.sku || '—'],
-      ['HSN Code', p.hsn_code || '—'],
-    ].filter(r => r[1] && r[1] !== '—' || r[0] === 'Category');
-
-    document.getElementById('infoBox').innerHTML = rows.map(([label, value]) => `
-      <div class="info-row">
-        <span class="info-label">${label}</span>
-        <span class="info-value">${value}</span>
-      </div>`).join('');
-
-    // Tabs
-    document.getElementById('tab-description').innerHTML =
-      p.short_description
-        ? `<p>${p.short_description}</p>`
-        : `<p>Authentic ${p.category === 'Podis' ? 'podi' : p.category === 'Sweets' ? 'sweet' : 'snack'} from Chennai. Made with traditional recipes and fresh ingredients.</p>`;
-
-    document.getElementById('tab-ingredients').innerHTML = p.ingredients
-      ? `<p><strong style="color:var(--white)">Ingredients:</strong> ${p.ingredients}</p>
-         <br><p style="font-size:0.82rem;color:#666">Contains natural spices and oils. Made in a facility that processes nuts and sesame seeds. Please check ingredients if you have allergies.</p>`
-      : '<p>Ingredient information not available for this product.</p>';
-
-    // Show product
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('productDetail').style.display = 'block';
-
-    // Load related
-    loadRelated(p.category, p.id);
-
+    filterProducts(currentCategory, null);
   } catch (err) {
-    document.getElementById('loadingState').innerHTML = '<p style="color:#ff6b6b">Failed to load product. <a href="products.html" style="color:var(--gold)">← Back to products</a></p>';
+    document.getElementById('productsGrid').innerHTML = '<p style="color:var(--gray);text-align:center;grid-column:1/-1;padding:60px">Failed to load products. Please refresh.</p>';
   }
 }
 
-async function loadRelated(category, currentId) {
-  try {
-    const res = await fetch(`${CONFIG.API_URL}/api/products?category=${category}`);
-    const data = await res.json();
-    const related = (data.products || []).filter(p => p.id !== currentId).slice(0, 4);
-    document.getElementById('relatedProducts').innerHTML = related.length
-      ? related.map(createProductCard).join('')
-      : '';
-  } catch {}
-}
-
 function toggleMenu() { document.querySelector('.nav-links')?.classList.toggle('open'); }
-loadProduct();
+loadProducts();
 </script>
 </body>
 </html>
