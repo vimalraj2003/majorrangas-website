@@ -6,9 +6,11 @@ function createProductCard(p) {
   const hasDiscount = p.sale_price && parseFloat(p.sale_price) < mrp;
   const inStock = p.stock_qty > 0;
   const emoji = p.category === 'Sweets' ? '🍬' : p.category === 'Podis' ? '🌶️' : '🥨';
+  // Use id as fallback if slug is missing
+  const link = p.slug ? `product.html?slug=${p.slug}` : `product.html?id=${p.id}`;
 
   return `
-    <div class="product-card" onclick="window.location.href='product.html?slug=${p.slug}'" style="cursor:pointer">
+    <div class="product-card" onclick="window.location.href='${link}'" style="cursor:pointer">
       ${p.image_primary
         ? `<img class="product-img" src="${p.image_primary}" alt="${p.name}" loading="lazy" onerror="this.parentNode.querySelector('.product-img-placeholder').style.display='flex';this.style.display='none'">`
         : ''}
