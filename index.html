@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Major Rangas — Authentic South Indian Snacks, Sweets & Podis</title>
+  <meta name="description" content="Authentic South Indian snacks, sweets and podis from Chennai. Murukku, Thattai, Laddu, Idly Podi and more. Order online with free delivery.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">MAJOR RANGAS</span>
+      <span class="logo-sub">Authentic South Indian</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="products.html">All Products</a></li>
+      <li><a href="products.html?cat=Snacks">Snacks</a></li>
+      <li><a href="products.html?cat=Sweets">Sweets</a></li>
+      <li><a href="products.html?cat=Podis">Podis</a></li>
+      <li><a href="track.html">Track Order</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="openCart()">
+        🛒 <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-tag">Chennai's Finest Since Generations</p>
+    <h1 class="hero-title">Taste the Tradition<br><span class="gold">of South India</span></h1>
+    <p class="hero-desc">Authentic snacks, sweets & podis crafted with love.<br>Made fresh, packed with flavour, delivered to your door.</p>
+    <div class="hero-btns">
+      <a href="products.html" class="btn-primary">Shop Now</a>
+      <a href="products.html?cat=Snacks" class="btn-outline">View Snacks</a>
+    </div>
+  </div>
+  <div class="hero-badges">
+    <div class="badge">🏆 Authentic</div>
+    <div class="badge">🌿 No Preservatives</div>
+    <div class="badge">📦 Pan India Delivery</div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section categories">
+  <div class="container">
+    <h2 class="section-title">Shop by <span class="gold">Category</span></h2>
+    <div class="cat-grid">
+      <a href="products.html?cat=Snacks" class="cat-card">
+        <div class="cat-icon">🥨</div>
+        <h3>Snacks</h3>
+        <p>Murukku, Thattai, Chips & more</p>
+        <span class="cat-link">Explore →</span>
+      </a>
+      <a href="products.html?cat=Sweets" class="cat-card">
+        <div class="cat-icon">🍬</div>
+        <h3>Sweets</h3>
+        <p>Laddu, Chikki, Health Mix & more</p>
+        <span class="cat-link">Explore →</span>
+      </a>
+      <a href="products.html?cat=Podis" class="cat-card">
+        <div class="cat-icon">🌶️</div>
+        <h3>Podis</h3>
+        <p>Idly Podi, Paruppu Podi, Coffee & more</p>
+        <span class="cat-link">Explore →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section featured">
+  <div class="container">
+    <h2 class="section-title">Bestsellers</h2>
+    <div class="products-grid" id="featuredProducts">
+      <div class="loading-spinner">Loading products...</div>
+    </div>
+    <div class="center-btn">
+      <a href="products.html" class="btn-primary">View All Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section why-us">
+  <div class="container">
+    <h2 class="section-title">Why <span class="gold">Major Rangas?</span></h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🏡</div>
+        <h3>Homemade Taste</h3>
+        <p>Traditional recipes passed down through generations, made with love just like home.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌿</div>
+        <h3>No Preservatives</h3>
+        <p>Fresh ingredients, natural flavours. No artificial colours or preservatives added.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📦</div>
+        <h3>Pan India Delivery</h3>
+        <p>We deliver authentic Chennai taste across India. Fresh, sealed, and on time.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">✅</div>
+        <h3>Quality Assured</h3>
+        <p>Every batch is made fresh and quality checked before packaging and dispatch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3 class="gold">MAJOR RANGAS</h3>
+        <p>Authentic South Indian snacks, sweets & podis from Chennai. Crafted with love, delivered with care.</p>
+        <p class="footer-gstin">GSTIN: 33AFNFS9165E1ZM</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=Snacks">Snacks</a></li>
+          <li><a href="products.html?cat=Sweets">Sweets</a></li>
+          <li><a href="products.html?cat=Podis">Podis</a></li>
+          <li><a href="track.html">Track Order</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>📍 Chennai, Tamil Nadu</p>
+        <p>📧 contact@majorrangas.com</p>
+        <p>🌐 majorrangas.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Major Rangas. All rights reserved. | Made in Chennai 🙏</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

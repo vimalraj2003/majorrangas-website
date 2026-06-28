@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — Major Rangas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .success-page { min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+    .success-box { background: var(--black2); border: 1px solid var(--gold-dark); border-radius: 12px; padding: 50px 40px; text-align: center; max-width: 520px; width: 100%; }
+    .success-icon { font-size: 4rem; margin-bottom: 20px; }
+    .success-title { font-family: var(--font-serif); font-size: 2rem; color: var(--gold); margin-bottom: 12px; }
+    .success-order { background: rgba(201,168,76,0.08); border: 1px solid var(--gold-dark); border-radius: 8px; padding: 16px 24px; margin: 24px 0; }
+    .success-order span { display: block; color: var(--gray); font-size: 0.85rem; margin-bottom: 4px; }
+    .success-order strong { color: var(--gold); font-size: 1.3rem; font-family: var(--font-serif); }
+    .success-actions { display: flex; gap: 12px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">MAJOR RANGAS</span>
+      <span class="logo-sub">Authentic South Indian</span>
+    </a>
+  </div>
+</nav>
+
+<div class="success-page">
+  <div class="success-box">
+    <div class="success-icon">🎉</div>
+    <h1 class="success-title">Order Confirmed!</h1>
+    <p style="color:var(--gray);line-height:1.7">Thank you for shopping with Major Rangas. Your authentic South Indian treats are on their way!</p>
+    <div class="success-order">
+      <span>Your Order Number</span>
+      <strong id="orderNumber">—</strong>
+    </div>
+    <p style="color:var(--gray);font-size:0.85rem" id="paymentNote"></p>
+    <div class="success-actions">
+      <a href="track.html" class="btn-outline" id="trackBtn">Track Order</a>
+      <a href="products.html" class="btn-primary">Shop More</a>
+    </div>
+    <p style="color:#555;font-size:0.8rem;margin-top:20px">Save your order number for tracking</p>
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const order = params.get('order') || '';
+  const method = params.get('method') || 'online';
+  document.getElementById('orderNumber').textContent = order;
+  document.getElementById('trackBtn').href = `track.html?order=${order}`;
+  document.getElementById('paymentNote').textContent = method === 'cod'
+    ? '💵 Cash on Delivery — Pay when your order arrives.'
+    : '✅ Payment received successfully.';
+</script>
+</body>
+</html>

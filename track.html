@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Order — Major Rangas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .track-page { min-height: 80vh; padding: 60px 20px; }
+    .track-box { background: var(--black2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; max-width: 600px; margin: 0 auto; }
+    .track-box h2 { font-family: var(--font-serif); color: var(--gold); margin-bottom: 24px; }
+    .track-input-row { display: flex; gap: 12px; margin-bottom: 32px; }
+    .track-input-row input { flex: 1; padding: 12px 16px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: var(--white); font-size: 0.9rem; outline: none; }
+    .track-input-row input:focus { border-color: var(--gold); }
+    .order-detail { background: var(--black); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+    .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    .detail-row:last-child { border: none; }
+    .detail-label { color: var(--gray); }
+    .status-badge { padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
+    .status-placed { background: rgba(201,168,76,0.15); color: var(--gold); }
+    .status-confirmed { background: rgba(33,150,243,0.15); color: #64B5F6; }
+    .status-shipped { background: rgba(156,39,176,0.15); color: #CE93D8; }
+    .status-delivered { background: rgba(76,175,80,0.15); color: #81C784; }
+    .status-cancelled { background: rgba(244,67,54,0.15); color: #EF9A9A; }
+    .timeline { margin-top: 24px; }
+    .timeline-step { display: flex; gap: 16px; margin-bottom: 20px; }
+    .timeline-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--border); flex-shrink: 0; margin-top: 3px; }
+    .timeline-dot.done { background: var(--gold); }
+    .timeline-label { font-size: 0.9rem; }
+    .timeline-label span { display: block; color: var(--gray); font-size: 0.8rem; margin-top: 2px; }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">MAJOR RANGAS</span>
+      <span class="logo-sub">Authentic South Indian</span>
+    </a>
+    <div class="nav-right">
+      <a href="products.html" style="color:var(--gold);font-size:0.9rem">← Shop</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container"><h1>Track Your Order</h1><p>Enter your order number to track delivery</p></div>
+</div>
+
+<div class="track-page">
+  <div class="track-box">
+    <h2>Order Tracker</h2>
+    <div class="track-input-row">
+      <input type="text" id="trackInput" placeholder="e.g. MR2406001234" value="">
+      <button class="btn-primary" onclick="trackOrder()">Track</button>
+    </div>
+    <div id="trackResult"></div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+async function trackOrder() {
+  const num = document.getElementById('trackInput').value.trim().toUpperCase();
+  if (!num) { document.getElementById('trackResult').innerHTML = '<p style="color:#ff6b6b">Please enter order number</p>'; return; }
+  document.getElementById('trackResult').innerHTML = '<p style="color:var(--gray)">Searching...</p>';
+  try {
+    const res = await fetch(`${CONFIG.API_URL}/api/orders/track/${num}`);
+    const data = await res.json();
+    if (!data.success) { document.getElementById('trackResult').innerHTML = '<p style="color:#ff6b6b">Order not found. Please check the order number.</p>'; return; }
+    const o = data.order;
+    const statuses = ['placed','confirmed','processing','shipped','delivered'];
+    const currentIdx = statuses.indexOf(o.order_status);
+    const statusLabels = { placed:'Order Placed', confirmed:'Confirmed', processing:'Processing', shipped:'Shipped', delivered:'Delivered', cancelled:'Cancelled' };
+    document.getElementById('trackResult').innerHTML = `
+      <div class="order-detail">
+        <div class="detail-row"><span class="detail-label">Order Number</span><span style="color:var(--gold);font-weight:600">${o.order_number}</span></div>
+        <div class="detail-row"><span class="detail-label">Customer</span><span>${o.customer_name}</span></div>
+        <div class="detail-row"><span class="detail-label">Order Date</span><span>${new Date(o.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'})}</span></div>
+        <div class="detail-row"><span class="detail-label">Total</span><span style="color:var(--gold);font-weight:600">₹${parseFloat(o.total_amount).toFixed(2)}</span></div>
+        <div class="detail-row"><span class="detail-label">Payment</span><span>${o.payment_method?.toUpperCase()} · ${o.payment_status?.toUpperCase()}</span></div>
+        <div class="detail-row"><span class="detail-label">Status</span><span class="status-badge status-${o.order_status}">${statusLabels[o.order_status] || o.order_status}</span></div>
+        ${o.tracking_number ? `<div class="detail-row"><span class="detail-label">Tracking No</span><span style="color:var(--gold)">${o.tracking_number}</span></div>` : ''}
+      </div>
+      ${o.order_status !== 'cancelled' ? `
+      <div class="timeline" style="margin-top:24px">
+        ${statuses.map((s, i) => `
+          <div class="timeline-step">
+            <div class="timeline-dot ${i <= currentIdx ? 'done' : ''}"></div>
+            <div class="timeline-label">
+              ${statusLabels[s]}
+              ${i === currentIdx ? '<span>Current status</span>' : i < currentIdx ? '<span>✓ Completed</span>' : '<span style="color:#333">Pending</span>'}
+            </div>
+          </div>`).join('')}
+      </div>` : ''}
+      <div style="margin-top:20px">
+        <a href="${CONFIG.API_URL}/api/invoice/${o.order_number}" target="_blank" class="btn-outline" style="font-size:0.85rem;padding:10px 20px">📄 Download Invoice</a>
+      </div>
+    `;
+  } catch (err) {
+    document.getElementById('trackResult').innerHTML = '<p style="color:#ff6b6b">Unable to fetch order. Please try again.</p>';
+  }
+}
+
+// Auto-track if order number in URL
+const params = new URLSearchParams(window.location.search);
+const order = params.get('order');
+if (order) { document.getElementById('trackInput').value = order; trackOrder(); }
+</script>
+</body>
+</html>

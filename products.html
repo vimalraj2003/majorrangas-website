@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Major Rangas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">MAJOR RANGAS</span>
+      <span class="logo-sub">Authentic South Indian</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="products.html">All Products</a></li>
+      <li><a href="products.html?cat=Snacks">Snacks</a></li>
+      <li><a href="products.html?cat=Sweets">Sweets</a></li>
+      <li><a href="products.html?cat=Podis">Podis</a></li>
+      <li><a href="track.html">Track Order</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="openCart()">🛒 <span class="cart-count" id="cartCount">0</span></button>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <h1 id="pageTitle">All Products</h1>
+    <p id="pageSubtitle">Authentic South Indian flavours, made fresh in Chennai</p>
+  </div>
+</div>
+
+<section class="section" style="padding-top:40px">
+  <div class="container">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('All', this)">All</button>
+      <button class="filter-btn" onclick="filterProducts('Snacks', this)">🥨 Snacks</button>
+      <button class="filter-btn" onclick="filterProducts('Sweets', this)">🍬 Sweets</button>
+      <button class="filter-btn" onclick="filterProducts('Podis', this)">🌶️ Podis</button>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search products..." oninput="searchProducts(this.value)">
+    </div>
+    <div id="productCount" style="color:var(--gray);font-size:0.85rem;margin-bottom:20px"></div>
+    <div class="products-grid" id="productsGrid">
+      <div class="loading-spinner">Loading products...</div>
+    </div>
+  </div>
+</section>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2024 Major Rangas. All rights reserved. | Chennai, Tamil Nadu 🙏</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/cart.js"></script>
+<script>
+let allProducts = [];
+let currentCategory = 'All';
+
+function createProductCard(p) {
+  const price = parseFloat(p.sale_price || p.mrp);
+  const mrp = parseFloat(p.mrp);
+  const hasDiscount = p.sale_price && parseFloat(p.sale_price) < mrp;
+  const inStock = p.stock_qty > 0;
+  const emoji = p.category === 'Sweets' ? '🍬' : p.category === 'Podis' ? '🌶️' : '🥨';
+  return `
+    <div class="product-card">
+      ${p.image_primary ? `<img class="product-img" src="${p.image_primary}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
+      <div class="product-img-placeholder" style="display:${p.image_primary ? 'none' : 'flex'}">${emoji}</div>
+      <div class="product-info">
+        <div class="product-cat">${p.category} · ${p.sub_category || ''}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-weight">${p.weight ? p.weight + p.unit : ''}</div>
+        <div class="product-price">
+          <span class="price-mrp">₹${price.toFixed(2)}</span>
+          ${hasDiscount ? `<span class="price-compare">₹${mrp.toFixed(2)}</span><span class="price-save">${Math.round((1-price/mrp)*100)}% OFF</span>` : ''}
+        </div>
+        ${inStock
+          ? `<button class="add-to-cart" onclick='addToCart(${JSON.stringify({id:p.id,name:p.name,mrp:price,image_primary:p.image_primary,weight:p.weight,unit:p.unit,category:p.category})})'>Add to Cart</button>`
+          : `<button class="add-to-cart" disabled>Out of Stock</button>`}
+      </div>
+    </div>`;
+}
+
+function renderProducts(products) {
+  const grid = document.getElementById('productsGrid');
+  const count = document.getElementById('productCount');
+  if (products.length === 0) {
+    grid.innerHTML = '<p style="color:var(--gray);text-align:center;grid-column:1/-1;padding:60px">No products found</p>';
+    count.textContent = '';
+    return;
+  }
+  grid.innerHTML = products.map(createProductCard).join('');
+  count.textContent = `Showing ${products.length} product${products.length !== 1 ? 's' : ''}`;
+}
+
+function filterProducts(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn?.classList.add('active');
+  const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+  let filtered = allProducts.filter(p => cat === 'All' || p.category === cat);
+  if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.ingredients||'').toLowerCase().includes(search));
+  renderProducts(filtered);
+}
+
+function searchProducts(val) {
+  const search = val.toLowerCase();
+  let filtered = allProducts.filter(p => currentCategory === 'All' || p.category === currentCategory);
+  if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search) || (p.ingredients||'').toLowerCase().includes(search));
+  renderProducts(filtered);
+}
+
+async function loadProducts() {
+  try {
+    const res = await fetch(`${CONFIG.API_URL}/api/products`);
+    const data = await res.json();
+    allProducts = data.products || [];
+    // Check URL param for category
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('cat');
+    if (cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        if (b.textContent.includes(cat)) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+      document.getElementById('pageTitle').textContent = cat;
+    }
+    filterProducts(currentCategory, null);
+  } catch (err) {
+    document.getElementById('productsGrid').innerHTML = '<p style="color:var(--gray);text-align:center;grid-column:1/-1;padding:60px">Failed to load products. Please refresh.</p>';
+  }
+}
+
+function toggleMenu() { document.querySelector('.nav-links')?.classList.toggle('open'); }
+loadProducts();
+</script>
+</body>
+</html>
