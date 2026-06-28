@@ -319,7 +319,7 @@ function createProductCard(p) {
   const price = parseFloat(p.sale_price || p.mrp);
   const emoji = p.category === 'Sweets' ? '🍬' : p.category === 'Podis' ? '🌶️' : '🥨';
   return `
-    <div class="product-card" onclick="window.location.href='product.html?slug=${p.slug}'" style="cursor:pointer">
+    <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer">
       ${p.image_primary ? `<img class="product-img" src="${p.image_primary}" alt="${p.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
       <div class="product-img-placeholder" style="display:${p.image_primary ? 'none' : 'flex'}">${emoji}</div>
       <div class="product-info">
