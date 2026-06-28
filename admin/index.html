@@ -214,6 +214,9 @@
               <div class="theme-opt" id="theme-navy"><div class="theme-swatch" style="background:#080C14;border:2px solid #C9A84C"></div><span>Deep Navy</span></div>
               <div class="theme-opt" id="theme-maroon"><div class="theme-swatch" style="background:#140608;border:2px solid #C9A84C"></div><span>Dark Maroon</span></div>
               <div class="theme-opt" id="theme-charcoal"><div class="theme-swatch" style="background:#111318;border:2px solid #C9A84C"></div><span>Charcoal</span></div>
+              <div class="theme-opt" id="theme-white"><div class="theme-swatch" style="background:#FFFFFF;border:2px solid #C9A84C"></div><span>Pure White</span></div>
+              <div class="theme-opt" id="theme-cream"><div class="theme-swatch" style="background:#F8F3E8;border:2px solid #C9A84C"></div><span>Warm Cream</span></div>
+              <div class="theme-opt" id="theme-ivory"><div class="theme-swatch" style="background:#F5F0E8;border:2px solid #A88732"></div><span>Ivory Gold</span></div>
             </div>
           </div>
 
@@ -725,13 +728,13 @@ function markUnsaved() {
   document.getElementById('saveStatus').className = 'save-status';
 }
 
-var themeNames = ['brown','black','green','navy','maroon','charcoal'];
+var themeNames = ['brown','black','green','navy','maroon','charcoal','white','cream','ivory'];
 themeNames.forEach(function(t) {
   document.getElementById('theme-' + t).onclick = function() {
     currentTheme = t;
     document.querySelectorAll('.theme-opt').forEach(function(el) { el.classList.remove('selected'); });
     this.classList.add('selected');
-    var bgs = { brown:'#1C1208', black:'#0D0D0D', green:'#0a1208', navy:'#080C14', maroon:'#140608', charcoal:'#111318' };
+    var bgs = { brown:'#1C1208', black:'#0D0D0D', green:'#0a1208', navy:'#080C14', maroon:'#140608', charcoal:'#111318', white:'#FFFFFF', cream:'#F8F3E8', ivory:'#F5F0E8' };
     document.getElementById('prevBg').style.background = bgs[t] || '#1C1208';
     markUnsaved();
   };
