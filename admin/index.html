@@ -7,19 +7,21 @@
   <title>Admin — Major Rangas</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0D0D0D;--bg2:#1A1A1A;--gold:#C9A84C;--gold-light:#E5C976;--white:#FFFFFF;--gray:#888;--border:#2A2A2A;--green:#4CAF50;--red:#F44336;--blue:#2196F3;}
+    :root{--bg:#0D0D0D;--bg2:#1A1A1A;--gold:#C9A84C;--gold-light:#E5C976;--white:#FFF;--gray:#888;--border:#2A2A2A;--green:#4CAF50;--red:#F44336;}
     *{margin:0;padding:0;box-sizing:border-box;}
     body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;}
     a{text-decoration:none;color:inherit;}
+
     .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;}
     .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px;width:360px;text-align:center;}
     .login-box h1{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.8rem;margin-bottom:8px;}
     .login-box p{color:var(--gray);font-size:0.85rem;margin-bottom:28px;}
     .inp{width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:0.9rem;margin-bottom:14px;outline:none;}
     .inp:focus{border-color:var(--gold);}
-    .btn-gold{width:100%;background:var(--gold);color:var(--bg);border:none;padding:13px;border-radius:6px;font-weight:700;font-size:0.95rem;cursor:pointer;}
-    .btn-gold:hover{background:var(--gold-light);}
+    .btn-gold-full{width:100%;background:var(--gold);color:var(--bg);border:none;padding:13px;border-radius:6px;font-weight:700;font-size:0.95rem;cursor:pointer;}
+    .btn-gold-full:hover{background:var(--gold-light);}
     .err{color:#ff6b6b;font-size:0.82rem;margin-top:8px;}
+
     .app{display:none;}
     .app.show{display:flex;min-height:100vh;}
     .sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);padding:20px 0;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
@@ -27,24 +29,27 @@
     .sidebar-logo h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;}
     .sidebar-logo p{color:var(--gray);font-size:0.7rem;margin-top:2px;}
     .sidebar-nav{padding:16px 0;flex:1;}
-    .nav-group-title{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;padding:12px 20px 6px;}
+    .nav-group{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;padding:12px 20px 6px;}
     .nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:var(--gray);cursor:pointer;transition:all 0.2s;font-size:0.88rem;border-left:2px solid transparent;}
     .nav-item:hover,.nav-item.active{color:var(--gold);background:rgba(201,168,76,0.06);border-left-color:var(--gold);}
-    .nav-item .icon{font-size:1rem;width:18px;text-align:center;}
     .sidebar-bottom{padding:16px 20px;border-top:1px solid var(--border);}
+    .admin-name{color:var(--gray);font-size:0.75rem;margin-bottom:8px;}
     .logout-btn{width:100%;padding:8px;background:none;border:1px solid var(--border);color:var(--gray);border-radius:4px;cursor:pointer;font-size:0.82rem;}
     .logout-btn:hover{border-color:var(--red);color:var(--red);}
+
     .main{flex:1;overflow-y:auto;}
     .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;}
-    .topbar h2{font-size:1.05rem;color:var(--white);}
+    .topbar h2{font-size:1.05rem;}
     .content{padding:28px;}
     .page{display:none;}
     .page.active{display:block;}
+
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
     .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;}
     .stat-label{color:var(--gray);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
     .stat-value{font-size:1.8rem;font-weight:700;font-family:'Playfair Display',serif;}
     .stat-gold{color:var(--gold);}
+
     .table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:24px;}
     .table-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
     .table-header h3{font-size:0.95rem;}
@@ -67,42 +72,45 @@
     .btn-blue{background:rgba(33,150,243,0.15);color:#64B5F6;}
     .btn-red{background:rgba(244,67,54,0.15);color:#EF9A9A;}
     .btn-green{background:rgba(76,175,80,0.15);color:#81C784;}
-    .btn-gold-sm{background:var(--gold);color:var(--bg);padding:8px 20px;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem;}
+    .btn-gold-sm{background:var(--gold);color:var(--bg);padding:9px 22px;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem;}
     .btn-gold-sm:hover{background:var(--gold-light);}
+
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;}
     .modal-overlay.open{display:flex;}
     .modal{background:var(--bg2);border:1px solid #333;border-radius:10px;padding:28px;width:500px;max-height:85vh;overflow-y:auto;}
     .modal h3{font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:20px;}
     .form-group{margin-bottom:14px;}
-    .form-group label{display:block;color:var(--gray);font-size:0.78rem;margin-bottom:5px;letter-spacing:0.5px;}
+    .form-group label{display:block;color:var(--gray);font-size:0.78rem;margin-bottom:5px;}
     .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.88rem;outline:none;font-family:'Inter',sans-serif;}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
     .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
     .modal-actions{display:flex;gap:10px;margin-top:20px;}
-    .modal-actions button{flex:1;padding:11px;border:none;border-radius:5px;cursor:pointer;font-weight:600;font-size:0.88rem;}
-    .modal-save{background:var(--gold);color:var(--bg);}
-    .modal-cancel{background:var(--border);color:var(--gray);}
+    .modal-save{flex:1;padding:11px;border:none;border-radius:5px;cursor:pointer;font-weight:600;font-size:0.88rem;background:var(--gold);color:var(--bg);}
+    .modal-cancel{flex:1;padding:11px;border:none;border-radius:5px;cursor:pointer;font-weight:600;font-size:0.88rem;background:var(--border);color:var(--gray);}
     select option{background:var(--bg2);}
-    .toast{position:fixed;bottom:20px;right:20px;background:var(--gold);color:var(--bg);padding:12px 20px;border-radius:5px;font-weight:600;font-size:0.85rem;z-index:999;transform:translateY(80px);opacity:0;transition:all 0.3s;}
-    .toast.show{transform:translateY(0);opacity:1;}
 
-    /* ── BANNER SETTINGS ── */
     .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
     .settings-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:22px;}
     .settings-card h3{color:var(--gold);font-size:0.9rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);font-family:'Playfair Display',serif;}
-    .theme-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px;}
+    .full-card{grid-column:1/-1;}
+    .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px;}
     .theme-opt{border:2px solid var(--border);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.2s;}
     .theme-opt.selected{border-color:var(--gold);}
     .theme-swatch{width:32px;height:32px;border-radius:50%;margin:0 auto 6px;}
     .theme-opt span{font-size:0.72rem;color:var(--gray);}
-    .preview-box{background:#111;border:1px solid var(--border);border-radius:6px;padding:16px;margin-top:16px;text-align:center;}
-    .preview-box .prev-bar{border-radius:2px;padding:6px;font-size:0.65rem;font-weight:700;letter-spacing:1.5px;margin-bottom:10px;}
-    .preview-box .prev-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:4px;}
-    .preview-box .prev-sub{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
-    .full-width-card{grid-column:1/-1;}
+    .img-preview{height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.75rem;margin-top:8px;overflow:hidden;}
+    .img-preview img{width:100%;height:100%;object-fit:cover;}
     .save-bar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;z-index:5;}
     .save-status{color:var(--gray);font-size:0.82rem;}
     .save-status.saved{color:#81C784;}
+
+    .preview-box{background:#111;border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center;}
+    .prev-bar{border-radius:2px;padding:6px;font-size:0.65rem;font-weight:700;letter-spacing:1.5px;margin-bottom:10px;}
+    .prev-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:4px;}
+    .prev-sub{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
+
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--gold);color:var(--bg);padding:12px 20px;border-radius:5px;font-weight:600;font-size:0.85rem;z-index:999;transform:translateY(80px);opacity:0;transition:all 0.3s;}
+    .toast.show{transform:translateY(0);opacity:1;}
   </style>
 </head>
 <body>
@@ -114,7 +122,7 @@
     <p>Admin Panel — Secure Login</p>
     <input class="inp" type="email" id="loginEmail" placeholder="Email" value="vimalraj.cse@gmail.com">
     <input class="inp" type="password" id="loginPassword" placeholder="Password">
-    <button class="btn-gold" onclick="login()">Login →</button>
+    <button class="btn-gold-full" id="loginBtn">Login →</button>
     <div class="err" id="loginErr"></div>
   </div>
 </div>
@@ -122,31 +130,25 @@
 <!-- APP -->
 <div class="app" id="app">
   <div class="sidebar">
-    <div class="sidebar-logo">
-      <h2>MAJOR RANGAS</h2>
-      <p>Admin Panel</p>
-    </div>
+    <div class="sidebar-logo"><h2>MAJOR RANGAS</h2><p>Admin Panel</p></div>
     <div class="sidebar-nav">
-      <div class="nav-group-title">Main</div>
-      <div class="nav-item active" onclick="showPage('dashboard',this)"><span class="icon">📊</span> Dashboard</div>
-      <div class="nav-item" onclick="showPage('orders',this)"><span class="icon">📦</span> Orders</div>
-      <div class="nav-item" onclick="showPage('products',this)"><span class="icon">🛍️</span> Products</div>
-      <div class="nav-item" onclick="showPage('inventory',this)"><span class="icon">📋</span> Inventory</div>
-      <div class="nav-group-title">Customise</div>
-      <div class="nav-item" onclick="showPage('banner',this)"><span class="icon">🎨</span> Banner & Theme</div>
-      <div class="nav-item" onclick="showPage('announcement',this)"><span class="icon">📢</span> Announcement</div>
+      <div class="nav-group">Main</div>
+      <div class="nav-item active" id="nav-dashboard"><span>📊</span> Dashboard</div>
+      <div class="nav-item" id="nav-orders"><span>📦</span> Orders</div>
+      <div class="nav-item" id="nav-products"><span>🛍️</span> Products</div>
+      <div class="nav-item" id="nav-inventory"><span>📋</span> Inventory</div>
+      <div class="nav-group">Customise</div>
+      <div class="nav-item" id="nav-banner"><span>🎨</span> Banner & Theme</div>
+      <div class="nav-item" id="nav-announcement"><span>📢</span> Announcement</div>
     </div>
     <div class="sidebar-bottom">
-      <div style="color:var(--gray);font-size:0.75rem;margin-bottom:8px" id="adminName"></div>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+      <div class="admin-name" id="adminName"></div>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
     </div>
   </div>
 
   <div class="main">
-    <div class="topbar">
-      <h2 id="pageTitle">Dashboard</h2>
-      <div style="color:var(--gray);font-size:0.78rem">Major Rangas Admin</div>
-    </div>
+    <div class="topbar"><h2 id="pageTitle">Dashboard</h2></div>
     <div class="content">
 
       <!-- DASHBOARD -->
@@ -158,7 +160,7 @@
           <div class="stat-card"><div class="stat-label">Pending Orders</div><div class="stat-value stat-gold" id="statPending">—</div></div>
         </div>
         <div class="table-wrap">
-          <div class="table-header"><h3>Recent Orders</h3><button class="btn-sm btn-blue" onclick="showPage('orders',null)">View All</button></div>
+          <div class="table-header"><h3>Recent Orders</h3><button class="btn-sm btn-blue" id="viewAllBtn">View All</button></div>
           <table><thead><tr><th>Order #</th><th>Customer</th><th>Amount</th><th>Payment</th><th>Status</th><th>Date</th></tr></thead>
           <tbody id="recentOrdersTable"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
         </div>
@@ -169,14 +171,11 @@
         <div class="table-wrap">
           <div class="table-header">
             <h3>All Orders</h3>
-            <select onchange="filterOrders(this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--white);padding:6px 12px;border-radius:4px;font-size:0.82rem">
+            <select id="orderFilter" style="background:var(--bg);border:1px solid var(--border);color:var(--white);padding:6px 12px;border-radius:4px;font-size:0.82rem">
               <option value="">All Status</option>
-              <option value="placed">Placed</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="processing">Processing</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
+              <option value="placed">Placed</option><option value="confirmed">Confirmed</option>
+              <option value="processing">Processing</option><option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
             </select>
           </div>
           <table><thead><tr><th>Order #</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
@@ -187,8 +186,8 @@
       <!-- PRODUCTS -->
       <div class="page" id="page-products">
         <div class="table-wrap">
-          <div class="table-header"><h3>Products</h3><button class="btn-sm btn-green" onclick="openAddProduct()">+ Add Product</button></div>
-          <table><thead><tr><th>Name</th><th>Category</th><th>MRP</th><th>Sale Price</th><th>Stock</th><th>SKU</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
+          <div class="table-header"><h3>Products</h3><button class="btn-sm btn-green" id="addProductBtn">+ Add Product</button></div>
+          <table><thead><tr><th>Name</th><th>Category</th><th>MRP</th><th>Sale</th><th>Stock</th><th>SKU</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="productsTable"><tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
         </div>
       </div>
@@ -206,111 +205,70 @@
       <div class="page" id="page-banner">
         <div class="settings-grid">
 
-          <!-- Theme Color -->
           <div class="settings-card">
-            <h3>🎨 Website Theme</h3>
-            <div class="form-group">
-              <label>Background Color Theme</label>
-              <div class="theme-picker">
-                <div class="theme-opt selected" id="theme-brown" onclick="selectTheme('brown')">
-                  <div class="theme-swatch" style="background:#1C1208;border:2px solid #C9A84C"></div>
-                  <span>Warm Brown</span>
-                </div>
-                <div class="theme-opt" id="theme-black" onclick="selectTheme('black')">
-                  <div class="theme-swatch" style="background:#0D0D0D;border:2px solid #333"></div>
-                  <span>Pure Black</span>
-                </div>
-                <div class="theme-opt" id="theme-green" onclick="selectTheme('green')">
-                  <div class="theme-swatch" style="background:#0a1208;border:2px solid #C9A84C"></div>
-                  <span>Dark Green</span>
-                </div>
+            <h3>Theme Color</h3>
+            <div class="theme-grid">
+              <div class="theme-opt selected" id="theme-brown"><div class="theme-swatch" style="background:#1C1208;border:2px solid #C9A84C"></div><span>Warm Brown</span></div>
+              <div class="theme-opt" id="theme-black"><div class="theme-swatch" style="background:#0D0D0D;border:2px solid #333"></div><span>Pure Black</span></div>
+              <div class="theme-opt" id="theme-green"><div class="theme-swatch" style="background:#0a1208;border:2px solid #C9A84C"></div><span>Dark Green</span></div>
+              <div class="theme-opt" id="theme-navy"><div class="theme-swatch" style="background:#080C14;border:2px solid #C9A84C"></div><span>Deep Navy</span></div>
+              <div class="theme-opt" id="theme-maroon"><div class="theme-swatch" style="background:#140608;border:2px solid #C9A84C"></div><span>Dark Maroon</span></div>
+              <div class="theme-opt" id="theme-charcoal"><div class="theme-swatch" style="background:#111318;border:2px solid #C9A84C"></div><span>Charcoal</span></div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Live Preview</h3>
+            <div class="preview-box">
+              <div class="prev-bar" id="prevBar" style="background:#C9A84C;color:#1C1208">FREE SHIPPING ABOVE ₹500</div>
+              <div id="prevBg" style="background:#1C1208;padding:16px;border-radius:4px;margin-top:8px">
+                <div style="color:rgba(201,168,76,0.5);font-size:0.6rem;letter-spacing:3px;margin-bottom:6px">CHENNAI'S FINEST</div>
+                <div class="prev-title" id="prevL1" style="color:#F5E6C8">Taste of</div>
+                <div class="prev-title" id="prevL2" style="color:#C9A84C;font-style:italic">Our Homeland</div>
+                <div class="prev-sub" id="prevSub" style="color:rgba(201,168,76,0.4);margin-top:6px">SNACKS · SWEETS · PODIS</div>
               </div>
             </div>
           </div>
 
-          <!-- Hero Banner Text -->
           <div class="settings-card">
-            <h3>🏷️ Hero Banner Text</h3>
-            <div class="form-group">
-              <label>Headline Line 1 (white text)</label>
-              <input type="text" id="set-heroLine1" placeholder="e.g. Taste of">
-            </div>
-            <div class="form-group">
-              <label>Headline Line 2 (gold italic)</label>
-              <input type="text" id="set-heroLine2" placeholder="e.g. Our Homeland">
-            </div>
-            <div class="form-group">
-              <label>Sub Caption (small text below)</label>
-              <input type="text" id="set-heroSubtitle" placeholder="e.g. Snacks · Sweets · Podis">
-            </div>
-            <div class="form-group">
-              <label>Description Text</label>
-              <textarea id="set-heroDesc" rows="3" placeholder="Short description under headline..."></textarea>
-            </div>
+            <h3>Hero Text</h3>
+            <div class="form-group"><label>Headline Line 1 (white)</label><input type="text" id="set-s1t1" placeholder="Taste of"></div>
+            <div class="form-group"><label>Headline Line 2 (gold italic)</label><input type="text" id="set-s1t2" placeholder="Our Homeland"></div>
+            <div class="form-group"><label>Slide 2 Line 1</label><input type="text" id="set-s2t1" placeholder="Fresh From"></div>
+            <div class="form-group"><label>Slide 2 Line 2</label><input type="text" id="set-s2t2" placeholder="Chennai Kitchen"></div>
           </div>
 
-          <!-- Featured Category -->
           <div class="settings-card">
-            <h3>⭐ Featured Category</h3>
-            <div class="form-group">
-              <label>Highlight Category on Homepage</label>
-              <select id="set-featuredCat">
-                <option value="All">All (Show Everything)</option>
-                <option value="Snacks">Snacks</option>
-                <option value="Sweets">Sweets</option>
-                <option value="Podis">Podis</option>
-              </select>
-            </div>
-            <div class="form-group" style="margin-top:8px">
-              <label>Show Brand Story Section</label>
-              <select id="set-showStory">
-                <option value="true">Yes — Show Story</option>
-                <option value="false">No — Hide Story</option>
-              </select>
-            </div>
+            <h3>More Slides Text</h3>
+            <div class="form-group"><label>Slide 3 Line 1</label><input type="text" id="set-s3t1" placeholder="Authentic"></div>
+            <div class="form-group"><label>Slide 3 Line 2</label><input type="text" id="set-s3t2" placeholder="South Indian"></div>
+            <div class="form-group"><label>Slide 4 Line 1</label><input type="text" id="set-s4t1" placeholder="Traditional"></div>
+            <div class="form-group"><label>Slide 4 Line 2</label><input type="text" id="set-s4t2" placeholder="Recipes Always"></div>
           </div>
 
-          <!-- Story Text -->
-          <div class="settings-card">
-            <h3>📖 Brand Story Text</h3>
-            <div class="form-group">
-              <label>Story Description</label>
-              <textarea id="set-storyText" rows="5" placeholder="Your brand story..."></textarea>
-            </div>
-          </div>
-
-          <!-- Slider Images -->
-          <div class="settings-card full-width-card">
-            <h3>🖼️ Slider Banner Images (4 Slides)</h3>
-            <p style="color:var(--gray);font-size:0.8rem;margin-bottom:16px">Upload images to <a href="https://imgbb.com" target="_blank" style="color:var(--gold)">imgbb.com</a> (free) → copy <strong>Direct Link</strong> → paste below. Change weekly anytime!</p>
+          <div class="settings-card full-card">
+            <h3>Slider Images (4 Slides)</h3>
+            <p style="color:var(--gray);font-size:0.8rem;margin-bottom:16px">Upload to <a href="https://imgbb.com" target="_blank" style="color:var(--gold)">imgbb.com</a> → copy Direct Link → paste below</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
               <div>
-                <div class="form-group"><label>Slide 1 — Image URL</label><input type="text" id="set-img1" placeholder="https://i.ibb.co/..." oninput="prevImg('prev1',this.value)"></div>
-                <div class="form-group"><label>Slide 1 — Title Line 1 (white)</label><input type="text" id="set-s1t1" placeholder="Taste of"></div>
-                <div class="form-group"><label>Slide 1 — Title Line 2 (gold italic)</label><input type="text" id="set-s1t2" placeholder="Our Homeland"></div>
-                <div id="prev1" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 1 Preview</div>
+                <div class="form-group"><label>Slide 1 Image URL</label><input type="text" id="set-img1" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev1">Slide 1 preview</div>
               </div>
               <div>
-                <div class="form-group"><label>Slide 2 — Image URL</label><input type="text" id="set-img2" placeholder="https://i.ibb.co/..." oninput="prevImg('prev2',this.value)"></div>
-                <div class="form-group"><label>Slide 2 — Title Line 1 (white)</label><input type="text" id="set-s2t1" placeholder="Fresh From"></div>
-                <div class="form-group"><label>Slide 2 — Title Line 2 (gold italic)</label><input type="text" id="set-s2t2" placeholder="Chennai Kitchen"></div>
-                <div id="prev2" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 2 Preview</div>
+                <div class="form-group"><label>Slide 2 Image URL</label><input type="text" id="set-img2" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev2">Slide 2 preview</div>
               </div>
               <div>
-                <div class="form-group"><label>Slide 3 — Image URL</label><input type="text" id="set-img3" placeholder="https://i.ibb.co/..." oninput="prevImg('prev3',this.value)"></div>
-                <div class="form-group"><label>Slide 3 — Title Line 1 (white)</label><input type="text" id="set-s3t1" placeholder="Authentic"></div>
-                <div class="form-group"><label>Slide 3 — Title Line 2 (gold italic)</label><input type="text" id="set-s3t2" placeholder="South Indian"></div>
-                <div id="prev3" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 3 Preview</div>
+                <div class="form-group"><label>Slide 3 Image URL</label><input type="text" id="set-img3" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev3">Slide 3 preview</div>
               </div>
               <div>
-                <div class="form-group"><label>Slide 4 — Image URL</label><input type="text" id="set-img4" placeholder="https://i.ibb.co/..." oninput="prevImg('prev4',this.value)"></div>
-                <div class="form-group"><label>Slide 4 — Title Line 1 (white)</label><input type="text" id="set-s4t1" placeholder="Traditional"></div>
-                <div class="form-group"><label>Slide 4 — Title Line 2 (gold italic)</label><input type="text" id="set-s4t2" placeholder="Recipes Always"></div>
-                <div id="prev4" style="height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.78rem;margin-top:6px;overflow:hidden">Slide 4 Preview</div>
+                <div class="form-group"><label>Slide 4 Image URL</label><input type="text" id="set-img4" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev4">Slide 4 preview</div>
               </div>
             </div>
-            <div class="form-group" style="margin-top:16px">
-              <label>Autoplay Speed (seconds per slide)</label>
+            <div class="form-group" style="margin-top:16px;max-width:300px">
+              <label>Autoplay Speed</label>
               <select id="set-autoplay">
                 <option value="3">3 seconds</option>
                 <option value="5" selected>5 seconds</option>
@@ -320,44 +278,52 @@
             </div>
           </div>
 
-          <!-- Live Preview -->
-          <div class="settings-card full-width-card">
-            <h3>👁️ Live Preview</h3>
-            <div class="preview-box" id="livePreview">
-              <div class="prev-bar" id="prev-bar" style="background:#C9A84C;color:#1C1208">FREE SHIPPING ABOVE ₹500</div>
-              <div style="background:#1C1208;padding:20px;border-radius:4px;margin-top:8px">
-                <div style="color:rgba(201,168,76,0.5);font-size:0.65rem;letter-spacing:3px;margin-bottom:8px">CHENNAI'S FINEST SINCE GENERATIONS</div>
-                <div class="prev-title" id="prev-line1" style="color:#F5E6C8">Taste of</div>
-                <div class="prev-title" id="prev-line2" style="color:#C9A84C;font-style:italic">Our Homeland</div>
-                <div class="prev-sub" id="prev-sub" style="color:rgba(201,168,76,0.5);margin-top:6px">SNACKS · SWEETS · PODIS</div>
+          <div class="settings-card full-card">
+            <h3>Other Settings</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div>
+                <div class="form-group"><label>Featured Category</label>
+                  <select id="set-featuredCat">
+                    <option value="All">All</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Sweets">Sweets</option>
+                    <option value="Podis">Podis</option>
+                  </select>
+                </div>
+                <div class="form-group"><label>Show Brand Story Section</label>
+                  <select id="set-showStory">
+                    <option value="true">Yes — Show</option>
+                    <option value="false">No — Hide</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div class="form-group"><label>Brand Story Text</label>
+                  <textarea id="set-storyText" rows="4" placeholder="Your brand story..."></textarea>
+                </div>
               </div>
             </div>
           </div>
 
         </div>
-
         <div class="save-bar">
-          <div class="save-status" id="saveStatus">Unsaved changes</div>
-          <button class="btn-gold-sm" onclick="saveBannerSettings()">Save & Apply to Website →</button>
+          <div class="save-status" id="saveStatus">Ready to save</div>
+          <button class="btn-gold-sm" id="saveBannerBtn">Save & Apply to Website →</button>
         </div>
       </div>
 
       <!-- ANNOUNCEMENT -->
       <div class="page" id="page-announcement">
         <div class="settings-card" style="max-width:600px">
-          <h3>📢 Announcement Bar</h3>
+          <h3>Announcement Bar</h3>
           <div class="form-group">
-            <label>Announcement Text (shows at very top of website)</label>
-            <input type="text" id="set-announcement" placeholder="e.g. FREE SHIPPING ON ORDERS ABOVE ₹500">
+            <label>Text shown at top of website</label>
+            <input type="text" id="set-announcement" placeholder="FREE SHIPPING ON ORDERS ABOVE ₹500">
           </div>
-          <div style="margin-top:8px">
-            <div style="background:#C9A84C;color:#1C1208;padding:8px;text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:2px;border-radius:4px" id="announcementPreview">
-              FREE SHIPPING ON ORDERS ABOVE ₹500
-            </div>
+          <div id="announcePrev" style="background:#C9A84C;color:#1C1208;padding:8px;text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:2px;border-radius:4px;margin-top:8px">
+            FREE SHIPPING ON ORDERS ABOVE ₹500
           </div>
-          <div style="margin-top:16px">
-            <button class="btn-gold-sm" onclick="saveAnnouncementSettings()">Save Announcement →</button>
-          </div>
+          <div style="margin-top:16px"><button class="btn-gold-sm" id="saveAnnounceBtn">Save Announcement</button></div>
         </div>
       </div>
 
@@ -365,7 +331,7 @@
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- ORDER MODAL -->
 <div class="modal-overlay" id="orderModal">
   <div class="modal">
     <h3>Update Order Status</h3>
@@ -379,12 +345,13 @@
     </div>
     <div class="form-group"><label>Tracking Number</label><input type="text" id="modalTracking" placeholder="e.g. BD12345678IN"></div>
     <div class="modal-actions">
-      <button class="modal-cancel" onclick="closeModal('orderModal')">Cancel</button>
-      <button class="modal-save" onclick="updateOrderStatus()">Update</button>
+      <button class="modal-cancel" id="cancelOrderModal">Cancel</button>
+      <button class="modal-save" id="saveOrderModal">Update</button>
     </div>
   </div>
 </div>
 
+<!-- PRODUCT MODAL -->
 <div class="modal-overlay" id="productModal">
   <div class="modal">
     <h3 id="productModalTitle">Add Product</h3>
@@ -416,21 +383,22 @@
       <div class="form-group"><label>Featured</label><select id="pFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
     </div>
     <div class="modal-actions">
-      <button class="modal-cancel" onclick="closeModal('productModal')">Cancel</button>
-      <button class="modal-save" onclick="saveProduct()">Save Product</button>
+      <button class="modal-cancel" id="cancelProductModal">Cancel</button>
+      <button class="modal-save" id="saveProductModal">Save Product</button>
     </div>
   </div>
 </div>
 
+<!-- STOCK MODAL -->
 <div class="modal-overlay" id="stockModal">
   <div class="modal" style="width:360px">
     <h3>Update Stock</h3>
     <input type="hidden" id="stockProductId">
-    <div class="form-group"><label id="stockProductName" style="color:var(--white);font-size:0.95rem"></label></div>
+    <div class="form-group"><label id="stockProductName" style="color:var(--white);font-size:0.9rem"></label></div>
     <div class="form-group"><label>New Stock Quantity</label><input id="stockQty" type="number" min="0"></div>
     <div class="modal-actions">
-      <button class="modal-cancel" onclick="closeModal('stockModal')">Cancel</button>
-      <button class="modal-save" onclick="updateStock()">Update</button>
+      <button class="modal-cancel" id="cancelStockModal">Cancel</button>
+      <button class="modal-save" id="saveStockModal">Update Stock</button>
     </div>
   </div>
 </div>
@@ -442,338 +410,409 @@ var API = 'https://majorrangas-backend-production.up.railway.app';
 var token = localStorage.getItem('mr_admin_token');
 var adminInfo = JSON.parse(localStorage.getItem('mr_admin_info') || '{}');
 var currentTheme = 'brown';
-var currentSettings = {};
 
-function showToast(msg,isErr){
-  var t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.background=isErr?'#F44336':'var(--gold)';
+function showToast(msg, isErr) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = isErr ? '#F44336' : '#C9A84C';
   t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show')},3000);
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
 }
 
-async function login(){
-  var email=document.getElementById('loginEmail').value;
-  var pass=document.getElementById('loginPassword').value;
-  document.getElementById('loginErr').textContent='';
-  try{
-    var res=await fetch(API+'/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
-    var data=await res.json();
-    if(!data.success){document.getElementById('loginErr').textContent=data.error||'Login failed';return;}
-    token=data.token; adminInfo=data.admin;
-    localStorage.setItem('mr_admin_token',token);
-    localStorage.setItem('mr_admin_info',JSON.stringify(adminInfo));
+function authH() {
+  return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// LOGIN
+document.getElementById('loginBtn').onclick = async function() {
+  var email = document.getElementById('loginEmail').value;
+  var pass = document.getElementById('loginPassword').value;
+  document.getElementById('loginErr').textContent = '';
+  try {
+    var res = await fetch(API + '/api/admin/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: pass })
+    });
+    var data = await res.json();
+    if (!data.success) { document.getElementById('loginErr').textContent = data.error || 'Login failed'; return; }
+    token = data.token;
+    adminInfo = data.admin;
+    localStorage.setItem('mr_admin_token', token);
+    localStorage.setItem('mr_admin_info', JSON.stringify(adminInfo));
     initApp();
-  }catch(e){document.getElementById('loginErr').textContent='Connection failed';}
-}
+  } catch(e) { document.getElementById('loginErr').textContent = 'Connection failed'; }
+};
 
-function initApp(){
-  document.getElementById('loginPage').style.display='none';
+document.getElementById('logoutBtn').onclick = function() {
+  localStorage.removeItem('mr_admin_token');
+  localStorage.removeItem('mr_admin_info');
+  location.reload();
+};
+
+function initApp() {
+  document.getElementById('loginPage').style.display = 'none';
   document.getElementById('app').classList.add('show');
-  document.getElementById('adminName').textContent=adminInfo.name||'Admin';
+  document.getElementById('adminName').textContent = adminInfo.name || 'Admin';
   loadDashboard();
   loadSettingsData();
 }
 
-function logout(){localStorage.removeItem('mr_admin_token');localStorage.removeItem('mr_admin_info');location.reload();}
-function authH(){return{'Content-Type':'application/json','Authorization':'Bearer '+token};}
-
-function showPage(page,el){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
-  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
-  document.getElementById('page-'+page).classList.add('active');
-  if(el)el.classList.add('active');
-  var titles={dashboard:'Dashboard',orders:'Orders',products:'Products',inventory:'Inventory',banner:'Banner & Theme',announcement:'Announcement Bar'};
-  document.getElementById('pageTitle').textContent=titles[page]||page;
-  if(page==='dashboard')loadDashboard();
-  if(page==='orders')loadOrders();
-  if(page==='products')loadProducts();
-  if(page==='inventory')loadInventory();
-}
-
-// ── DASHBOARD ──
-async function loadDashboard(){
-  try{
-    var[sRes,oRes]=await Promise.all([
-      fetch(API+'/api/admin/stats',{headers:authH()}),
-      fetch(API+'/api/admin/orders?limit=8',{headers:authH()})
-    ]);
-    var stats=await sRes.json(); var orders=await oRes.json();
-    if(stats.success){
-      document.getElementById('statOrders').textContent=stats.stats.total_orders;
-      document.getElementById('statRevenue').textContent='₹'+stats.stats.total_revenue.toLocaleString('en-IN');
-      document.getElementById('statProducts').textContent=stats.stats.active_products;
-      document.getElementById('statPending').textContent=stats.stats.pending_orders;
-    }
-    if(orders.success){
-      document.getElementById('recentOrdersTable').innerHTML=orders.orders.map(function(o){
-        return '<tr><td style="color:var(--gold);font-weight:600">'+o.order_number+'</td><td>'+o.customer_name+'</td><td>₹'+parseFloat(o.total_amount).toFixed(2)+'</td><td><span class="badge badge-'+o.payment_status+'">'+o.payment_status+'</span></td><td><span class="badge badge-'+o.order_status+'">'+o.order_status+'</span></td><td>'+new Date(o.created_at).toLocaleDateString('en-IN')+'</td></tr>';
-      }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">No orders yet</td></tr>';
-    }
-  }catch(e){}
-}
-
-// ── ORDERS ──
-async function loadOrders(status){
-  try{
-    var url=status?API+'/api/admin/orders?status='+status+'&limit=100':API+'/api/admin/orders?limit=100';
-    var res=await fetch(url,{headers:authH()}); var data=await res.json();
-    if(!data.success)return;
-    document.getElementById('ordersTable').innerHTML=data.orders.map(function(o){
-      var items=typeof o.items==='string'?JSON.parse(o.items):o.items;
-      return '<tr><td style="color:var(--gold);font-weight:600">'+o.order_number+'</td><td>'+o.customer_name+'</td><td>'+o.customer_phone+'</td><td>'+items.length+' items</td><td>₹'+parseFloat(o.total_amount).toFixed(2)+'</td><td><span class="badge badge-'+o.payment_status+'">'+o.payment_status+'</span></td><td><span class="badge badge-'+o.order_status+'">'+o.order_status+'</span></td><td>'+new Date(o.created_at).toLocaleDateString('en-IN')+'</td><td style="display:flex;gap:6px"><button class="btn-sm btn-blue" onclick="openOrderModal('+o.id+',\''+o.order_status+'\',\''+( o.tracking_number||'')+'\')">Update</button><a href="'+API+'/api/invoice/'+o.order_number+'" target="_blank" class="btn-sm btn-green" style="display:inline-block">Invoice</a></td></tr>';
-    }).join('')||'<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No orders</td></tr>';
-  }catch(e){}
-}
-function filterOrders(s){loadOrders(s);}
-function openOrderModal(id,status,tracking){document.getElementById('modalOrderId').value=id;document.getElementById('modalOrderStatus').value=status;document.getElementById('modalTracking').value=tracking||'';document.getElementById('orderModal').classList.add('open');}
-async function updateOrderStatus(){
-  var id=document.getElementById('modalOrderId').value;
-  var status=document.getElementById('modalOrderStatus').value;
-  var tracking=document.getElementById('modalTracking').value;
-  try{
-    var res=await fetch(API+'/api/admin/orders/'+id+'/status',{method:'PUT',headers:authH(),body:JSON.stringify({order_status:status,tracking_number:tracking})});
-    var data=await res.json();
-    if(data.success){showToast('Order updated!');closeModal('orderModal');loadOrders();}else showToast('Update failed',true);
-  }catch(e){showToast('Error',true);}
-}
-
-// ── PRODUCTS ──
-async function loadProducts(){
-  try{
-    var res=await fetch(API+'/api/admin/products',{headers:authH()}); var data=await res.json();
-    if(!data.success)return;
-    document.getElementById('productsTable').innerHTML=data.products.map(function(p){
-      return '<tr><td>'+p.name+'</td><td>'+p.category+'</td><td>₹'+parseFloat(p.mrp).toFixed(2)+'</td><td>'+(p.sale_price?'₹'+parseFloat(p.sale_price).toFixed(2):'—')+'</td><td>'+p.stock_qty+'</td><td style="color:var(--gray);font-size:0.75rem">'+(p.sku||'—')+'</td><td>'+(p.is_featured?'<span class="badge" style="background:rgba(201,168,76,0.15);color:var(--gold)">Yes</span>':'—')+'</td><td><span class="badge badge-'+(p.is_active?'active':'inactive')+'">'+(p.is_active?'Active':'Hidden')+'</span></td><td style="display:flex;gap:6px"><button class="btn-sm btn-blue" onclick=\'openEditProduct('+JSON.stringify(p).replace(/\'/g,"&#39;")+')\'> Edit</button><button class="btn-sm btn-green" onclick="openStockModal('+p.id+',\''+p.name.replace(/\'/g,"\\'")+'\',' +p.stock_qty+')">Stock</button></td></tr>';
-    }).join('')||'<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No products</td></tr>';
-  }catch(e){}
-}
-function openAddProduct(){
-  document.getElementById('productModalTitle').textContent='Add Product';
-  document.getElementById('productId').value='';
-  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage'].forEach(function(id){document.getElementById(id).value='';});
-  document.getElementById('pCategory').value='Snacks';
-  document.getElementById('pUnit').value='g';
-  document.getElementById('pActive').value='true';
-  document.getElementById('pFeatured').value='false';
-  document.getElementById('productModal').classList.add('open');
-}
-function openEditProduct(p){
-  document.getElementById('productModalTitle').textContent='Edit Product';
-  document.getElementById('productId').value=p.id;
-  document.getElementById('pName').value=p.name||'';
-  document.getElementById('pCategory').value=p.category||'Snacks';
-  document.getElementById('pSubCategory').value=p.sub_category||'';
-  document.getElementById('pDescription').value=p.short_description||'';
-  document.getElementById('pIngredients').value=p.ingredients||'';
-  document.getElementById('pMrp').value=p.mrp||'';
-  document.getElementById('pSalePrice').value=p.sale_price||'';
-  document.getElementById('pWeight').value=p.weight||'';
-  document.getElementById('pUnit').value=p.unit||'g';
-  document.getElementById('pStock').value=p.stock_qty||0;
-  document.getElementById('pSku').value=p.sku||'';
-  document.getElementById('pImage').value=p.image_primary||'';
-  document.getElementById('pActive').value=p.is_active?'true':'false';
-  document.getElementById('pFeatured').value=p.is_featured?'true':'false';
-  document.getElementById('productModal').classList.add('open');
-}
-async function saveProduct(){
-  var id=document.getElementById('productId').value;
-  var name=document.getElementById('pName').value.trim();
-  if(!name){showToast('Name required',true);return;}
-  var payload={
-    name,category:document.getElementById('pCategory').value,
-    sub_category:document.getElementById('pSubCategory').value,
-    short_description:document.getElementById('pDescription').value,
-    ingredients:document.getElementById('pIngredients').value,
-    mrp:document.getElementById('pMrp').value,
-    sale_price:document.getElementById('pSalePrice').value||null,
-    weight:document.getElementById('pWeight').value,
-    unit:document.getElementById('pUnit').value,
-    stock_qty:document.getElementById('pStock').value,
-    sku:document.getElementById('pSku').value,
-    image_primary:document.getElementById('pImage').value,
-    is_active:document.getElementById('pActive').value==='true',
-    is_featured:document.getElementById('pFeatured').value==='true',
-    slug:name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')
+// NAV
+var pages = ['dashboard','orders','products','inventory','banner','announcement'];
+pages.forEach(function(p) {
+  document.getElementById('nav-' + p).onclick = function() {
+    showPage(p);
   };
-  try{
-    var url=id?API+'/api/admin/products/'+id:API+'/api/admin/products';
-    var method=id?'PUT':'POST';
-    var res=await fetch(url,{method,headers:authH(),body:JSON.stringify(payload)});
-    var data=await res.json();
-    if(data.success){showToast(id?'Product updated!':'Product added!');closeModal('productModal');loadProducts();}
-    else showToast(data.error||'Save failed',true);
-  }catch(e){showToast('Error',true);}
+});
+document.getElementById('viewAllBtn').onclick = function() { showPage('orders'); };
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('page-' + page).classList.add('active');
+  var navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  var titles = { dashboard:'Dashboard', orders:'Orders', products:'Products', inventory:'Inventory', banner:'Banner & Theme', announcement:'Announcement Bar' };
+  document.getElementById('pageTitle').textContent = titles[page] || page;
+  if (page === 'dashboard') loadDashboard();
+  if (page === 'orders') loadOrders('');
+  if (page === 'products') loadProducts();
+  if (page === 'inventory') loadInventory();
 }
 
-// ── INVENTORY ──
-async function loadInventory(){
-  try{
-    var res=await fetch(API+'/api/admin/products',{headers:authH()}); var data=await res.json();
-    if(!data.success)return;
-    document.getElementById('inventoryTable').innerHTML=data.products.map(function(p){
-      var low=p.stock_qty<10; var out=p.stock_qty===0;
-      return '<tr><td>'+p.name+'</td><td>'+p.category+'</td><td style="color:var(--gray);font-size:0.75rem">'+(p.sku||'—')+'</td><td style="color:'+(out?'#F44336':low?'#FF9800':'#81C784')+';font-weight:600">'+p.stock_qty+'</td><td><span class="badge" style="background:'+(out?'rgba(244,67,54,0.15)':low?'rgba(255,152,0,0.15)':'rgba(76,175,80,0.12)')+';color:'+(out?'#EF9A9A':low?'#FFB74D':'#81C784')+'">'+(out?'Out of Stock':low?'Low Stock':'In Stock')+'</span></td><td><button class="btn-sm btn-blue" onclick="openStockModal('+p.id+',\''+p.name.replace(/\'/g,"\\'")+'\',' +p.stock_qty+')">Update</button></td></tr>';
-    }).join('');
-  }catch(e){}
+// DASHBOARD
+async function loadDashboard() {
+  try {
+    var sRes = await fetch(API + '/api/admin/stats', { headers: authH() });
+    var oRes = await fetch(API + '/api/admin/orders?limit=8', { headers: authH() });
+    var stats = await sRes.json();
+    var orders = await oRes.json();
+    if (stats.success) {
+      document.getElementById('statOrders').textContent = stats.stats.total_orders;
+      document.getElementById('statRevenue').textContent = '₹' + stats.stats.total_revenue.toLocaleString('en-IN');
+      document.getElementById('statProducts').textContent = stats.stats.active_products;
+      document.getElementById('statPending').textContent = stats.stats.pending_orders;
+    }
+    if (orders.success) {
+      var html = '';
+      orders.orders.forEach(function(o) {
+        html += '<tr><td style="color:var(--gold);font-weight:600">' + o.order_number + '</td>'
+          + '<td>' + o.customer_name + '</td>'
+          + '<td>₹' + parseFloat(o.total_amount).toFixed(2) + '</td>'
+          + '<td><span class="badge badge-' + o.payment_status + '">' + o.payment_status + '</span></td>'
+          + '<td><span class="badge badge-' + o.order_status + '">' + o.order_status + '</span></td>'
+          + '<td>' + new Date(o.created_at).toLocaleDateString('en-IN') + '</td></tr>';
+      });
+      document.getElementById('recentOrdersTable').innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">No orders yet</td></tr>';
+    }
+  } catch(e) {}
 }
-function openStockModal(id,name,current){
-  document.getElementById('stockProductId').value=id;
-  document.getElementById('stockProductName').textContent=name;
-  document.getElementById('stockQty').value=current;
+
+// ORDERS
+async function loadOrders(status) {
+  try {
+    var url = API + '/api/admin/orders?limit=100' + (status ? '&status=' + status : '');
+    var res = await fetch(url, { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.orders.forEach(function(o) {
+      var items = typeof o.items === 'string' ? JSON.parse(o.items) : o.items;
+      html += '<tr><td style="color:var(--gold);font-weight:600">' + o.order_number + '</td>'
+        + '<td>' + o.customer_name + '</td><td>' + o.customer_phone + '</td>'
+        + '<td>' + items.length + ' items</td>'
+        + '<td>₹' + parseFloat(o.total_amount).toFixed(2) + '</td>'
+        + '<td><span class="badge badge-' + o.payment_status + '">' + o.payment_status + '</span></td>'
+        + '<td><span class="badge badge-' + o.order_status + '">' + o.order_status + '</span></td>'
+        + '<td>' + new Date(o.created_at).toLocaleDateString('en-IN') + '</td>'
+        + '<td style="display:flex;gap:6px">'
+        + '<button class="btn-sm btn-blue" onclick="openOrderModal(' + o.id + ',\'' + o.order_status + '\',\'' + (o.tracking_number||'') + '\')">Update</button>'
+        + '<a href="' + API + '/api/invoice/' + o.order_number + '" target="_blank" class="btn-sm btn-green" style="display:inline-block">Invoice</a>'
+        + '</td></tr>';
+    });
+    document.getElementById('ordersTable').innerHTML = html || '<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No orders</td></tr>';
+  } catch(e) {}
+}
+
+document.getElementById('orderFilter').onchange = function() { loadOrders(this.value); };
+
+function openOrderModal(id, status, tracking) {
+  document.getElementById('modalOrderId').value = id;
+  document.getElementById('modalOrderStatus').value = status;
+  document.getElementById('modalTracking').value = tracking || '';
+  document.getElementById('orderModal').classList.add('open');
+}
+document.getElementById('cancelOrderModal').onclick = function() { closeModal('orderModal'); };
+document.getElementById('saveOrderModal').onclick = async function() {
+  var id = document.getElementById('modalOrderId').value;
+  var status = document.getElementById('modalOrderStatus').value;
+  var tracking = document.getElementById('modalTracking').value;
+  try {
+    var res = await fetch(API + '/api/admin/orders/' + id + '/status', {
+      method: 'PUT', headers: authH(),
+      body: JSON.stringify({ order_status: status, tracking_number: tracking })
+    });
+    var data = await res.json();
+    if (data.success) { showToast('Order updated!'); closeModal('orderModal'); loadOrders(''); }
+    else showToast('Update failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// PRODUCTS
+async function loadProducts() {
+  try {
+    var res = await fetch(API + '/api/admin/products', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.products.forEach(function(p) {
+      html += '<tr><td>' + p.name + '</td><td>' + p.category + '</td>'
+        + '<td>₹' + parseFloat(p.mrp).toFixed(2) + '</td>'
+        + '<td>' + (p.sale_price ? '₹' + parseFloat(p.sale_price).toFixed(2) : '—') + '</td>'
+        + '<td>' + p.stock_qty + '</td>'
+        + '<td style="color:var(--gray);font-size:0.75rem">' + (p.sku || '—') + '</td>'
+        + '<td>' + (p.is_featured ? '<span class="badge" style="background:rgba(201,168,76,0.15);color:var(--gold)">Yes</span>' : '—') + '</td>'
+        + '<td><span class="badge badge-' + (p.is_active ? 'active' : 'inactive') + '">' + (p.is_active ? 'Active' : 'Hidden') + '</span></td>'
+        + '<td style="display:flex;gap:6px">'
+        + '<button class="btn-sm btn-blue" onclick="openEditProduct(' + p.id + ')">Edit</button>'
+        + '<button class="btn-sm btn-green" onclick="openStockModal(' + p.id + ',\'' + p.name.replace(/'/g, '') + '\',' + p.stock_qty + ')">Stock</button>'
+        + '</td></tr>';
+    });
+    document.getElementById('productsTable').innerHTML = html || '<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No products</td></tr>';
+    window._products = data.products;
+  } catch(e) {}
+}
+
+document.getElementById('addProductBtn').onclick = function() { openAddProduct(); };
+document.getElementById('cancelProductModal').onclick = function() { closeModal('productModal'); };
+
+function openAddProduct() {
+  document.getElementById('productModalTitle').textContent = 'Add Product';
+  document.getElementById('productId').value = '';
+  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage'].forEach(function(id) { document.getElementById(id).value = ''; });
+  document.getElementById('pCategory').value = 'Snacks';
+  document.getElementById('pUnit').value = 'g';
+  document.getElementById('pActive').value = 'true';
+  document.getElementById('pFeatured').value = 'false';
+  document.getElementById('productModal').classList.add('open');
+}
+
+function openEditProduct(id) {
+  var products = window._products || [];
+  var p = products.find(function(x) { return x.id === id; });
+  if (!p) return;
+  document.getElementById('productModalTitle').textContent = 'Edit Product';
+  document.getElementById('productId').value = p.id;
+  document.getElementById('pName').value = p.name || '';
+  document.getElementById('pCategory').value = p.category || 'Snacks';
+  document.getElementById('pSubCategory').value = p.sub_category || '';
+  document.getElementById('pDescription').value = p.short_description || '';
+  document.getElementById('pIngredients').value = p.ingredients || '';
+  document.getElementById('pMrp').value = p.mrp || '';
+  document.getElementById('pSalePrice').value = p.sale_price || '';
+  document.getElementById('pWeight').value = p.weight || '';
+  document.getElementById('pUnit').value = p.unit || 'g';
+  document.getElementById('pStock').value = p.stock_qty || 0;
+  document.getElementById('pSku').value = p.sku || '';
+  document.getElementById('pImage').value = p.image_primary || '';
+  document.getElementById('pActive').value = p.is_active ? 'true' : 'false';
+  document.getElementById('pFeatured').value = p.is_featured ? 'true' : 'false';
+  document.getElementById('productModal').classList.add('open');
+}
+
+document.getElementById('saveProductModal').onclick = async function() {
+  var id = document.getElementById('productId').value;
+  var name = document.getElementById('pName').value.trim();
+  if (!name) { showToast('Name required', true); return; }
+  var payload = {
+    name: name,
+    category: document.getElementById('pCategory').value,
+    sub_category: document.getElementById('pSubCategory').value,
+    short_description: document.getElementById('pDescription').value,
+    ingredients: document.getElementById('pIngredients').value,
+    mrp: document.getElementById('pMrp').value,
+    sale_price: document.getElementById('pSalePrice').value || null,
+    weight: document.getElementById('pWeight').value,
+    unit: document.getElementById('pUnit').value,
+    stock_qty: document.getElementById('pStock').value,
+    sku: document.getElementById('pSku').value,
+    image_primary: document.getElementById('pImage').value,
+    is_active: document.getElementById('pActive').value === 'true',
+    is_featured: document.getElementById('pFeatured').value === 'true',
+    slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  };
+  try {
+    var url = id ? API + '/api/admin/products/' + id : API + '/api/admin/products';
+    var method = id ? 'PUT' : 'POST';
+    var res = await fetch(url, { method: method, headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) { showToast(id ? 'Product updated!' : 'Product added!'); closeModal('productModal'); loadProducts(); }
+    else showToast(data.error || 'Save failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// INVENTORY
+async function loadInventory() {
+  try {
+    var res = await fetch(API + '/api/admin/products', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.products.forEach(function(p) {
+      var low = p.stock_qty < 10, out = p.stock_qty === 0;
+      var statusColor = out ? '#EF9A9A' : low ? '#FFB74D' : '#81C784';
+      var statusBg = out ? 'rgba(244,67,54,0.15)' : low ? 'rgba(255,152,0,0.15)' : 'rgba(76,175,80,0.12)';
+      var statusText = out ? 'Out of Stock' : low ? 'Low Stock' : 'In Stock';
+      html += '<tr><td>' + p.name + '</td><td>' + p.category + '</td>'
+        + '<td style="color:var(--gray);font-size:0.75rem">' + (p.sku || '—') + '</td>'
+        + '<td style="color:' + (out ? '#F44336' : low ? '#FF9800' : '#81C784') + ';font-weight:600">' + p.stock_qty + '</td>'
+        + '<td><span class="badge" style="background:' + statusBg + ';color:' + statusColor + '">' + statusText + '</span></td>'
+        + '<td><button class="btn-sm btn-blue" onclick="openStockModal(' + p.id + ',\'' + p.name.replace(/'/g, '') + '\',' + p.stock_qty + ')">Update</button></td></tr>';
+    });
+    document.getElementById('inventoryTable').innerHTML = html;
+  } catch(e) {}
+}
+
+function openStockModal(id, name, current) {
+  document.getElementById('stockProductId').value = id;
+  document.getElementById('stockProductName').textContent = name;
+  document.getElementById('stockQty').value = current;
   document.getElementById('stockModal').classList.add('open');
 }
-async function updateStock(){
-  var id=document.getElementById('stockProductId').value;
-  var qty=document.getElementById('stockQty').value;
-  try{
-    var res=await fetch(API+'/api/admin/products/'+id+'/stock',{method:'PUT',headers:authH(),body:JSON.stringify({stock_qty:parseInt(qty)})});
-    var data=await res.json();
-    if(data.success){showToast('Stock updated!');closeModal('stockModal');loadInventory();loadProducts();}
-    else showToast('Failed',true);
-  }catch(e){showToast('Error',true);}
-}
+document.getElementById('cancelStockModal').onclick = function() { closeModal('stockModal'); };
+document.getElementById('saveStockModal').onclick = async function() {
+  var id = document.getElementById('stockProductId').value;
+  var qty = parseInt(document.getElementById('stockQty').value);
+  try {
+    var res = await fetch(API + '/api/admin/products/' + id + '/stock', {
+      method: 'PUT', headers: authH(), body: JSON.stringify({ stock_qty: qty })
+    });
+    var data = await res.json();
+    if (data.success) { showToast('Stock updated!'); closeModal('stockModal'); loadInventory(); loadProducts(); }
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
 
-// ── SETTINGS ──
-async function loadSettingsData(){
-  try{
-    var res=await fetch(API+'/api/settings'); var data=await res.json();
-    if(!data.success)return;
-    var s=data.settings; currentSettings=s;
-    if(s.theme_color){selectTheme(s.theme_color,true);}
-    if(s.banner_headline){
-      var parts=s.banner_headline.split('\n');
-      document.getElementById('set-heroLine1').value=parts[0]||'';
-      document.getElementById('set-heroLine2').value=parts[1]||'';
-      document.getElementById('prev-line1').textContent=parts[0]||'';
-      document.getElementById('prev-line2').textContent=parts[1]||'';
-    }
-    if(s.banner_subtext){document.getElementById('set-heroDesc').value=s.banner_subtext||'';}
-    if(s.announcement_text){
-      document.getElementById('set-announcement').value=s.announcement_text;
-      document.getElementById('announcementPreview').textContent=s.announcement_text;
-    }
-    if(s.featured_category){document.getElementById('set-featuredCat').value=s.featured_category;}
-    if(s.show_story_section){document.getElementById('set-showStory').value=s.show_story_section;}
-    if(s.story_text){document.getElementById('set-storyText').value=s.story_text;}
-    if(s.banner_image_1){document.getElementById('set-img1').value=s.banner_image_1;prevImg('prev1',s.banner_image_1);}
-    if(s.banner_image_2){document.getElementById('set-img2').value=s.banner_image_2;prevImg('prev2',s.banner_image_2);}
-    if(s.banner_image_3){document.getElementById('set-img3').value=s.banner_image_3;prevImg('prev3',s.banner_image_3);}
-    if(s.banner_image_4){document.getElementById('set-img4').value=s.banner_image_4;prevImg('prev4',s.banner_image_4);}
-    if(s.banner_slide_1_title)document.getElementById('set-s1t1').value=s.banner_slide_1_title;
-    if(s.banner_slide_1_subtitle)document.getElementById('set-s1t2').value=s.banner_slide_1_subtitle;
-    if(s.banner_slide_2_title)document.getElementById('set-s2t1').value=s.banner_slide_2_title;
-    if(s.banner_slide_2_subtitle)document.getElementById('set-s2t2').value=s.banner_slide_2_subtitle;
-    if(s.banner_slide_3_title)document.getElementById('set-s3t1').value=s.banner_slide_3_title;
-    if(s.banner_slide_3_subtitle)document.getElementById('set-s3t2').value=s.banner_slide_3_subtitle;
-    if(s.banner_slide_4_title)document.getElementById('set-s4t1').value=s.banner_slide_4_title;
-    if(s.banner_slide_4_subtitle)document.getElementById('set-s4t2').value=s.banner_slide_4_subtitle;
-    if(s.slider_autoplay_seconds)document.getElementById('set-autoplay').value=s.slider_autoplay_seconds;
-    var sub=s.banner_headline?s.banner_headline.split('\n')[0]:'';
-    document.getElementById('set-heroSubtitle') && (document.getElementById('set-heroSubtitle').value=s.hero_subtitle||'');
-    document.getElementById('saveStatus').textContent='Settings loaded ✓';
-    document.getElementById('saveStatus').className='save-status saved';
-  }catch(e){}
-}
-
-function prevImg(boxId,url){
-  var box=document.getElementById(boxId);
-  if(!box)return;
-  if(url&&url.trim()){
-    var img=document.createElement('img');
-    img.src=url;
-    img.style.cssText='width:100%;height:100%;object-fit:cover';
-    img.onerror=function(){box.textContent='Invalid URL - check link';};
-    box.innerHTML='';
+// SETTINGS
+function setImgPreview(boxId, url) {
+  var box = document.getElementById(boxId);
+  if (!box) return;
+  if (url && url.trim()) {
+    var img = document.createElement('img');
+    img.src = url;
+    img.onerror = function() { box.textContent = 'Invalid URL'; };
+    box.innerHTML = '';
     box.appendChild(img);
-  }else{
-    box.textContent='No image — paste URL above';
-  }
-  document.getElementById('saveStatus').textContent='Unsaved changes';
-  document.getElementById('saveStatus').className='save-status';
-}else{box.textContent='No image set';}
-  document.getElementById('saveStatus').textContent='Unsaved changes';
-  document.getElementById('saveStatus').className='save-status';
-}
-
-function selectTheme(theme,silent){
-  currentTheme=theme;
-  document.querySelectorAll('.theme-opt').forEach(function(el){el.classList.remove('selected')});
-  var el=document.getElementById('theme-'+theme);
-  if(el)el.classList.add('selected');
-  var bgs={brown:'#1C1208',black:'#0D0D0D',green:'#0a1208'};
-  document.getElementById('livePreview').querySelector('div:last-child').style.background=bgs[theme]||'#1C1208';
-  if(!silent){
-    document.getElementById('saveStatus').textContent='Unsaved changes';
-    document.getElementById('saveStatus').className='save-status';
+  } else {
+    box.textContent = 'No image set';
   }
 }
 
-// Live preview updates
-['set-heroLine1','set-heroLine2','set-heroSubtitle'].forEach(function(id){
-  var el=document.getElementById(id);
-  if(!el)return;
-  el.addEventListener('input',function(){
-    if(id==='set-heroLine1')document.getElementById('prev-line1').textContent=this.value;
-    if(id==='set-heroLine2')document.getElementById('prev-line2').textContent=this.value;
-    if(id==='set-heroSubtitle')document.getElementById('prev-sub').textContent=this.value;
-    document.getElementById('saveStatus').textContent='Unsaved changes';
-    document.getElementById('saveStatus').className='save-status';
-  });
-});
-document.getElementById('set-announcement')&&document.getElementById('set-announcement').addEventListener('input',function(){
-  document.getElementById('announcementPreview').textContent=this.value||'FREE SHIPPING ABOVE ₹500';
-});
+document.getElementById('set-img1').oninput = function() { setImgPreview('prev1', this.value); markUnsaved(); };
+document.getElementById('set-img2').oninput = function() { setImgPreview('prev2', this.value); markUnsaved(); };
+document.getElementById('set-img3').oninput = function() { setImgPreview('prev3', this.value); markUnsaved(); };
+document.getElementById('set-img4').oninput = function() { setImgPreview('prev4', this.value); markUnsaved(); };
+document.getElementById('set-s1t1').oninput = function() { document.getElementById('prevL1').textContent = this.value; markUnsaved(); };
+document.getElementById('set-s1t2').oninput = function() { document.getElementById('prevL2').textContent = this.value; markUnsaved(); };
+document.getElementById('set-announcement').oninput = function() { document.getElementById('announcePrev').textContent = this.value || 'FREE SHIPPING ABOVE ₹500'; };
 
-async function saveBannerSettings(){
-  var line1=document.getElementById('set-heroLine1').value;
-  var line2=document.getElementById('set-heroLine2').value;
-  var payload={
-    theme_color:currentTheme,
-    banner_headline:line1+(line2?'\n'+line2:''),
-    banner_subtext:document.getElementById('set-heroDesc').value,
-    featured_category:document.getElementById('set-featuredCat').value,
-    show_story_section:document.getElementById('set-showStory').value,
-    story_text:document.getElementById('set-storyText').value,
-    banner_image_1:document.getElementById('set-img1').value,
-    banner_image_2:document.getElementById('set-img2').value,
-    banner_image_3:document.getElementById('set-img3').value,
-    banner_image_4:document.getElementById('set-img4').value,
-    banner_slide_1_title:document.getElementById('set-s1t1').value,
-    banner_slide_1_subtitle:document.getElementById('set-s1t2').value,
-    banner_slide_2_title:document.getElementById('set-s2t1').value,
-    banner_slide_2_subtitle:document.getElementById('set-s2t2').value,
-    banner_slide_3_title:document.getElementById('set-s3t1').value,
-    banner_slide_3_subtitle:document.getElementById('set-s3t2').value,
-    banner_slide_4_title:document.getElementById('set-s4t1').value,
-    banner_slide_4_subtitle:document.getElementById('set-s4t2').value,
-    slider_autoplay_seconds:document.getElementById('set-autoplay').value
+function markUnsaved() {
+  document.getElementById('saveStatus').textContent = 'Unsaved changes';
+  document.getElementById('saveStatus').className = 'save-status';
+}
+
+var themeNames = ['brown','black','green','navy','maroon','charcoal'];
+themeNames.forEach(function(t) {
+  document.getElementById('theme-' + t).onclick = function() {
+    currentTheme = t;
+    document.querySelectorAll('.theme-opt').forEach(function(el) { el.classList.remove('selected'); });
+    this.classList.add('selected');
+    var bgs = { brown:'#1C1208', black:'#0D0D0D', green:'#0a1208', navy:'#080C14', maroon:'#140608', charcoal:'#111318' };
+    document.getElementById('prevBg').style.background = bgs[t] || '#1C1208';
+    markUnsaved();
   };
-  try{
-    var res=await fetch(API+'/api/settings',{method:'PUT',headers:authH(),body:JSON.stringify(payload)});
-    var data=await res.json();
-    if(data.success){
+});
+
+async function loadSettingsData() {
+  try {
+    var res = await fetch(API + '/api/settings');
+    var data = await res.json();
+    if (!data.success) return;
+    var s = data.settings;
+    if (s.theme_color) {
+      currentTheme = s.theme_color;
+      document.querySelectorAll('.theme-opt').forEach(function(el) { el.classList.remove('selected'); });
+      var el = document.getElementById('theme-' + s.theme_color);
+      if (el) el.classList.add('selected');
+    }
+    if (s.announcement_text) { document.getElementById('set-announcement').value = s.announcement_text; document.getElementById('announcePrev').textContent = s.announcement_text; }
+    if (s.banner_slide_1_title) { document.getElementById('set-s1t1').value = s.banner_slide_1_title; document.getElementById('prevL1').textContent = s.banner_slide_1_title; }
+    if (s.banner_slide_1_subtitle) { document.getElementById('set-s1t2').value = s.banner_slide_1_subtitle; document.getElementById('prevL2').textContent = s.banner_slide_1_subtitle; }
+    if (s.banner_slide_2_title) document.getElementById('set-s2t1').value = s.banner_slide_2_title;
+    if (s.banner_slide_2_subtitle) document.getElementById('set-s2t2').value = s.banner_slide_2_subtitle;
+    if (s.banner_slide_3_title) document.getElementById('set-s3t1').value = s.banner_slide_3_title;
+    if (s.banner_slide_3_subtitle) document.getElementById('set-s3t2').value = s.banner_slide_3_subtitle;
+    if (s.banner_slide_4_title) document.getElementById('set-s4t1').value = s.banner_slide_4_title;
+    if (s.banner_slide_4_subtitle) document.getElementById('set-s4t2').value = s.banner_slide_4_subtitle;
+    if (s.banner_image_1) { document.getElementById('set-img1').value = s.banner_image_1; setImgPreview('prev1', s.banner_image_1); }
+    if (s.banner_image_2) { document.getElementById('set-img2').value = s.banner_image_2; setImgPreview('prev2', s.banner_image_2); }
+    if (s.banner_image_3) { document.getElementById('set-img3').value = s.banner_image_3; setImgPreview('prev3', s.banner_image_3); }
+    if (s.banner_image_4) { document.getElementById('set-img4').value = s.banner_image_4; setImgPreview('prev4', s.banner_image_4); }
+    if (s.slider_autoplay_seconds) document.getElementById('set-autoplay').value = s.slider_autoplay_seconds;
+    if (s.featured_category) document.getElementById('set-featuredCat').value = s.featured_category;
+    if (s.show_story_section) document.getElementById('set-showStory').value = s.show_story_section;
+    if (s.story_text) document.getElementById('set-storyText').value = s.story_text;
+    document.getElementById('saveStatus').textContent = 'Settings loaded ✓';
+    document.getElementById('saveStatus').className = 'save-status saved';
+  } catch(e) {}
+}
+
+document.getElementById('saveBannerBtn').onclick = async function() {
+  var payload = {
+    theme_color: currentTheme,
+    banner_slide_1_title: document.getElementById('set-s1t1').value,
+    banner_slide_1_subtitle: document.getElementById('set-s1t2').value,
+    banner_slide_2_title: document.getElementById('set-s2t1').value,
+    banner_slide_2_subtitle: document.getElementById('set-s2t2').value,
+    banner_slide_3_title: document.getElementById('set-s3t1').value,
+    banner_slide_3_subtitle: document.getElementById('set-s3t2').value,
+    banner_slide_4_title: document.getElementById('set-s4t1').value,
+    banner_slide_4_subtitle: document.getElementById('set-s4t2').value,
+    banner_image_1: document.getElementById('set-img1').value,
+    banner_image_2: document.getElementById('set-img2').value,
+    banner_image_3: document.getElementById('set-img3').value,
+    banner_image_4: document.getElementById('set-img4').value,
+    slider_autoplay_seconds: document.getElementById('set-autoplay').value,
+    featured_category: document.getElementById('set-featuredCat').value,
+    show_story_section: document.getElementById('set-showStory').value,
+    story_text: document.getElementById('set-storyText').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) {
       showToast('Settings saved! Website updated ✓');
-      document.getElementById('saveStatus').textContent='Saved ✓';
-      document.getElementById('saveStatus').className='save-status saved';
-    }else showToast('Save failed',true);
-  }catch(e){showToast('Error saving',true);}
-}
+      document.getElementById('saveStatus').textContent = 'Saved ✓';
+      document.getElementById('saveStatus').className = 'save-status saved';
+    } else showToast('Save failed', true);
+  } catch(e) { showToast('Error saving', true); }
+};
 
-async function saveAnnouncementSettings(){
-  var text=document.getElementById('set-announcement').value;
-  try{
-    var res=await fetch(API+'/api/settings',{method:'PUT',headers:authH(),body:JSON.stringify({announcement_text:text})});
-    var data=await res.json();
-    if(data.success)showToast('Announcement saved!');
-    else showToast('Save failed',true);
-  }catch(e){showToast('Error',true);}
-}
+document.getElementById('saveAnnounceBtn').onclick = async function() {
+  var text = document.getElementById('set-announcement').value;
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify({ announcement_text: text }) });
+    var data = await res.json();
+    if (data.success) showToast('Announcement saved!');
+    else showToast('Save failed', true);
+  } catch(e) { showToast('Error', true); }
+};
 
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-
-if(token)initApp();
+if (token) initApp();
 </script>
 </body>
 </html>
