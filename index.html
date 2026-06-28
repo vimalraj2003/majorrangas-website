@@ -16,6 +16,9 @@
     body.theme-navy{--bg:#080C14;--bg2:#060a10;--bg3:#0d1220;}
     body.theme-maroon{--bg:#140608;--bg2:#100406;--bg3:#1c080c;}
     body.theme-charcoal{--bg:#111318;--bg2:#0d0f14;--bg3:#181b22;}
+    body.theme-white{--bg:#FFFFFF;--bg2:#F5F5F5;--bg3:#EEEEEE;--gold:#A88732;--gold-light:#C9A84C;--gold-dark:#8B6914;--cream:#1A1A1A;--gold-faint:rgba(168,135,50,0.08);--gold-border:rgba(168,135,50,0.2);}
+    body.theme-cream{--bg:#F8F3E8;--bg2:#F0E9D6;--bg3:#E8DFC8;--gold:#8B6914;--gold-light:#A88732;--gold-dark:#6B5010;--cream:#1C1208;--gold-faint:rgba(139,105,20,0.08);--gold-border:rgba(139,105,20,0.2);}
+    body.theme-ivory{--bg:#F5F0E8;--bg2:#EDE6D4;--bg3:#E5DCC4;--gold:#A88732;--gold-light:#C9A84C;--gold-dark:#8B6914;--cream:#1C1208;--gold-faint:rgba(168,135,50,0.08);--gold-border:rgba(168,135,50,0.2);}
     *{margin:0;padding:0;box-sizing:border-box;}
     html{scroll-behavior:smooth;}
     body{background:var(--bg);color:var(--cream);font-family:var(--font-sans);font-size:15px;line-height:1.6;}
@@ -26,6 +29,15 @@
     body.theme-navy .navbar{background:rgba(8,12,20,0.96);}
     body.theme-maroon .navbar{background:rgba(20,6,8,0.96);}
     body.theme-charcoal .navbar{background:rgba(17,19,24,0.96);}
+    body.theme-white .navbar{background:rgba(255,255,255,0.97);border-bottom:1px solid rgba(168,135,50,0.2);}
+    body.theme-cream .navbar{background:rgba(248,243,232,0.97);border-bottom:1px solid rgba(139,105,20,0.2);}
+    body.theme-ivory .navbar{background:rgba(245,240,232,0.97);border-bottom:1px solid rgba(168,135,50,0.2);}
+    body.theme-white .logo-main,body.theme-cream .logo-main,body.theme-ivory .logo-main{color:var(--gold);}
+    body.theme-white .announce-bar,body.theme-cream .announce-bar,body.theme-ivory .announce-bar{background:var(--gold);color:#FFFFFF;}
+    body.theme-white .marquee,body.theme-cream .marquee,body.theme-ivory .marquee{background:var(--gold);}
+    body.theme-white .marquee-item,body.theme-cream .marquee-item,body.theme-ivory .marquee-item{color:#FFFFFF;}
+    body.theme-white .prod-card,body.theme-cream .prod-card,body.theme-ivory .prod-card{border:1px solid var(--gold-border);}
+    body.theme-white .cat-item,body.theme-cream .cat-item,body.theme-ivory .cat-item{border-color:var(--gold-border);}
     .nav-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:64px;padding:0 40px;}
     .nav-left,.nav-right-links{display:flex;gap:28px;list-style:none;}
     .nav-right-links{justify-content:flex-end;align-items:center;}
