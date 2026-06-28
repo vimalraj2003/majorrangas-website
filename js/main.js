@@ -8,7 +8,7 @@ function createProductCard(p) {
   const emoji = p.category === 'Sweets' ? '🍬' : p.category === 'Podis' ? '🌶️' : '🥨';
 
   return `
-    <div class="product-card">
+    <div class="product-card" onclick="window.location.href='product.html?slug=${p.slug}'" style="cursor:pointer">
       ${p.image_primary
         ? `<img class="product-img" src="${p.image_primary}" alt="${p.name}" loading="lazy" onerror="this.parentNode.querySelector('.product-img-placeholder').style.display='flex';this.style.display='none'">`
         : ''}
@@ -23,7 +23,7 @@ function createProductCard(p) {
           ${hasDiscount ? `<span class="price-save">${Math.round((1 - price/mrp)*100)}% OFF</span>` : ''}
         </div>
         ${inStock
-          ? `<button class="add-to-cart" onclick='addToCart(${JSON.stringify({id: p.id, name: p.name, mrp: price, image_primary: p.image_primary, weight: p.weight, unit: p.unit, category: p.category})})'>Add to Cart</button>`
+          ? `<button class="add-to-cart" onclick='event.stopPropagation();addToCart(${JSON.stringify({id: p.id, name: p.name, mrp: price, image_primary: p.image_primary, weight: p.weight, unit: p.unit, category: p.category})})'>Add to Cart</button>`
           : `<button class="add-to-cart" disabled>Out of Stock</button><div class="out-of-stock">Currently unavailable</div>`
         }
       </div>
@@ -39,7 +39,6 @@ async function loadFeaturedProducts() {
     const res = await fetch(`${CONFIG.API_URL}/api/products?featured=true`);
     const data = await res.json();
     let products = data.products || [];
-    // Fallback: show first 8 active products if no featured
     if (products.length === 0) {
       const res2 = await fetch(`${CONFIG.API_URL}/api/products`);
       const data2 = await res2.json();
