@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +26,29 @@
   <div class="container">
     <h1>Checkout</h1>
     <p>Complete your order</p>
+  </div>
+</div>
+
+<!-- Login prompt banner -->
+<div id="loginPromptBanner" style="background:rgba(201,168,76,0.08);border-bottom:1px solid rgba(201,168,76,0.15);padding:12px 40px;display:none">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:1.2rem">👤</span>
+      <span style="color:rgba(245,230,200,0.7);font-size:0.85rem">Login to save your address & track orders easily</span>
+    </div>
+    <div style="display:flex;gap:10px">
+      <a href="login.html?redirect=checkout.html" style="background:var(--gold);color:var(--black);padding:7px 20px;border-radius:4px;font-size:0.78rem;font-weight:700;letter-spacing:1px;text-decoration:none">LOGIN</a>
+      <button onclick="dismissLoginBanner()" style="background:none;border:1px solid var(--border);color:var(--gray);padding:7px 16px;border-radius:4px;font-size:0.78rem;cursor:pointer">Continue as Guest</button>
+    </div>
+  </div>
+</div>
+
+<!-- Logged in user info -->
+<div id="loggedInBar" style="background:rgba(76,175,80,0.06);border-bottom:1px solid rgba(76,175,80,0.15);padding:10px 40px;display:none">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:10px">
+    <span style="font-size:1rem">✅</span>
+    <span style="color:#81C784;font-size:0.82rem">Logged in as <strong id="loggedInName"></strong> — your order will be saved to your account</span>
+    <a href="account.html" style="color:#81C784;font-size:0.75rem;margin-left:8px;text-decoration:underline">My Account</a>
   </div>
 </div>
 
@@ -180,6 +202,53 @@ function loadSummary() {
     </div>`).join('');
 }
 
+// Check login status
+function checkLoginStatus() {
+  var token = localStorage.getItem('mr_customer_token');
+  var customer = JSON.parse(localStorage.getItem('mr_customer') || '{}');
+  if (token && customer.email) {
+    // Logged in — show green bar, pre-fill form
+    document.getElementById('loggedInBar').style.display = 'block';
+    document.getElementById('loggedInName').textContent = customer.name || customer.email;
+    if (customer.name) document.getElementById('customerName').value = customer.name;
+    if (customer.email) document.getElementById('customerEmail').value = customer.email;
+    if (customer.phone) document.getElementById('customerPhone').value = customer.phone;
+    loadSavedAddress(token);
+  } else {
+    // Not logged in — show login prompt
+    document.getElementById('loginPromptBanner').style.display = 'block';
+  }
+}
+
+function dismissLoginBanner() {
+  document.getElementById('loginPromptBanner').style.display = 'none';
+}
+
+async function loadSavedAddress(token) {
+  try {
+    var res = await fetch(CONFIG.API_URL + '/api/customers/addresses', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    var data = await res.json();
+    if (data.success && data.addresses.length > 0) {
+      var def = data.addresses.find(function(a){ return a.is_default; }) || data.addresses[0];
+      if (def) {
+        document.getElementById('shippingAddress').value = def.address || '';
+        document.getElementById('shippingCity').value = def.city || '';
+        document.getElementById('shippingState').value = def.state || '';
+        document.getElementById('shippingPincode').value = def.pincode || '';
+        if (def.phone) document.getElementById('customerPhone').value = def.phone;
+        // Show saved address notice
+        var notice = document.createElement('div');
+        notice.style.cssText = 'background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:8px 14px;font-size:0.78rem;color:rgba(201,168,76,0.7);margin-bottom:14px';
+        notice.textContent = '✓ Default address pre-filled from your account';
+        var addrField = document.getElementById('shippingAddress').parentNode;
+        addrField.insertBefore(notice, addrField.firstChild);
+      }
+    }
+  } catch(e) {}
+}
+
 window.appliedDiscount = 0;
 window.appliedCouponCode = '';
 
@@ -201,8 +270,56 @@ async function applyCoupon() {
       msg.style.color = '#81C784';
       msg.textContent = `✓ Coupon applied! You save ₹${data.discount.toFixed(2)}`;
       loadSummary();
+checkLoginStatus();
     } else {
-      window.appliedDiscount = 0;
+      // Check login status
+function checkLoginStatus() {
+  var token = localStorage.getItem('mr_customer_token');
+  var customer = JSON.parse(localStorage.getItem('mr_customer') || '{}');
+  if (token && customer.email) {
+    // Logged in — show green bar, pre-fill form
+    document.getElementById('loggedInBar').style.display = 'block';
+    document.getElementById('loggedInName').textContent = customer.name || customer.email;
+    if (customer.name) document.getElementById('customerName').value = customer.name;
+    if (customer.email) document.getElementById('customerEmail').value = customer.email;
+    if (customer.phone) document.getElementById('customerPhone').value = customer.phone;
+    loadSavedAddress(token);
+  } else {
+    // Not logged in — show login prompt
+    document.getElementById('loginPromptBanner').style.display = 'block';
+  }
+}
+
+function dismissLoginBanner() {
+  document.getElementById('loginPromptBanner').style.display = 'none';
+}
+
+async function loadSavedAddress(token) {
+  try {
+    var res = await fetch(CONFIG.API_URL + '/api/customers/addresses', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    var data = await res.json();
+    if (data.success && data.addresses.length > 0) {
+      var def = data.addresses.find(function(a){ return a.is_default; }) || data.addresses[0];
+      if (def) {
+        document.getElementById('shippingAddress').value = def.address || '';
+        document.getElementById('shippingCity').value = def.city || '';
+        document.getElementById('shippingState').value = def.state || '';
+        document.getElementById('shippingPincode').value = def.pincode || '';
+        if (def.phone) document.getElementById('customerPhone').value = def.phone;
+        // Show saved address notice
+        var notice = document.createElement('div');
+        notice.style.cssText = 'background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:8px 14px;font-size:0.78rem;color:rgba(201,168,76,0.7);margin-bottom:14px';
+        notice.textContent = '✓ Default address pre-filled from your account';
+        var addrField = document.getElementById('shippingAddress').parentNode;
+        addrField.insertBefore(notice, addrField.firstChild);
+      }
+    }
+  } catch(e) {}
+}
+
+window.appliedDiscount = 0;
       window.appliedCouponCode = '';
       msg.style.color = '#ff6b6b';
       msg.textContent = data.error || 'Invalid coupon';
