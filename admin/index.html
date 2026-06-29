@@ -1056,7 +1056,7 @@ async function loadLowStock() {
   try {
     var settRes = await fetch(API + '/api/settings');
     var settData = await settRes.json();
-    var threshold = parseInt((settData.settings || {}).low_stock_threshold || 10);
+    var threshold = parseInt(((settData.settings || {}).low_stock_threshold) || 10);
     if (settData.settings && settData.settings.low_stock_threshold) {
       document.getElementById('set-lowStock').value = settData.settings.low_stock_threshold;
     }
@@ -1067,12 +1067,21 @@ async function loadLowStock() {
     var html = '';
     lowItems.forEach(function(p) {
       var out = p.stock_qty === 0;
-      html += '<tr><td>' + p.name + '</td><td>' + p.category + '</td>'
-        + '<td style="color:' + (out ? '#F44336' : '#FF9800') + ';font-weight:700">' + p.stock_qty + '</td>'
-        + '<td><span class="badge" style="background:' + (out ? 'rgba(244,67,54,0.15)' : 'rgba(255,152,0,0.15)') + ';color:' + (out ? '#EF9A9A' : '#FFB74D') + '">' + (out ? 'Out of Stock' : 'Low Stock') + '</span></td>'
-        + '<td><button class="btn-sm btn-blue" onclick="openStockModal(' + p.id + ','' + p.name.replace(/'/g,'') + '',' + p.stock_qty + ')">Update</button></td></tr>';
+      var color = out ? '#F44336' : '#FF9800';
+      var bg = out ? 'rgba(244,67,54,0.15)' : 'rgba(255,152,0,0.15)';
+      var fc = out ? '#EF9A9A' : '#FFB74D';
+      var label = out ? 'Out of Stock' : 'Low Stock';
+      var safeName = p.name.replace(/'/g, '');
+      var row = '<tr>';
+      row += '<td>' + p.name + '</td>';
+      row += '<td>' + p.category + '</td>';
+      row += '<td style="color:' + color + ';font-weight:700">' + p.stock_qty + '</td>';
+      row += '<td><span class="badge" style="background:' + bg + ';color:' + fc + '">' + label + '</span></td>';
+      row += '<td><button class="btn-sm btn-blue" onclick="openStockModal(' + p.id + ',\'' + safeName + '\',' + p.stock_qty + ')">Update</button></td>';
+      row += '</tr>';
+      html += row;
     });
-    document.getElementById('lowStockTable').innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:#81C784;padding:20px">✓ All products well stocked!</td></tr>';
+    document.getElementById('lowStockTable').innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:#81C784;padding:20px">All products well stocked!</td></tr>';
   } catch(e) {}
 }
 
