@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — Major Rangas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .account-page{min-height:100vh;padding:100px 0 60px;background:var(--black);}
+    .account-grid{display:grid;grid-template-columns:260px 1fr;gap:28px;max-width:1100px;margin:0 auto;padding:0 20px;}
+    .account-sidebar{background:var(--black2);border:1px solid var(--border);border-radius:10px;padding:24px;height:fit-content;position:sticky;top:90px;}
+    .account-avatar{text-align:center;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+    .avatar-img{width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);margin:0 auto 10px;display:block;background:var(--border);}
+    .avatar-initials{width:72px;height:72px;border-radius:50%;background:var(--gold);color:var(--black);font-family:var(--font-serif);font-size:1.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
+    .account-name{color:var(--white);font-family:var(--font-serif);font-size:1.1rem;margin-bottom:4px;}
+    .account-email{color:var(--gray);font-size:0.78rem;}
+    .acc-nav{list-style:none;}
+    .acc-nav li{margin-bottom:4px;}
+    .acc-nav a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:6px;color:var(--gray);font-size:0.88rem;text-decoration:none;transition:all 0.2s;cursor:pointer;}
+    .acc-nav a:hover,.acc-nav a.active{background:rgba(201,168,76,0.08);color:var(--gold);}
+    .acc-nav .icon{width:18px;text-align:center;}
+    .logout-link{color:#ff6b6b!important;margin-top:8px;border-top:1px solid var(--border);padding-top:12px!important;}
+
+    .account-content{background:var(--black2);border:1px solid var(--border);border-radius:10px;padding:28px;}
+    .section-title{font-family:var(--font-serif);color:var(--gold);font-size:1.2rem;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+    .acc-section{display:none;}
+    .acc-section.active{display:block;}
+
+    /* Profile */
+    .profile-form .inp-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+    .profile-form .inp-group{margin-bottom:16px;}
+    .profile-form label{display:block;color:var(--gray);font-size:0.78rem;margin-bottom:6px;}
+    .profile-form input{width:100%;padding:11px 14px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:0.88rem;outline:none;}
+    .profile-form input:focus{border-color:var(--gold);}
+    .btn-save{background:var(--gold);color:var(--black);border:none;padding:11px 28px;border-radius:6px;font-weight:700;font-size:0.88rem;cursor:pointer;}
+    .btn-save:hover{background:var(--gold-light);}
+
+    /* Orders */
+    .order-card{background:var(--black);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:14px;}
+    .order-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+    .order-num{color:var(--gold);font-weight:700;font-size:0.9rem;}
+    .order-date{color:var(--gray);font-size:0.78rem;}
+    .order-status{padding:3px 12px;border-radius:10px;font-size:0.72rem;font-weight:700;}
+    .status-placed{background:rgba(201,168,76,0.15);color:var(--gold);}
+    .status-confirmed{background:rgba(33,150,243,0.15);color:#64B5F6;}
+    .status-shipped{background:rgba(156,39,176,0.15);color:#CE93D8;}
+    .status-delivered{background:rgba(76,175,80,0.15);color:#81C784;}
+    .status-cancelled{background:rgba(244,67,54,0.15);color:#EF9A9A;}
+    .order-items{color:var(--gray);font-size:0.82rem;margin-bottom:10px;line-height:1.6;}
+    .order-total{color:var(--gold);font-weight:700;font-size:1rem;}
+    .order-actions{display:flex;gap:8px;margin-top:10px;}
+    .btn-track{background:none;border:1px solid var(--border);color:var(--gray);padding:6px 14px;border-radius:4px;font-size:0.78rem;cursor:pointer;transition:all 0.2s;}
+    .btn-track:hover{border-color:var(--gold);color:var(--gold);}
+
+    /* Addresses */
+    .address-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+    .address-card{background:var(--black);border:1px solid var(--border);border-radius:8px;padding:16px;position:relative;}
+    .address-card.default{border-color:var(--gold);}
+    .default-badge{position:absolute;top:10px;right:10px;background:var(--gold);color:var(--black);font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:10px;}
+    .address-name{color:var(--white);font-weight:600;margin-bottom:4px;}
+    .address-text{color:var(--gray);font-size:0.82rem;line-height:1.6;}
+    .address-actions{display:flex;gap:8px;margin-top:10px;}
+    .btn-del{background:none;border:1px solid rgba(244,67,54,0.3);color:#EF9A9A;padding:5px 12px;border-radius:4px;font-size:0.75rem;cursor:pointer;}
+
+    .add-address-form{background:var(--black);border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:16px;}
+    .add-address-form h4{color:var(--gold);font-size:0.88rem;margin-bottom:14px;}
+
+    /* Wishlist */
+    .wishlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;}
+    .wish-card{background:var(--black);border:1px solid var(--border);border-radius:8px;overflow:hidden;position:relative;}
+    .wish-card img{width:100%;aspect-ratio:1;object-fit:cover;}
+    .wish-card-placeholder{width:100%;aspect-ratio:1;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:2.5rem;}
+    .wish-card-info{padding:12px;}
+    .wish-card-name{color:var(--white);font-size:0.85rem;margin-bottom:4px;font-family:var(--font-serif);}
+    .wish-card-price{color:var(--gold);font-weight:700;font-size:0.9rem;}
+    .wish-remove{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);border:none;color:#EF9A9A;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;}
+    .wish-add-cart{width:100%;background:var(--gold);color:var(--black);border:none;padding:8px;font-size:0.78rem;font-weight:700;cursor:pointer;transition:background 0.2s;}
+    .wish-add-cart:hover{background:var(--gold-light);}
+
+    .empty-state{text-align:center;padding:60px 20px;color:var(--gray);}
+    .empty-icon{font-size:3rem;margin-bottom:12px;}
+
+    .toast{position:fixed;bottom:24px;right:24px;z-index:999;background:var(--gold);color:var(--black);padding:11px 20px;border-radius:4px;font-weight:700;font-size:0.82rem;transform:translateY(80px);opacity:0;transition:all 0.3s;}
+    .toast.show{transform:translateY(0);opacity:1;}
+
+    @media(max-width:768px){
+      .account-grid{grid-template-columns:1fr;}
+      .account-sidebar{position:static;}
+      .address-grid{grid-template-columns:1fr;}
+      .profile-form .inp-row{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <ul class="nav-left" style="list-style:none;display:flex;gap:28px">
+      <li><a href="products.html?cat=Snacks" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Snacks</a></li>
+      <li><a href="products.html?cat=Sweets" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Sweets</a></li>
+      <li><a href="products.html?cat=Podis" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Podis</a></li>
+    </ul>
+    <a href="index.html" class="logo">
+      <span class="logo-main">MAJOR RANGAS</span>
+      <span class="logo-sub">Authentic South Indian</span>
+    </a>
+    <ul style="list-style:none;display:flex;gap:20px;justify-content:flex-end;align-items:center">
+      <li><a href="products.html" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Products</a></li>
+      <li><a href="track.html" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Track</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="account-page">
+  <div class="account-grid">
+
+    <!-- Sidebar -->
+    <div class="account-sidebar">
+      <div class="account-avatar">
+        <div id="avatarBox"></div>
+        <div class="account-name" id="sidebarName">Loading...</div>
+        <div class="account-email" id="sidebarEmail"></div>
+      </div>
+      <ul class="acc-nav">
+        <li><a class="active" onclick="showSection('orders')"><span class="icon">📦</span> My Orders</a></li>
+        <li><a onclick="showSection('wishlist')"><span class="icon">❤️</span> Wishlist</a></li>
+        <li><a onclick="showSection('addresses')"><span class="icon">📍</span> Addresses</a></li>
+        <li><a onclick="showSection('profile')"><span class="icon">👤</span> Profile</a></li>
+        <li><a class="logout-link" onclick="doLogout()"><span class="icon">🚪</span> Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="account-content">
+
+      <!-- ORDERS -->
+      <div class="acc-section active" id="sec-orders">
+        <div class="section-title">My Orders</div>
+        <div id="ordersList"><div class="empty-state"><div class="empty-icon">📦</div><p>Loading orders...</p></div></div>
+      </div>
+
+      <!-- WISHLIST -->
+      <div class="acc-section" id="sec-wishlist">
+        <div class="section-title">My Wishlist</div>
+        <div class="wishlist-grid" id="wishlistGrid"></div>
+      </div>
+
+      <!-- ADDRESSES -->
+      <div class="acc-section" id="sec-addresses">
+        <div class="section-title">Saved Addresses</div>
+        <div class="address-grid" id="addressGrid"></div>
+        <button class="btn-save" onclick="toggleAddressForm()">+ Add New Address</button>
+        <div class="add-address-form" id="addAddressForm" style="display:none">
+          <h4>New Address</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <div><label style="color:var(--gray);font-size:0.75rem;display:block;margin-bottom:4px">Name</label><input type="text" id="addrName" style="width:100%;padding:10px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);outline:none;font-size:0.85rem"></div>
+            <div><label style="color:var(--gray);font-size:0.75rem;display:block;margin-bottom:4px">Phone</label><input type="text" id="addrPhone" style="width:100%;padding:10px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);outline:none;font-size:0.85rem"></div>
+          </div>
+          <div style="margin-bottom:12px"><label style="color:var(--gray);font-size:0.75rem;display:block;margin-bottom:4px">Address</label><textarea id="addrAddress" rows="2" style="width:100%;padding:10px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);outline:none;font-size:0.85rem;resize:none"></textarea></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+            <div><label style="color:var(--gray);font-size:0.75rem;display:block;margin-bottom:4px">City</label><input type="text" id="addrCity" style="width:100%;padding:10px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);outline:none;font-size:0.85rem"></div>
+            <div><label style="color:var(--gray);font-size:0.75rem;display:block;margin-bottom:4px">State</label><input type="text" id="addrState" style="width:100%;padding:10px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);outline:none;font-size:0.85rem"></div>
+            <div><label style="color:var(--gray);font-size:0.75rem;display:block;margin-bottom:4px">Pincode</label><input type="text" id="addrPincode" style="width:100%;padding:10px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);outline:none;font-size:0.85rem"></div>
+          </div>
+          <label style="display:flex;align-items:center;gap:8px;color:var(--gray);font-size:0.82rem;margin-bottom:14px;cursor:pointer">
+            <input type="checkbox" id="addrDefault"> Set as default address
+          </label>
+          <button class="btn-save" onclick="saveAddress()">Save Address</button>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="acc-section" id="sec-profile">
+        <div class="section-title">My Profile</div>
+        <div class="profile-form">
+          <div class="inp-row">
+            <div class="inp-group"><label>Full Name</label><input type="text" id="profName"></div>
+            <div class="inp-group"><label>Phone Number</label><input type="tel" id="profPhone"></div>
+          </div>
+          <div class="inp-group"><label>Email Address</label><input type="email" id="profEmail" disabled style="opacity:0.5;cursor:not-allowed"></div>
+          <button class="btn-save" onclick="saveProfile()">Save Changes →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/config.js"></script>
+<script src="js/cart.js"></script>
+<script>
+var API = CONFIG.API_URL;
+var token = localStorage.getItem('mr_customer_token');
+var customer = JSON.parse(localStorage.getItem('mr_customer') || '{}');
+
+if (!token) window.location.href = 'login.html';
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+function authH() {
+  return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+}
+
+function showSection(sec) {
+  document.querySelectorAll('.acc-section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.acc-nav a').forEach(function(a){ a.classList.remove('active'); });
+  document.getElementById('sec-' + sec).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (sec === 'orders') loadOrders();
+  if (sec === 'wishlist') loadWishlist();
+  if (sec === 'addresses') loadAddresses();
+  if (sec === 'profile') loadProfile();
+}
+
+// Init sidebar
+function initSidebar() {
+  var name = customer.name || 'User';
+  var email = customer.email || '';
+  var avatar = customer.avatar_url;
+  document.getElementById('sidebarName').textContent = name;
+  document.getElementById('sidebarEmail').textContent = email;
+  var box = document.getElementById('avatarBox');
+  if (avatar) {
+    box.innerHTML = '<img class="avatar-img" src="' + avatar + '" alt="' + name + '">';
+  } else {
+    box.innerHTML = '<div class="avatar-initials">' + (name.charAt(0) || 'U').toUpperCase() + '</div>';
+  }
+}
+
+// ORDERS
+async function loadOrders() {
+  try {
+    var res = await fetch(API + '/api/customers/orders', { headers: authH() });
+    var data = await res.json();
+    var container = document.getElementById('ordersList');
+    if (!data.success || !data.orders.length) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><p>No orders yet</p><a href="products.html" style="color:var(--gold);font-size:0.85rem">Start Shopping →</a></div>';
+      return;
+    }
+    container.innerHTML = data.orders.map(function(o) {
+      var items = typeof o.items === 'string' ? JSON.parse(o.items) : o.items;
+      var itemNames = items.map(function(i){ return i.name + ' x' + i.quantity; }).join(', ');
+      return '<div class="order-card">'
+        + '<div class="order-card-top">'
+        + '<div><div class="order-num">' + o.order_number + '</div><div class="order-date">' + new Date(o.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) + '</div></div>'
+        + '<span class="order-status status-' + o.order_status + '">' + o.order_status.toUpperCase() + '</span>'
+        + '</div>'
+        + '<div class="order-items">' + itemNames + '</div>'
+        + '<div style="display:flex;justify-content:space-between;align-items:center">'
+        + '<div class="order-total">₹' + parseFloat(o.total_amount).toFixed(2) + '</div>'
+        + '<div class="order-actions">'
+        + '<button class="btn-track" onclick="window.location.href=\'track.html?order=' + o.order_number + '\'">Track</button>'
+        + '<a href="' + API + '/api/invoice/' + o.order_number + '" target="_blank" class="btn-track" style="text-decoration:none;display:inline-flex;align-items:center">Invoice</a>'
+        + '</div></div></div>';
+    }).join('');
+  } catch(e) { document.getElementById('ordersList').innerHTML = '<p style="color:var(--gray)">Failed to load orders</p>'; }
+}
+
+// WISHLIST
+async function loadWishlist() {
+  try {
+    var res = await fetch(API + '/api/customers/wishlist', { headers: authH() });
+    var data = await res.json();
+    var grid = document.getElementById('wishlistGrid');
+    if (!data.success || !data.wishlist.length) {
+      grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">❤️</div><p>Your wishlist is empty</p><a href="products.html" style="color:var(--gold);font-size:0.85rem">Browse Products →</a></div>';
+      return;
+    }
+    var emoji = function(cat){ return cat==='Sweets'?'🍬':cat==='Podis'?'🌶️':'🥨'; };
+    grid.innerHTML = data.wishlist.map(function(p) {
+      var price = parseFloat(p.sale_price || p.mrp);
+      return '<div class="wish-card">'
+        + (p.image_primary ? '<img src="' + p.image_primary + '" alt="' + p.name + '" onerror="this.style.display=\'none\'">' : '')
+        + '<div class="wish-card-placeholder" style="display:' + (p.image_primary?'none':'flex') + '">' + emoji(p.category) + '</div>'
+        + '<button class="wish-remove" onclick="removeWishlist(' + p.product_id + ')">✕</button>'
+        + '<div class="wish-card-info"><div class="wish-card-name">' + p.name + '</div><div class="wish-card-price">₹' + price.toFixed(0) + '</div></div>'
+        + '<button class="wish-add-cart" onclick="addToCart({id:' + p.product_id + ',name:\'' + p.name.replace(/'/g,"\\'") + '\',mrp:' + price + ',image_primary:\'' + (p.image_primary||'') + '\',category:\'' + p.category + '\',weight:' + (p.weight||0) + ',unit:\'' + (p.unit||'g') + '\'})">Add to Cart</button>'
+        + '</div>';
+    }).join('');
+  } catch(e) {}
+}
+
+async function removeWishlist(pid) {
+  try {
+    await fetch(API + '/api/customers/wishlist/' + pid, { method: 'DELETE', headers: authH() });
+    showToast('Removed from wishlist'); loadWishlist();
+  } catch(e) {}
+}
+
+// ADDRESSES
+async function loadAddresses() {
+  try {
+    var res = await fetch(API + '/api/customers/addresses', { headers: authH() });
+    var data = await res.json();
+    var grid = document.getElementById('addressGrid');
+    if (!data.success || !data.addresses.length) {
+      grid.innerHTML = '<div style="color:var(--gray);font-size:0.85rem;padding:10px">No saved addresses</div>';
+      return;
+    }
+    grid.innerHTML = data.addresses.map(function(a) {
+      return '<div class="address-card' + (a.is_default?' default':'') + '">'
+        + (a.is_default ? '<span class="default-badge">Default</span>' : '')
+        + '<div class="address-name">' + a.name + '</div>'
+        + '<div class="address-text">' + a.address + '<br>' + a.city + ', ' + a.state + ' - ' + a.pincode + '<br>📞 ' + a.phone + '</div>'
+        + '<div class="address-actions"><button class="btn-del" onclick="deleteAddress(' + a.id + ')">Delete</button></div>'
+        + '</div>';
+    }).join('');
+  } catch(e) {}
+}
+
+function toggleAddressForm() {
+  var form = document.getElementById('addAddressForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveAddress() {
+  var payload = {
+    name: document.getElementById('addrName').value,
+    phone: document.getElementById('addrPhone').value,
+    address: document.getElementById('addrAddress').value,
+    city: document.getElementById('addrCity').value,
+    state: document.getElementById('addrState').value,
+    pincode: document.getElementById('addrPincode').value,
+    is_default: document.getElementById('addrDefault').checked
+  };
+  if (!payload.name || !payload.address || !payload.city) { showToast('Fill all fields'); return; }
+  try {
+    var res = await fetch(API + '/api/customers/addresses', { method: 'POST', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) { showToast('Address saved!'); toggleAddressForm(); loadAddresses(); }
+    else showToast('Failed to save');
+  } catch(e) { showToast('Error'); }
+}
+
+async function deleteAddress(id) {
+  if (!confirm('Delete this address?')) return;
+  try {
+    await fetch(API + '/api/customers/addresses/' + id, { method: 'DELETE', headers: authH() });
+    showToast('Address deleted'); loadAddresses();
+  } catch(e) {}
+}
+
+// PROFILE
+function loadProfile() {
+  document.getElementById('profName').value = customer.name || '';
+  document.getElementById('profEmail').value = customer.email || '';
+  document.getElementById('profPhone').value = customer.phone || '';
+}
+
+async function saveProfile() {
+  var name = document.getElementById('profName').value;
+  var phone = document.getElementById('profPhone').value;
+  try {
+    var res = await fetch(API + '/api/customers/profile', { method: 'PUT', headers: authH(), body: JSON.stringify({ name, phone }) });
+    var data = await res.json();
+    if (data.success) {
+      customer.name = name; customer.phone = phone;
+      localStorage.setItem('mr_customer', JSON.stringify(customer));
+      showToast('Profile updated!'); initSidebar();
+    } else showToast('Failed to update');
+  } catch(e) { showToast('Error'); }
+}
+
+function doLogout() {
+  localStorage.removeItem('mr_customer_token');
+  localStorage.removeItem('mr_customer');
+  window.location.href = 'index.html';
+}
+
+initSidebar();
+loadOrders();
+</script>
+</body>
+</html>

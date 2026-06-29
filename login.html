@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Major Rangas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 20px 40px;background:var(--black);}
+    .auth-box{background:var(--black2);border:1px solid var(--border);border-radius:12px;padding:40px;width:100%;max-width:420px;}
+    .auth-logo{text-align:center;margin-bottom:28px;}
+    .auth-logo h1{font-family:var(--font-serif);color:var(--gold);font-size:1.6rem;letter-spacing:3px;}
+    .auth-logo p{color:var(--gray);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+    .auth-tabs{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:28px;}
+    .auth-tab{flex:1;padding:10px;background:none;border:none;color:var(--gray);font-size:0.85rem;cursor:pointer;transition:all 0.2s;}
+    .auth-tab.active{background:var(--gold);color:var(--black);font-weight:700;}
+    .form-section{display:none;}
+    .form-section.active{display:block;}
+    .inp-group{margin-bottom:16px;}
+    .inp-group label{display:block;color:var(--gray);font-size:0.78rem;margin-bottom:6px;letter-spacing:0.5px;}
+    .inp-group input{width:100%;padding:12px 16px;background:var(--black);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:0.9rem;outline:none;font-family:var(--font-sans);}
+    .inp-group input:focus{border-color:var(--gold);}
+    .btn-auth{width:100%;background:var(--gold);color:var(--black);border:none;padding:13px;border-radius:6px;font-weight:700;font-size:0.95rem;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+    .btn-auth:hover{background:var(--gold-light);}
+    .divider{display:flex;align-items:center;gap:12px;margin:20px 0;}
+    .divider-line{flex:1;height:1px;background:var(--border);}
+    .divider span{color:var(--gray);font-size:0.75rem;}
+    .google-btn{width:100%;background:var(--black);border:1px solid var(--border);color:var(--white);padding:12px;border-radius:6px;font-size:0.88rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;}
+    .google-btn:hover{border-color:var(--gold);background:#111;}
+    .google-btn img{width:18px;height:18px;}
+    .auth-err{color:#ff6b6b;font-size:0.8rem;margin-top:8px;display:none;}
+    .auth-success{color:#81C784;font-size:0.8rem;margin-top:8px;display:none;}
+    #g_id_signin{margin-top:0;}
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <ul class="nav-left" style="list-style:none;display:flex;gap:28px">
+      <li><a href="products.html?cat=Snacks" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Snacks</a></li>
+      <li><a href="products.html?cat=Sweets" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Sweets</a></li>
+    </ul>
+    <a href="index.html" class="logo">
+      <span class="logo-main">MAJOR RANGAS</span>
+      <span class="logo-sub">Authentic South Indian</span>
+    </a>
+    <ul style="list-style:none;display:flex;gap:20px;justify-content:flex-end;align-items:center">
+      <li><a href="products.html" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Products</a></li>
+      <li><a href="account.html" style="color:var(--gold);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none">Account</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <h1>MAJOR RANGAS</h1>
+      <p>Your Account</p>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="form-section active" id="loginForm">
+      <div class="inp-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com">
+      </div>
+      <div class="inp-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Your password">
+      </div>
+      <button class="btn-auth" onclick="doLogin()">Login →</button>
+      <div class="auth-err" id="loginErr"></div>
+
+      <div class="divider"><div class="divider-line"></div><span>OR</span><div class="divider-line"></div></div>
+
+      <button class="google-btn" onclick="googleLogin()">
+        <img src="https://www.google.com/favicon.ico" alt="Google">
+        Continue with Google
+      </button>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="form-section" id="registerForm">
+      <div class="inp-group">
+        <label>Full Name</label>
+        <input type="text" id="regName" placeholder="Your full name">
+      </div>
+      <div class="inp-group">
+        <label>Email Address</label>
+        <input type="email" id="regEmail" placeholder="your@email.com">
+      </div>
+      <div class="inp-group">
+        <label>Phone Number</label>
+        <input type="tel" id="regPhone" placeholder="10-digit mobile number">
+      </div>
+      <div class="inp-group">
+        <label>Password</label>
+        <input type="password" id="regPassword" placeholder="Min 6 characters">
+      </div>
+      <button class="btn-auth" onclick="doRegister()">Create Account →</button>
+      <div class="auth-err" id="registerErr"></div>
+      <div class="auth-success" id="registerSuccess"></div>
+
+      <div class="divider"><div class="divider-line"></div><span>OR</span><div class="divider-line"></div></div>
+
+      <button class="google-btn" onclick="googleLogin()">
+        <img src="https://www.google.com/favicon.ico" alt="Google">
+        Continue with Google
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(function(t,i){ t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1)); });
+  document.getElementById('loginForm').classList.toggle('active', tab==='login');
+  document.getElementById('registerForm').classList.toggle('active', tab==='register');
+}
+
+function showErr(id, msg) {
+  var el = document.getElementById(id);
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(function(){ el.style.display='none'; }, 4000);
+}
+
+function saveSession(token, customer) {
+  localStorage.setItem('mr_customer_token', token);
+  localStorage.setItem('mr_customer', JSON.stringify(customer));
+  var redirect = new URLSearchParams(window.location.search).get('redirect') || 'account.html';
+  window.location.href = redirect;
+}
+
+async function doLogin() {
+  var email = document.getElementById('loginEmail').value.trim();
+  var password = document.getElementById('loginPassword').value;
+  if (!email || !password) { showErr('loginErr', 'Please fill all fields'); return; }
+  try {
+    var res = await fetch(CONFIG.API_URL + '/api/customers/login', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password })
+    });
+    var data = await res.json();
+    if (data.success) saveSession(data.token, data.customer);
+    else showErr('loginErr', data.error || 'Login failed');
+  } catch(e) { showErr('loginErr', 'Connection error'); }
+}
+
+async function doRegister() {
+  var name = document.getElementById('regName').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var phone = document.getElementById('regPhone').value.trim();
+  var password = document.getElementById('regPassword').value;
+  if (!name || !email || !password) { showErr('registerErr', 'Please fill all required fields'); return; }
+  if (password.length < 6) { showErr('registerErr', 'Password must be at least 6 characters'); return; }
+  try {
+    var res = await fetch(CONFIG.API_URL + '/api/customers/register', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, phone, password })
+    });
+    var data = await res.json();
+    if (data.success) saveSession(data.token, data.customer);
+    else showErr('registerErr', data.error || 'Registration failed');
+  } catch(e) { showErr('registerErr', 'Connection error'); }
+}
+
+// Google Login using Google Identity Services
+function googleLogin() {
+  google.accounts.id.initialize({
+    client_id: 'YOUR_GOOGLE_CLIENT_ID', // Add your Google Client ID
+    callback: handleGoogleResponse
+  });
+  google.accounts.id.prompt();
+}
+
+async function handleGoogleResponse(response) {
+  try {
+    var payload = JSON.parse(atob(response.credential.split('.')[1]));
+    var res = await fetch(CONFIG.API_URL + '/api/customers/google', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        google_id: payload.sub,
+        email: payload.email,
+        name: payload.name,
+        avatar_url: payload.picture
+      })
+    });
+    var data = await res.json();
+    if (data.success) saveSession(data.token, data.customer);
+    else showErr('loginErr', data.error || 'Google login failed');
+  } catch(e) { showErr('loginErr', 'Google login error'); }
+}
+
+// Check if already logged in
+if (localStorage.getItem('mr_customer_token')) {
+  window.location.href = 'account.html';
+}
+</script>
+</body>
+</html>
