@@ -140,6 +140,12 @@
       <div class="nav-group">Customise</div>
       <div class="nav-item" id="nav-banner"><span>🎨</span> Banner & Theme</div>
       <div class="nav-item" id="nav-announcement"><span>📢</span> Announcement</div>
+      <div class="nav-group">Store</div>
+      <div class="nav-item" id="nav-coupons"><span>🎟️</span> Coupons</div>
+      <div class="nav-item" id="nav-payments"><span>💳</span> Payment Settings</div>
+      <div class="nav-item" id="nav-shipping"><span>🚚</span> Shipping</div>
+      <div class="nav-item" id="nav-seo"><span>🔍</span> SEO</div>
+      <div class="nav-item" id="nav-alerts"><span>🔔</span> Alerts</div>
     </div>
     <div class="sidebar-bottom">
       <div class="admin-name" id="adminName"></div>
@@ -330,6 +336,119 @@
         </div>
       </div>
 
+      <!-- COUPONS -->
+      <div class="page" id="page-coupons">
+        <div class="table-wrap" style="margin-bottom:20px">
+          <div class="table-header"><h3>Discount Coupons</h3><button class="btn-sm btn-green" id="addCouponBtn">+ Add Coupon</button></div>
+          <table><thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min Order</th><th>Used/Max</th><th>Expires</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="couponsTable"><tr><td colspan="8" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+        <div class="settings-card" style="max-width:500px">
+          <h3>Quick Add Coupon</h3>
+          <div class="form-row-2">
+            <div class="form-group"><label>Coupon Code *</label><input type="text" id="newCouponCode" placeholder="e.g. WELCOME10" style="text-transform:uppercase"></div>
+            <div class="form-group"><label>Discount Type</label>
+              <select id="newCouponType">
+                <option value="percentage">Percentage (%)</option>
+                <option value="fixed">Fixed Amount (₹)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label>Discount Value *</label><input type="number" id="newCouponValue" placeholder="10"></div>
+            <div class="form-group"><label>Min Order Amount (₹)</label><input type="number" id="newCouponMin" placeholder="200"></div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label>Max Uses</label><input type="number" id="newCouponMax" placeholder="100"></div>
+            <div class="form-group"><label>Expires On</label><input type="date" id="newCouponExpiry"></div>
+          </div>
+          <button class="btn-gold-sm" id="createCouponBtn" style="margin-top:8px">Create Coupon →</button>
+        </div>
+      </div>
+
+      <!-- PAYMENT SETTINGS -->
+      <div class="page" id="page-payments">
+        <div class="settings-card" style="max-width:500px">
+          <h3>Payment Gateway Settings</h3>
+          <div class="form-group">
+            <label>Razorpay (Online Payment)</label>
+            <select id="set-razorpay">
+              <option value="true">Enabled ✅</option>
+              <option value="false">Disabled ❌</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Cash on Delivery (COD)</label>
+            <select id="set-cod">
+              <option value="true">Enabled ✅</option>
+              <option value="false">Disabled ❌</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="color:#888;font-size:0.75rem">Note: At least one payment method must be enabled</label>
+          </div>
+          <button class="btn-gold-sm" id="savePaymentBtn" style="margin-top:8px">Save Payment Settings →</button>
+        </div>
+      </div>
+
+      <!-- SHIPPING -->
+      <div class="page" id="page-shipping">
+        <div class="settings-card" style="max-width:500px">
+          <h3>Shipping Settings</h3>
+          <div class="form-group">
+            <label>Free Shipping Above (₹)</label>
+            <input type="number" id="set-freeShipping" placeholder="500">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Orders above this amount get free shipping</div>
+          </div>
+          <div class="form-group">
+            <label>Standard Shipping Charge (₹)</label>
+            <input type="number" id="set-shippingCharge" placeholder="60">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Applied on orders below free shipping threshold</div>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Number (for order notifications)</label>
+            <input type="text" id="set-whatsapp" placeholder="91XXXXXXXXXX">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Include country code, no + or spaces</div>
+          </div>
+          <button class="btn-gold-sm" id="saveShippingBtn" style="margin-top:8px">Save Shipping Settings →</button>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div class="page" id="page-seo">
+        <div class="settings-card" style="max-width:600px">
+          <h3>SEO Settings</h3>
+          <div class="form-group">
+            <label>Page Title (shown in browser tab & Google)</label>
+            <input type="text" id="set-seoTitle" placeholder="Major Rangas — Authentic South Indian Snacks">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Keep under 60 characters</div>
+          </div>
+          <div class="form-group">
+            <label>Meta Description (shown in Google search results)</label>
+            <textarea id="set-seoDesc" rows="3" placeholder="Authentic South Indian snacks, sweets and podis from Chennai..."></textarea>
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Keep under 160 characters</div>
+          </div>
+          <button class="btn-gold-sm" id="saveSeoBtn" style="margin-top:8px">Save SEO Settings →</button>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div class="page" id="page-alerts">
+        <div class="settings-card" style="max-width:500px;margin-bottom:20px">
+          <h3>Low Stock Alerts</h3>
+          <div class="form-group">
+            <label>Alert when stock falls below</label>
+            <input type="number" id="set-lowStock" placeholder="10">
+          </div>
+          <button class="btn-gold-sm" id="saveAlertsBtn" style="margin-top:8px">Save Alert Settings →</button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header"><h3>Low Stock Products</h3></div>
+          <table><thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="lowStockTable"><tr><td colspan="5" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -465,7 +584,7 @@ function initApp() {
 }
 
 // NAV
-var pages = ['dashboard','orders','products','inventory','banner','announcement'];
+var pages = ['dashboard','orders','products','inventory','banner','announcement','coupons','payments','shipping','seo','alerts'];
 pages.forEach(function(p) {
   document.getElementById('nav-' + p).onclick = function() {
     showPage(p);
@@ -479,12 +598,14 @@ function showPage(page) {
   document.getElementById('page-' + page).classList.add('active');
   var navEl = document.getElementById('nav-' + page);
   if (navEl) navEl.classList.add('active');
-  var titles = { dashboard:'Dashboard', orders:'Orders', products:'Products', inventory:'Inventory', banner:'Banner & Theme', announcement:'Announcement Bar' };
+  var titles = { dashboard:'Dashboard', orders:'Orders', products:'Products', inventory:'Inventory', banner:'Banner & Theme', announcement:'Announcement Bar', coupons:'Discount Coupons', payments:'Payment Settings', shipping:'Shipping Settings', seo:'SEO Settings', alerts:'Stock Alerts' };
   document.getElementById('pageTitle').textContent = titles[page] || page;
   if (page === 'dashboard') loadDashboard();
   if (page === 'orders') loadOrders('');
   if (page === 'products') loadProducts();
   if (page === 'inventory') loadInventory();
+  if (page === 'coupons') loadCoupons();
+  if (page === 'alerts') loadLowStock();
 }
 
 // DASHBOARD
@@ -813,6 +934,165 @@ document.getElementById('saveAnnounceBtn').onclick = async function() {
     if (data.success) showToast('Announcement saved!');
     else showToast('Save failed', true);
   } catch(e) { showToast('Error', true); }
+};
+
+
+// COUPONS
+async function loadCoupons() {
+  try {
+    var res = await fetch(API + '/api/coupons', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.coupons.forEach(function(c) {
+      var val = c.discount_type === 'percentage' ? c.discount_value + '%' : '₹' + c.discount_value;
+      var exp = c.expires_at ? new Date(c.expires_at).toLocaleDateString('en-IN') : 'Never';
+      html += '<tr>'
+        + '<td style="color:var(--gold);font-weight:700;letter-spacing:1px">' + c.code + '</td>'
+        + '<td>' + c.discount_type + '</td>'
+        + '<td>' + val + '</td>'
+        + '<td>₹' + c.min_order_amount + '</td>'
+        + '<td>' + c.used_count + ' / ' + c.max_uses + '</td>'
+        + '<td>' + exp + '</td>'
+        + '<td><span class="badge badge-' + (c.is_active ? 'active' : 'inactive') + '">' + (c.is_active ? 'Active' : 'Inactive') + '</span></td>'
+        + '<td style="display:flex;gap:6px">'
+        + '<button class="btn-sm btn-blue" onclick="toggleCoupon(' + c.id + ')">' + (c.is_active ? 'Disable' : 'Enable') + '</button>'
+        + '<button class="btn-sm btn-red" onclick="deleteCoupon(' + c.id + ')">Delete</button>'
+        + '</td></tr>';
+    });
+    document.getElementById('couponsTable').innerHTML = html || '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:20px">No coupons yet</td></tr>';
+  } catch(e) {}
+}
+
+document.getElementById('createCouponBtn').onclick = async function() {
+  var code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+  var type = document.getElementById('newCouponType').value;
+  var value = document.getElementById('newCouponValue').value;
+  var min = document.getElementById('newCouponMin').value || 0;
+  var max = document.getElementById('newCouponMax').value || 100;
+  var expiry = document.getElementById('newCouponExpiry').value || null;
+  if (!code || !value) { showToast('Code and value required', true); return; }
+  try {
+    var res = await fetch(API + '/api/coupons', {
+      method: 'POST', headers: authH(),
+      body: JSON.stringify({ code, discount_type: type, discount_value: value, min_order_amount: min, max_uses: max, expires_at: expiry })
+    });
+    var data = await res.json();
+    if (data.success) { showToast('Coupon created!'); loadCoupons(); ['newCouponCode','newCouponValue','newCouponMin','newCouponMax','newCouponExpiry'].forEach(function(id){document.getElementById(id).value='';}); }
+    else showToast(data.error || 'Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+async function toggleCoupon(id) {
+  try {
+    await fetch(API + '/api/coupons/' + id + '/toggle', { method: 'PUT', headers: authH() });
+    showToast('Coupon updated!'); loadCoupons();
+  } catch(e) {}
+}
+
+async function deleteCoupon(id) {
+  if (!confirm('Delete this coupon?')) return;
+  try {
+    await fetch(API + '/api/coupons/' + id, { method: 'DELETE', headers: authH() });
+    showToast('Coupon deleted!'); loadCoupons();
+  } catch(e) {}
+}
+
+// PAYMENT SETTINGS
+document.getElementById('savePaymentBtn').onclick = async function() {
+  var payload = {
+    razorpay_enabled: document.getElementById('set-razorpay').value,
+    cod_enabled: document.getElementById('set-cod').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('Payment settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// SHIPPING SETTINGS
+document.getElementById('saveShippingBtn').onclick = async function() {
+  var payload = {
+    free_shipping_above: document.getElementById('set-freeShipping').value,
+    shipping_charge: document.getElementById('set-shippingCharge').value,
+    whatsapp_number: document.getElementById('set-whatsapp').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('Shipping settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// SEO SETTINGS
+document.getElementById('saveSeoBtn').onclick = async function() {
+  var payload = {
+    seo_title: document.getElementById('set-seoTitle').value,
+    seo_description: document.getElementById('set-seoDesc').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('SEO settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// ALERTS
+document.getElementById('saveAlertsBtn').onclick = async function() {
+  var payload = { low_stock_threshold: document.getElementById('set-lowStock').value };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('Alert settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+async function loadLowStock() {
+  try {
+    var settRes = await fetch(API + '/api/settings');
+    var settData = await settRes.json();
+    var threshold = parseInt((settData.settings || {}).low_stock_threshold || 10);
+    if (settData.settings && settData.settings.low_stock_threshold) {
+      document.getElementById('set-lowStock').value = settData.settings.low_stock_threshold;
+    }
+    var res = await fetch(API + '/api/admin/products', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var lowItems = data.products.filter(function(p) { return p.stock_qty <= threshold; });
+    var html = '';
+    lowItems.forEach(function(p) {
+      var out = p.stock_qty === 0;
+      html += '<tr><td>' + p.name + '</td><td>' + p.category + '</td>'
+        + '<td style="color:' + (out ? '#F44336' : '#FF9800') + ';font-weight:700">' + p.stock_qty + '</td>'
+        + '<td><span class="badge" style="background:' + (out ? 'rgba(244,67,54,0.15)' : 'rgba(255,152,0,0.15)') + ';color:' + (out ? '#EF9A9A' : '#FFB74D') + '">' + (out ? 'Out of Stock' : 'Low Stock') + '</span></td>'
+        + '<td><button class="btn-sm btn-blue" onclick="openStockModal(' + p.id + ','' + p.name.replace(/'/g,'') + '',' + p.stock_qty + ')">Update</button></td></tr>';
+    });
+    document.getElementById('lowStockTable').innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:#81C784;padding:20px">✓ All products well stocked!</td></tr>';
+  } catch(e) {}
+}
+
+// Load extra settings into forms
+var origLoadSettings = loadSettingsData;
+loadSettingsData = async function() {
+  await origLoadSettings();
+  try {
+    var res = await fetch(API + '/api/settings');
+    var data = await res.json();
+    if (!data.success) return;
+    var s = data.settings;
+    if (s.razorpay_enabled !== undefined) document.getElementById('set-razorpay').value = s.razorpay_enabled;
+    if (s.cod_enabled !== undefined) document.getElementById('set-cod').value = s.cod_enabled;
+    if (s.free_shipping_above) document.getElementById('set-freeShipping').value = s.free_shipping_above;
+    if (s.shipping_charge) document.getElementById('set-shippingCharge').value = s.shipping_charge;
+    if (s.whatsapp_number) document.getElementById('set-whatsapp').value = s.whatsapp_number;
+    if (s.seo_title) document.getElementById('set-seoTitle').value = s.seo_title;
+    if (s.seo_description) document.getElementById('set-seoDesc').value = s.seo_description;
+  } catch(e) {}
 };
 
 if (token) initApp();
