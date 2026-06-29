@@ -154,10 +154,18 @@ function selectPayment(method) {
 function loadSummary() {
   const subtotal = getCartTotal();
   const shipping = subtotal >= CONFIG.FREE_SHIPPING_ABOVE ? 0 : CONFIG.SHIPPING_CHARGE;
-  const total = subtotal + shipping;
+  const discount = window.appliedDiscount || 0;
+  const total = Math.max(0, subtotal + shipping - discount);
 
   document.getElementById('summarySubtotal').textContent = `₹${subtotal.toFixed(2)}`;
   document.getElementById('summaryShipping').textContent = shipping === 0 ? 'FREE' : `₹${shipping}`;
+  const discRow = document.getElementById('summaryDiscountRow');
+  if (discount > 0 && discRow) {
+    discRow.style.display = 'flex';
+    document.getElementById('summaryDiscount').textContent = `-₹${discount.toFixed(2)}`;
+  } else if (discRow) {
+    discRow.style.display = 'none';
+  }
   document.getElementById('summaryTotal').textContent = `₹${total.toFixed(2)}`;
 
   const container = document.getElementById('summaryItems');
@@ -250,6 +258,13 @@ async function placeOrder() {
     if (!data.success) throw new Error(data.error || 'Order failed');
 
     if (selectedPayment === 'cod') {
+      // Use coupon if applied
+      if (window.appliedCouponCode) {
+        await fetch(`${CONFIG.API_URL}/api/coupons/use`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ code: window.appliedCouponCode })
+        }).catch(()=>{});
+      }
       cart = []; saveCart();
       window.location.href = `success.html?order=${data.order_number}&method=cod`;
       return;
@@ -279,6 +294,12 @@ async function placeOrder() {
         });
         const verifyData = await verifyRes.json();
         if (verifyData.success) {
+          if (window.appliedCouponCode) {
+            await fetch(`${CONFIG.API_URL}/api/coupons/use`, {
+              method: 'POST', headers: {'Content-Type':'application/json'},
+              body: JSON.stringify({ code: window.appliedCouponCode })
+            }).catch(()=>{});
+          }
           cart = []; saveCart();
           window.location.href = `success.html?order=${data.order_number}&method=online`;
         } else {
