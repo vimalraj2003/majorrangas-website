@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,6 +100,13 @@
             </div>
           </div>
 
+          <div class="form-section-title">Coupon Code</div>
+          <div style="display:flex;gap:10px;margin-bottom:18px">
+            <input type="text" id="couponCode" placeholder="Enter coupon code" style="flex:1;padding:12px 16px;background:var(--black);border:1px solid var(--border);border-radius:var(--radius);color:var(--white);font-size:0.9rem;outline:none;text-transform:uppercase">
+            <button type="button" onclick="applyCoupon()" style="background:var(--gold);color:var(--black);border:none;padding:12px 20px;border-radius:var(--radius);font-weight:700;cursor:pointer;font-size:0.85rem;white-space:nowrap">Apply</button>
+          </div>
+          <div id="couponMsg" style="font-size:0.82rem;margin-bottom:14px;display:none"></div>
+
           <div class="form-group">
             <label>Order Notes (optional)</label>
             <textarea id="orderNotes" rows="2" placeholder="Special instructions for your order..."></textarea>
@@ -120,6 +128,7 @@
         <div style="border-top:1px solid var(--border);margin:16px 0;padding-top:16px">
           <div class="summary-item"><span>Subtotal</span><span id="summarySubtotal">₹0</span></div>
           <div class="summary-item"><span>Shipping</span><span id="summaryShipping">₹60</span></div>
+          <div class="summary-item" id="summaryDiscountRow" style="display:none;color:#81C784"><span>Discount</span><span id="summaryDiscount" style="color:#81C784">-₹0</span></div>
           <div class="summary-total"><span>Total</span><span id="summaryTotal">₹0</span></div>
         </div>
         <div style="background:rgba(201,168,76,0.08);border:1px solid var(--gold-dark);border-radius:4px;padding:12px;font-size:0.8rem;color:var(--gray);margin-top:8px">
@@ -161,6 +170,40 @@ function loadSummary() {
       <span>${item.name} × ${item.quantity}</span>
       <span>₹${(parseFloat(item.mrp) * item.quantity).toFixed(2)}</span>
     </div>`).join('');
+}
+
+window.appliedDiscount = 0;
+window.appliedCouponCode = '';
+
+async function applyCoupon() {
+  const code = document.getElementById('couponCode').value.trim();
+  const msg = document.getElementById('couponMsg');
+  if (!code) return;
+  const subtotal = cart.reduce((s,i) => s + parseFloat(i.mrp)*i.quantity, 0);
+  try {
+    const res = await fetch(`${CONFIG.API_URL}/api/coupons/validate`, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ code, order_amount: subtotal })
+    });
+    const data = await res.json();
+    msg.style.display = 'block';
+    if (data.success) {
+      window.appliedDiscount = data.discount;
+      window.appliedCouponCode = code;
+      msg.style.color = '#81C784';
+      msg.textContent = `✓ Coupon applied! You save ₹${data.discount.toFixed(2)}`;
+      loadSummary();
+    } else {
+      window.appliedDiscount = 0;
+      window.appliedCouponCode = '';
+      msg.style.color = '#ff6b6b';
+      msg.textContent = data.error || 'Invalid coupon';
+    }
+  } catch(e) {
+    msg.style.display = 'block';
+    msg.style.color = '#ff6b6b';
+    msg.textContent = 'Could not validate coupon';
+  }
 }
 
 async function placeOrder() {
