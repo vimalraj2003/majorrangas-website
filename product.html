@@ -333,7 +333,7 @@ function createProductCard(p) {
 
 async function loadProduct() {
   const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug') || params.get('id');
+  const slug = params.get('slug');
   if (!slug) { window.location.href = 'products.html'; return; }
 
   try {
@@ -445,5 +445,6 @@ async function loadRelated(category, currentId) {
 function toggleMenu() { document.querySelector('.nav-links')?.classList.toggle('open'); }
 loadProduct();
 </script>
+<script src="js/navbar.js"></script>
 </body>
 </html>
