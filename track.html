@@ -1,113 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Track Order — Major Rangas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    .track-page { min-height: 80vh; padding: 60px 20px; }
-    .track-box { background: var(--black2); border: 1px solid var(--border); border-radius: 12px; padding: 40px; max-width: 600px; margin: 0 auto; }
-    .track-box h2 { font-family: var(--font-serif); color: var(--gold); margin-bottom: 24px; }
-    .track-input-row { display: flex; gap: 12px; margin-bottom: 32px; }
-    .track-input-row input { flex: 1; padding: 12px 16px; background: var(--black); border: 1px solid var(--border); border-radius: 4px; color: var(--white); font-size: 0.9rem; outline: none; }
-    .track-input-row input:focus { border-color: var(--gold); }
-    .order-detail { background: var(--black); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
-    .detail-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
-    .detail-row:last-child { border: none; }
-    .detail-label { color: var(--gray); }
-    .status-badge { padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
-    .status-placed { background: rgba(201,168,76,0.15); color: var(--gold); }
-    .status-confirmed { background: rgba(33,150,243,0.15); color: #64B5F6; }
-    .status-shipped { background: rgba(156,39,176,0.15); color: #CE93D8; }
-    .status-delivered { background: rgba(76,175,80,0.15); color: #81C784; }
-    .status-cancelled { background: rgba(244,67,54,0.15); color: #EF9A9A; }
-    .timeline { margin-top: 24px; }
-    .timeline-step { display: flex; gap: 16px; margin-bottom: 20px; }
-    .timeline-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--border); flex-shrink: 0; margin-top: 3px; }
-    .timeline-dot.done { background: var(--gold); }
-    .timeline-label { font-size: 0.9rem; }
-    .timeline-label span { display: block; color: var(--gray); font-size: 0.8rem; margin-top: 2px; }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{--gold:#C9830A;--teal:#0D9B8A;--teal-light:#12B5A2;--teal-bg:#E8F8F6;--white:#fff;--off-white:#FAFAF8;--cream:#F7F3EE;--text:#1A1A1A;--text2:#555;--text3:#888;--border:#E8E4DC;--shadow:0 2px 12px rgba(0,0,0,0.08);--font-serif:'Playfair Display',serif;--font-sans:'Inter',sans-serif;}
+    body{background:var(--off-white);font-family:var(--font-sans);min-height:100vh;}
+    a{text-decoration:none;color:inherit;}
+    .announce{background:var(--gold);color:#fff;text-align:center;font-size:0.8rem;font-weight:600;padding:10px;}
+    .navbar{background:var(--white);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
+    .nav-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;}
+    .logo-main{font-family:var(--font-serif);font-size:1.4rem;color:var(--text);font-weight:700;letter-spacing:2px;}
+    .logo-sub{font-size:0.6rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;display:block;text-align:center;}
+    .track-page{max-width:720px;margin:0 auto;padding:40px 20px;}
+    .track-header{text-align:center;margin-bottom:32px;}
+    .track-header h1{font-family:var(--font-serif);font-size:2rem;color:var(--text);margin-bottom:8px;}
+    .track-header p{color:var(--text3);font-size:0.9rem;}
+    .track-input-wrap{display:flex;gap:10px;margin-bottom:32px;}
+    .track-input{flex:1;padding:13px 18px;border:2px solid var(--border);border-radius:12px;font-size:0.95rem;outline:none;color:var(--text);font-family:var(--font-sans);transition:border-color 0.2s;}
+    .track-input:focus{border-color:var(--teal);}
+    .track-btn{background:var(--teal);color:#fff;border:none;padding:13px 28px;border-radius:12px;font-weight:700;font-size:0.9rem;cursor:pointer;white-space:nowrap;transition:background 0.2s;}
+    .track-btn:hover{background:var(--teal-light);}
+    .track-result{background:var(--white);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
+    .track-result-head{background:var(--teal);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+    .track-result-head .order-num{color:#fff;font-weight:700;font-size:1rem;}
+    .track-result-head .order-status{background:rgba(255,255,255,0.2);color:#fff;padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:700;}
+    .track-body{padding:24px;}
+    .track-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+    .track-info-item .label{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .track-info-item .val{font-size:0.9rem;color:var(--text);font-weight:500;}
+    .track-steps{margin-bottom:24px;}
+    .track-step{display:flex;gap:16px;margin-bottom:20px;position:relative;}
+    .track-step:not(:last-child)::after{content:'';position:absolute;left:14px;top:32px;bottom:-10px;width:2px;background:var(--border);}
+    .track-step.done::after{background:var(--teal);}
+    .step-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;border:2px solid var(--border);background:var(--white);}
+    .track-step.done .step-icon{background:var(--teal);border-color:var(--teal);color:#fff;}
+    .track-step.current .step-icon{border-color:var(--teal);color:var(--teal);}
+    .step-info .step-label{font-weight:600;font-size:0.88rem;color:var(--text);margin-bottom:2px;}
+    .step-info .step-desc{font-size:0.78rem;color:var(--text3);}
+    .track-items{border-top:1px solid var(--border);padding-top:20px;}
+    .track-items h4{font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:12px;}
+    .track-item{display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border);}
+    .track-item:last-child{border-bottom:none;}
+    .track-item span:first-child{color:var(--text2);}
+    .track-item span:last-child{color:var(--text);font-weight:600;}
+    .track-total{display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:2px solid var(--border);font-weight:700;font-size:1rem;}
+    .track-total span:last-child{color:var(--teal);}
+    .invoice-link{display:inline-flex;align-items:center;gap:6px;color:var(--teal);font-size:0.82rem;font-weight:600;margin-top:16px;}
+    .err-box{background:#FFF0F0;border:1px solid rgba(229,57,53,0.2);border-radius:12px;padding:20px;text-align:center;color:#E53935;font-size:0.88rem;}
+    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
   </style>
 </head>
 <body>
+<div class="announce">🎉 Free Shipping on orders above ₹500!</div>
 <nav class="navbar">
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <span class="logo-main">MAJOR RANGAS</span>
-      <span class="logo-sub">Authentic South Indian</span>
-    </a>
-    <div class="nav-right">
-      <a href="products.html" style="color:var(--gold);font-size:0.9rem">← Shop</a>
-    </div>
+    <a href="index.html" style="color:var(--teal);font-size:0.82rem;font-weight:500">← Home</a>
+    <a href="index.html"><span class="logo-main">MAJOR RANGAS</span><span class="logo-sub">Authentic South Indian</span></a>
+    <a href="account.html" style="color:var(--teal);font-size:0.82rem;font-weight:500">My Account</a>
   </div>
 </nav>
 
-<div class="page-header">
-  <div class="container"><h1>Track Your Order</h1><p>Enter your order number to track delivery</p></div>
-</div>
-
 <div class="track-page">
-  <div class="track-box">
-    <h2>Order Tracker</h2>
-    <div class="track-input-row">
-      <input type="text" id="trackInput" placeholder="e.g. MR2406001234" value="">
-      <button class="btn-primary" onclick="trackOrder()">Track</button>
-    </div>
-    <div id="trackResult"></div>
+  <div class="track-header">
+    <h1>Track Your Order</h1>
+    <p>Enter your order number to see the current status</p>
   </div>
+  <div class="track-input-wrap">
+    <input type="text" class="track-input" id="trackInput" placeholder="e.g. MR2606123456" value="">
+    <button class="track-btn" onclick="trackOrder()">Track →</button>
+  </div>
+  <div id="trackResult"></div>
 </div>
 
-<script src="js/config.js"></script>
+<a href="https://wa.me/919500865686" target="_blank" class="wa-float">💬</a>
+
 <script>
-async function trackOrder() {
-  const num = document.getElementById('trackInput').value.trim().toUpperCase();
-  if (!num) { document.getElementById('trackResult').innerHTML = '<p style="color:#ff6b6b">Please enter order number</p>'; return; }
-  document.getElementById('trackResult').innerHTML = '<p style="color:var(--gray)">Searching...</p>';
-  try {
-    const res = await fetch(`${CONFIG.API_URL}/api/orders/track/${num}`);
-    const data = await res.json();
-    if (!data.success) { document.getElementById('trackResult').innerHTML = '<p style="color:#ff6b6b">Order not found. Please check the order number.</p>'; return; }
-    const o = data.order;
-    const statuses = ['placed','confirmed','processing','shipped','delivered'];
-    const currentIdx = statuses.indexOf(o.order_status);
-    const statusLabels = { placed:'Order Placed', confirmed:'Confirmed', processing:'Processing', shipped:'Shipped', delivered:'Delivered', cancelled:'Cancelled' };
-    document.getElementById('trackResult').innerHTML = `
-      <div class="order-detail">
-        <div class="detail-row"><span class="detail-label">Order Number</span><span style="color:var(--gold);font-weight:600">${o.order_number}</span></div>
-        <div class="detail-row"><span class="detail-label">Customer</span><span>${o.customer_name}</span></div>
-        <div class="detail-row"><span class="detail-label">Order Date</span><span>${new Date(o.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'})}</span></div>
-        <div class="detail-row"><span class="detail-label">Total</span><span style="color:var(--gold);font-weight:600">₹${parseFloat(o.total_amount).toFixed(2)}</span></div>
-        <div class="detail-row"><span class="detail-label">Payment</span><span>${o.payment_method?.toUpperCase()} · ${o.payment_status?.toUpperCase()}</span></div>
-        <div class="detail-row"><span class="detail-label">Status</span><span class="status-badge status-${o.order_status}">${statusLabels[o.order_status] || o.order_status}</span></div>
-        ${o.tracking_number ? `<div class="detail-row"><span class="detail-label">Tracking No</span><span style="color:var(--gold)">${o.tracking_number}</span></div>` : ''}
-      </div>
-      ${o.order_status !== 'cancelled' ? `
-      <div class="timeline" style="margin-top:24px">
-        ${statuses.map((s, i) => `
-          <div class="timeline-step">
-            <div class="timeline-dot ${i <= currentIdx ? 'done' : ''}"></div>
-            <div class="timeline-label">
-              ${statusLabels[s]}
-              ${i === currentIdx ? '<span>Current status</span>' : i < currentIdx ? '<span>✓ Completed</span>' : '<span style="color:#333">Pending</span>'}
-            </div>
-          </div>`).join('')}
-      </div>` : ''}
-      <div style="margin-top:20px">
-        <a href="${CONFIG.API_URL}/api/invoice/${o.order_number}" target="_blank" class="btn-outline" style="font-size:0.85rem;padding:10px 20px">📄 Download Invoice</a>
-      </div>
-    `;
-  } catch (err) {
-    document.getElementById('trackResult').innerHTML = '<p style="color:#ff6b6b">Unable to fetch order. Please try again.</p>';
-  }
+var API='https://majorrangas-backend-production.up.railway.app';
+
+var steps=[
+  {key:'placed',label:'Order Placed',desc:'Your order has been received'},
+  {key:'confirmed',label:'Confirmed',desc:'Order confirmed & being prepared'},
+  {key:'processing',label:'Processing',desc:'Being packed with care'},
+  {key:'shipped',label:'Shipped',desc:'On the way to you'},
+  {key:'delivered',label:'Delivered',desc:'Order delivered successfully'}
+];
+
+function getStepIdx(status){return steps.findIndex(function(s){return s.key===status;});}
+
+async function trackOrder(){
+  var num=document.getElementById('trackInput').value.trim().toUpperCase();
+  if(!num){alert('Please enter an order number');return;}
+  var result=document.getElementById('trackResult');
+  result.innerHTML='<div style="text-align:center;padding:40px;color:var(--text3)">🔍 Searching...</div>';
+  try{
+    var res=await fetch(API+'/api/orders/track/'+num);
+    var data=await res.json();
+    if(!data.success){result.innerHTML='<div class="err-box">❌ Order not found. Please check the order number and try again.</div>';return;}
+    var o=data.order;
+    var items=typeof o.items==='string'?JSON.parse(o.items):o.items;
+    var curIdx=getStepIdx(o.order_status);
+    var stepsHtml=steps.map(function(s,i){
+      var done=i<curIdx,cur=i===curIdx;
+      return '<div class="track-step'+(done?' done':cur?' current':'')+'">'
+        +'<div class="step-icon">'+(done?'✓':cur?'●':String(i+1))+'</div>'
+        +'<div class="step-info"><div class="step-label">'+s.label+'</div><div class="step-desc">'+s.desc+'</div></div>'
+        +'</div>';
+    }).join('');
+    result.innerHTML='<div class="track-result">'
+      +'<div class="track-result-head"><div class="order-num">'+o.order_number+'</div><div class="order-status">'+o.order_status.toUpperCase()+'</div></div>'
+      +'<div class="track-body">'
+      +'<div class="track-info-grid">'
+      +'<div class="track-info-item"><div class="label">Customer</div><div class="val">'+o.customer_name+'</div></div>'
+      +'<div class="track-info-item"><div class="label">Phone</div><div class="val">'+o.customer_phone+'</div></div>'
+      +'<div class="track-info-item"><div class="label">Delivery To</div><div class="val">'+o.shipping_city+', '+o.shipping_state+'</div></div>'
+      +'<div class="track-info-item"><div class="label">Payment</div><div class="val">'+(o.payment_method||'').toUpperCase()+' — '+(o.payment_status||'').toUpperCase()+'</div></div>'
+      +(o.tracking_number?'<div class="track-info-item"><div class="label">Tracking Number</div><div class="val">'+o.tracking_number+'</div></div>':'')
+      +'</div>'
+      +'<div class="track-steps">'+stepsHtml+'</div>'
+      +'<div class="track-items"><h4>Order Items</h4>'
+      +items.map(function(i){return '<div class="track-item"><span>'+i.name+' × '+i.quantity+'</span><span>₹'+(parseFloat(i.price||i.mrp||0)*i.quantity).toFixed(2)+'</span></div>';}).join('')
+      +'<div class="track-total"><span>Total Paid</span><span>₹'+parseFloat(o.total_amount).toFixed(2)+'</span></div>'
+      +'<a href="'+API+'/api/invoice/'+o.order_number+'" target="_blank" class="invoice-link">📄 Download GST Invoice</a>'
+      +'</div></div></div>';
+  }catch(e){result.innerHTML='<div class="err-box">❌ Connection error. Please try again.</div>';}
 }
 
-// Auto-track if order number in URL
-const params = new URLSearchParams(window.location.search);
-const order = params.get('order');
-if (order) { document.getElementById('trackInput').value = order; trackOrder(); }
+// Auto-fill from URL
+var urlOrder=new URLSearchParams(window.location.search).get('order');
+if(urlOrder){document.getElementById('trackInput').value=urlOrder;trackOrder();}
 </script>
-<script src="js/navbar.js"></script>
 </body>
 </html>
