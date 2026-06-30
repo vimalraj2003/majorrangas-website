@@ -17,7 +17,7 @@
 
     /* NAVBAR */
     .navbar{background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);position:fixed;top:36px;left:0;right:0;z-index:999;box-shadow:var(--shadow);}
-    .nav-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px 32px;}
+    .nav-top{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;gap:20px;}
     .nav-logo-main{font-family:var(--font-serif);font-size:1.5rem;color:var(--text);font-weight:700;letter-spacing:2px;display:block;text-align:center;}
     .nav-logo-sub{font-size:0.6rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;text-align:center;display:block;}
     .nav-icons{display:flex;align-items:center;gap:20px;justify-content:flex-end;}
@@ -156,16 +156,16 @@
 <div class="announce" id="announceBar">🎉 Free Shipping on orders above ₹500! <a href="#" style="color:#fff;text-decoration:underline;margin-left:6px">Shop Now →</a></div>
 <nav class="navbar">
   <div class="nav-top">
-    <div class="search-wrap" style="display:flex;align-items:center">
-      <span class="icon">🔍</span>
-      <input type="text" class="search-input" id="searchInput" placeholder="Search products..." oninput="doSearch(this.value)">
-    </div>
-    <a href="index.html">
-      <div style="background:#1A1A1A;padding:10px 20px;border-radius:10px;display:inline-block">
-        <img src="images/logo.png" alt="Major Rangas" style="height:36px;display:block">
+    <a href="index.html" style="flex-shrink:0">
+      <div style="background:#1A1A1A;padding:8px 24px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center">
+        <img src="images/logo.png" alt="Major Rangas" style="height:40px;width:auto;display:block;max-width:none">
       </div>
     </a>
-    <div class="nav-icons">
+    <div class="search-wrap" style="display:flex;align-items:center;flex:1;justify-content:center;max-width:400px">
+      <span class="icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="Search products..." oninput="doSearch(this.value)" style="width:100%">
+    </div>
+    <div class="nav-icons" style="flex-shrink:0">
       <button class="nav-icon-btn" id="accountNavBtn" onclick="handleAccount()">👤 <span id="accountNavLabel">Login</span></button>
       <button class="nav-icon-btn" onclick="openCart()">🛒 <span class="cart-badge" id="cartCount">0</span></button>
     </div>
@@ -198,6 +198,7 @@
     <button class="cat-pill" onclick="filterCat('Snacks',this)">🥨 Snacks</button>
     <button class="cat-pill" onclick="filterCat('Sweets',this)">🍬 Sweets</button>
     <button class="cat-pill" onclick="filterCat('Podis',this)">🌶️ Podis</button>
+    <button class="cat-pill" onclick="filterCat('Combos',this)">🎁 Combos</button>
     <div class="filter-divider"></div>
     <select class="sort-select" id="sortSelect" onchange="doSort()">
       <option value="default">Featured</option>
@@ -221,6 +222,7 @@
       <div class="sidebar-row" onclick="filterCat('Snacks',this)"><span>Snacks</span><span class="cnt" id="cnt-Snacks">—</span></div>
       <div class="sidebar-row" onclick="filterCat('Sweets',this)"><span>Sweets</span><span class="cnt" id="cnt-Sweets">—</span></div>
       <div class="sidebar-row" onclick="filterCat('Podis',this)"><span>Podis</span><span class="cnt" id="cnt-Podis">—</span></div>
+      <div class="sidebar-row" onclick="filterCat('Combos',this)"><span>Combos</span><span class="cnt" id="cnt-Combos">—</span></div>
     </div>
     <div class="sidebar-box">
       <div class="sidebar-head">⚡ Filter</div>
@@ -289,18 +291,18 @@ function createCard(p){
   var savePct=hasDisc?Math.round((1-price/mrp)*100):0;
   var inStock=p.stock_qty>0;
   var isWished=wishlist.includes(p.id);
-  var emoji=getEmoji(p.category);
+  var emoji=p.is_combo?'🎁':getEmoji(p.category);
   return '<div class="prod-card" onclick="window.location.href=\'product.html?id='+p.id+'\'">'
     +'<div class="prod-card-img">'
     +(p.image_primary?'<img src="'+p.image_primary+'" alt="'+p.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'')
     +'<span style="position:relative;z-index:1">'+(p.image_primary?'':emoji)+'</span>'
-    +(hasDisc?'<div class="prod-card-badge badge-sale">Save '+savePct+'%</div>':'')
+    +(p.is_combo?'<div class="prod-card-badge" style="background:var(--teal)">🎁 Combo</div>':hasDisc?'<div class="prod-card-badge badge-sale">Save '+savePct+'%</div>':'')
     +'<button class="prod-wish'+(isWished?' wished':'')+ '" id="wish-'+p.id+'" onclick="event.stopPropagation();toggleWish('+p.id+')">'+(isWished?'♥':'♡')+'</button>'
     +'</div>'
     +'<div class="prod-card-info">'
     +'<div class="prod-card-cat">'+p.category+'</div>'
     +'<div class="prod-card-name">'+p.name+'</div>'
-    +'<div class="prod-card-wt">'+(p.weight?p.weight+p.unit:'')+'</div>'
+    +'<div class="prod-card-wt">'+(p.is_combo&&p.combo_items?p.combo_items:(p.weight?p.weight+p.unit:''))+'</div>'
     +'<div class="prod-card-bottom">'
     +'<div><span class="prod-price">₹'+price.toFixed(0)+'</span>'+(hasDisc?'<span class="prod-price-old">₹'+mrp.toFixed(0)+'</span>':'')+'</div>'
     +(inStock?'<button class="add-btn" onclick="event.stopPropagation();addItem('+p.id+')">+</button>':'<span class="out-badge">Out of stock</span>')
@@ -393,7 +395,7 @@ async function loadProds(){
     var data=await res.json();
     allProds=data.products||[];
     allProds.forEach(function(p){prodMap[p.id]=p;});
-    ['All','Snacks','Sweets','Podis'].forEach(function(cat){
+    ['All','Snacks','Sweets','Podis','Combos'].forEach(function(cat){
       var el=document.getElementById('cnt-'+cat);
       if(el)el.textContent=cat==='All'?allProds.length:allProds.filter(function(p){return p.category===cat;}).length;
     });

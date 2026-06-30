@@ -315,6 +315,7 @@ async function loadProduct(){
       +(hasDisc?'<span class="price-old">₹'+mrp.toFixed(2)+'</span><span class="save-tag">SAVE '+savePct+'%</span>':'')
       +'</div>'
       +'<div class="gst-note">Inclusive of all taxes</div>'
+      +(product.is_combo&&product.combo_items?'<div style="background:var(--primary-bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:18px"><div style="font-size:0.7rem;color:var(--primary);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">🎁 What\'s Inside</div><div style="font-size:0.88rem;color:var(--text)">'+product.combo_items+'</div></div>':'')
       +'<p class="pd-desc">'+(product.short_description||'Authentic South Indian delicacy made fresh with traditional recipes and the finest ingredients, straight from our Chennai kitchen to your home.')+'</p>'
       +(product.weight?'<div class="weight-row"><div class="weight-label">Pack Size</div><span class="weight-opt">'+product.weight+product.unit+'</span></div>':'')
       +'<div class="qty-row"><span class="qty-label">Quantity:</span><div class="qty-control"><button onclick="changeQty(-1)">−</button><span id="qtyVal">1</span><button onclick="changeQty(1)">+</button></div></div>'
