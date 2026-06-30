@@ -152,8 +152,8 @@
 <nav class="navbar">
   <div class="nav-top">
     <a href="products.html" style="color:var(--primary);font-size:0.82rem;font-weight:500">← Back to Products</a>
-    <a href="index.html"><div style="background:#1A1A1A;padding:10px 20px;border-radius:10px;display:inline-block">
-        <img src="images/logo.png" alt="Major Rangas" style="height:36px;display:block">
+    <a href="index.html"><div style="background:#1A1A1A;padding:8px 28px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center">
+        <img src="images/logo.png" alt="Major Rangas" style="height:44px;width:auto;display:block;max-width:none">
       </div></a>
     <div class="nav-icons">
       <button class="nav-icon-btn" id="accountNavBtn" onclick="handleAccount()">👤 <span id="accountNavLabel">Login</span></button>
@@ -286,6 +286,16 @@ async function loadProduct(){
     var isWished=wishlist.includes(product.id);
     var emoji=getEmoji(product.category);
     var img=product.image_primary;
+    var galleryImgs=[product.image_primary,product.image_2,product.image_3,product.image_4].filter(function(u){return u&&u.trim();});
+
+    var thumbsHtml='';
+    if(galleryImgs.length>1){
+      thumbsHtml='<div class="img-thumbs">'+galleryImgs.map(function(u,i){
+        return '<img class="img-thumb'+(i===0?' active':'')+'" src="'+u+'" onclick="changeImg(\''+u+'\',this)">';
+      }).join('')+'</div>';
+    } else if(galleryImgs.length===1){
+      thumbsHtml='<div class="img-thumbs"><img class="img-thumb active" src="'+galleryImgs[0]+'" onclick="changeImg(\''+galleryImgs[0]+'\',this)"></div>';
+    }
 
     document.getElementById('pdGrid').innerHTML=
       '<div>'
@@ -294,7 +304,7 @@ async function loadProduct(){
       +'<button class="wish-float'+(isWished?' wished':'')+'" id="wishBtn" onclick="toggleWish()">'+(isWished?'♥':'♡')+'</button>'
       +(img?'<img id="mainImg" src="'+img+'" alt="'+product.name+'">':'<span id="mainImg">'+emoji+'</span>')
       +'</div>'
-      +(img?'<div class="img-thumbs"><img class="img-thumb active" src="'+img+'" onclick="changeImg(\''+img+'\',this)"></div>':'')
+      +thumbsHtml
       +'</div>'
       +'<div class="pd-info">'
       +'<div class="pd-cat">'+product.category+(product.sub_category?' · '+product.sub_category:'')+'</div>'
