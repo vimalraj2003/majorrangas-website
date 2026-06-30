@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -499,7 +498,13 @@
       <div class="form-group"><label>Stock Qty *</label><input id="pStock" type="number"></div>
       <div class="form-group"><label>SKU Code</label><input id="pSku" type="text"></div>
     </div>
-    <div class="form-group"><label>Image URL</label><input id="pImage" type="text"></div>
+    <div class="form-group"><label>Image 1 (Primary)</label><input id="pImage" type="text" placeholder="https://..." oninput="prevProdImg(1,this.value)"></div>
+    <div class="img-preview" id="prodImgPrev1" style="height:70px;margin-bottom:10px"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Image 2</label><input id="pImage2" type="text" placeholder="https://..." oninput="prevProdImg(2,this.value)"></div>
+      <div class="form-group"><label>Image 3</label><input id="pImage3" type="text" placeholder="https://..." oninput="prevProdImg(3,this.value)"></div>
+    </div>
+    <div class="form-group"><label>Image 4</label><input id="pImage4" type="text" placeholder="https://..." oninput="prevProdImg(4,this.value)"></div>
     <div class="form-row-2">
       <div class="form-group"><label>Active</label><select id="pActive"><option value="true">Yes</option><option value="false">No</option></select></div>
       <div class="form-group"><label>Featured</label><select id="pFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
@@ -717,7 +722,8 @@ document.getElementById('cancelProductModal').onclick = function() { closeModal(
 function openAddProduct() {
   document.getElementById('productModalTitle').textContent = 'Add Product';
   document.getElementById('productId').value = '';
-  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage'].forEach(function(id) { document.getElementById(id).value = ''; });
+  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage','pImage2','pImage3','pImage4'].forEach(function(id) { document.getElementById(id).value = ''; });
+  ['prodImgPrev1','prodImgPrev2','prodImgPrev3','prodImgPrev4'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML='';});
   document.getElementById('pCategory').value = 'Snacks';
   document.getElementById('pUnit').value = 'g';
   document.getElementById('pActive').value = 'true';
@@ -743,6 +749,10 @@ function openEditProduct(id) {
   document.getElementById('pStock').value = p.stock_qty || 0;
   document.getElementById('pSku').value = p.sku || '';
   document.getElementById('pImage').value = p.image_primary || '';
+  document.getElementById('pImage2').value = p.image_2 || '';
+  document.getElementById('pImage3').value = p.image_3 || '';
+  document.getElementById('pImage4').value = p.image_4 || '';
+  prevProdImg(1, p.image_primary); prevProdImg(2, p.image_2); prevProdImg(3, p.image_3); prevProdImg(4, p.image_4);
   document.getElementById('pActive').value = p.is_active ? 'true' : 'false';
   document.getElementById('pFeatured').value = p.is_featured ? 'true' : 'false';
   document.getElementById('productModal').classList.add('open');
@@ -765,6 +775,9 @@ document.getElementById('saveProductModal').onclick = async function() {
     stock_qty: document.getElementById('pStock').value,
     sku: document.getElementById('pSku').value,
     image_primary: document.getElementById('pImage').value,
+    image_2: document.getElementById('pImage2').value,
+    image_3: document.getElementById('pImage3').value,
+    image_4: document.getElementById('pImage4').value,
     is_active: document.getElementById('pActive').value === 'true',
     is_featured: document.getElementById('pFeatured').value === 'true',
     slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
@@ -822,6 +835,17 @@ document.getElementById('saveStockModal').onclick = async function() {
 };
 
 // SETTINGS
+function prevProdImg(n, url) {
+  var box = document.getElementById('prodImgPrev'+n);
+  if (!box) return;
+  if (url && url.trim()) {
+    var img = document.createElement('img');
+    img.src = url; img.style.cssText='width:70px;height:70px;object-fit:cover;border-radius:6px';
+    img.onerror = function() { box.innerHTML=''; };
+    box.innerHTML=''; box.appendChild(img);
+  } else { box.innerHTML=''; }
+}
+
 function setImgPreview(boxId, url) {
   var box = document.getElementById(boxId);
   if (!box) return;
