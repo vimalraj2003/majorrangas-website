@@ -7,21 +7,21 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{--gold:#C9830A;--teal:#0D9B8A;--teal-light:#12B5A2;--teal-bg:#E8F8F6;--white:#fff;--off-white:#FAFAF8;--cream:#F7F3EE;--text:#1A1A1A;--text2:#555;--text3:#888;--border:#E8E4DC;--shadow:0 2px 12px rgba(0,0,0,0.08);--shadow-md:0 4px 24px rgba(0,0,0,0.12);--font-serif:'Playfair Display',serif;--font-sans:'Inter',sans-serif;}
-    body{background:var(--off-white);font-family:var(--font-sans);min-height:100vh;}
+    body{background:var(--bg);font-family:var(--font-sans);min-height:100vh;}
     a{text-decoration:none;color:inherit;}
     .announce{background:var(--gold);color:#fff;text-align:center;font-size:0.8rem;font-weight:600;padding:10px;}
-    .navbar{background:var(--white);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
+    .navbar{background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;}
     .logo-main{font-family:var(--font-serif);font-size:1.4rem;color:var(--text);font-weight:700;letter-spacing:2px;}
     .logo-sub{font-size:0.6rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;display:block;text-align:center;}
 
     .account-page{max-width:1100px;margin:0 auto;padding:32px;display:grid;grid-template-columns:260px 1fr;gap:24px;}
     .sidebar{position:sticky;top:24px;height:fit-content;}
-    .user-card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:24px;text-align:center;margin-bottom:14px;box-shadow:var(--shadow);}
+    .user-card{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:24px;text-align:center;margin-bottom:14px;box-shadow:var(--shadow);}
     .user-avatar{width:72px;height:72px;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--font-serif);font-size:1.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
     .user-name{font-weight:700;font-size:1rem;color:var(--text);margin-bottom:3px;}
     .user-email{color:var(--text3);font-size:0.78rem;}
-    .side-nav{background:var(--white);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
+    .side-nav{background:var(--bg2);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
     .side-nav-item{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;font-size:0.88rem;color:var(--text2);border-bottom:1px solid var(--border);transition:all 0.2s;font-weight:500;}
     .side-nav-item:last-child{border-bottom:none;}
     .side-nav-item:hover{background:var(--cream);color:var(--teal);}
@@ -30,7 +30,7 @@
     .logout-item{color:#E53935!important;}
     .logout-item:hover{background:#FFF0F0!important;color:#E53935!important;}
 
-    .content-area{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:28px;box-shadow:var(--shadow);}
+    .content-area{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:28px;box-shadow:var(--shadow);}
     .section{display:none;}
     .section.active{display:block;}
     .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border);}
@@ -107,6 +107,7 @@
       .profile-grid{grid-template-columns:1fr;}
     }
   </style>
+  <script src="js/theme.js"></script>
 </head>
 <body>
 <div class="announce">🎉 Free Shipping on orders above ₹500!</div>
