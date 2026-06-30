@@ -480,7 +480,7 @@
     <div class="form-group"><label>Product Name *</label><input id="pName" type="text"></div>
     <div class="form-row-2">
       <div class="form-group"><label>Category *</label>
-        <select id="pCategory"><option value="Snacks">Snacks</option><option value="Sweets">Sweets</option><option value="Podis">Podis</option></select>
+        <select id="pCategory"><option value="Snacks">Snacks</option><option value="Sweets">Sweets</option><option value="Podis">Podis</option><option value="Combos">Combos</option></select>
       </div>
       <div class="form-group"><label>Sub Category</label><input id="pSubCategory" type="text"></div>
     </div>
@@ -505,6 +505,10 @@
       <div class="form-group"><label>Image 3</label><input id="pImage3" type="text" placeholder="https://..." oninput="prevProdImg(3,this.value)"></div>
     </div>
     <div class="form-group"><label>Image 4</label><input id="pImage4" type="text" placeholder="https://..." oninput="prevProdImg(4,this.value)"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Is this a Combo?</label><select id="pIsCombo" onchange="toggleComboField()"><option value="false">No</option><option value="true">Yes</option></select></div>
+      <div class="form-group" id="comboItemsWrap" style="display:none"><label>What's Inside (shown to customer)</label><input id="pComboItems" type="text" placeholder="e.g. 2x Murukku + 1x Idly Podi + 1x Laddu"></div>
+    </div>
     <div class="form-row-2">
       <div class="form-group"><label>Active</label><select id="pActive"><option value="true">Yes</option><option value="false">No</option></select></div>
       <div class="form-group"><label>Featured</label><select id="pFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
@@ -716,18 +720,25 @@ async function loadProducts() {
   } catch(e) {}
 }
 
+function toggleComboField() {
+  var isCombo = document.getElementById('pIsCombo').value === 'true';
+  document.getElementById('comboItemsWrap').style.display = isCombo ? 'block' : 'none';
+}
+
 document.getElementById('addProductBtn').onclick = function() { openAddProduct(); };
 document.getElementById('cancelProductModal').onclick = function() { closeModal('productModal'); };
 
 function openAddProduct() {
   document.getElementById('productModalTitle').textContent = 'Add Product';
   document.getElementById('productId').value = '';
-  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage','pImage2','pImage3','pImage4'].forEach(function(id) { document.getElementById(id).value = ''; });
+  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage','pImage2','pImage3','pImage4','pComboItems'].forEach(function(id) { document.getElementById(id).value = ''; });
   ['prodImgPrev1','prodImgPrev2','prodImgPrev3','prodImgPrev4'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML='';});
   document.getElementById('pCategory').value = 'Snacks';
   document.getElementById('pUnit').value = 'g';
   document.getElementById('pActive').value = 'true';
   document.getElementById('pFeatured').value = 'false';
+  document.getElementById('pIsCombo').value = 'false';
+  toggleComboField();
   document.getElementById('productModal').classList.add('open');
 }
 
@@ -755,6 +766,9 @@ function openEditProduct(id) {
   prevProdImg(1, p.image_primary); prevProdImg(2, p.image_2); prevProdImg(3, p.image_3); prevProdImg(4, p.image_4);
   document.getElementById('pActive').value = p.is_active ? 'true' : 'false';
   document.getElementById('pFeatured').value = p.is_featured ? 'true' : 'false';
+  document.getElementById('pIsCombo').value = p.is_combo ? 'true' : 'false';
+  document.getElementById('pComboItems').value = p.combo_items || '';
+  toggleComboField();
   document.getElementById('productModal').classList.add('open');
 }
 
@@ -780,6 +794,8 @@ document.getElementById('saveProductModal').onclick = async function() {
     image_4: document.getElementById('pImage4').value,
     is_active: document.getElementById('pActive').value === 'true',
     is_featured: document.getElementById('pFeatured').value === 'true',
+    is_combo: document.getElementById('pIsCombo').value === 'true',
+    combo_items: document.getElementById('pComboItems').value,
     slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
   };
   try {
