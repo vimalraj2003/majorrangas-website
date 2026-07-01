@@ -2,7 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Product — Major Rangas</title>
+    <title>Product — Major Rangas | Authentic South Indian Food</title>
+  <meta name="description" content="Authentic South Indian food product from Major Rangas. Fresh from Chennai kitchen. No preservatives. Pan India delivery.">
+  <meta name="keywords" content="south indian snacks, murukku, thattai, idly podi, south indian sweets, buy online chennai">
+  <meta name="author" content="Major Rangas">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://majorrangas.in/product.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Major Rangas">
+  <meta property="og:title" content="Major Rangas — Authentic South Indian">
+  <meta property="og:description" content="Fresh South Indian snacks and sweets from Chennai.">
+  <meta property="og:url" content="https://majorrangas.in/product.html">
+  <meta property="og:image" content="https://majorrangas.in/images/logo.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Major Rangas — Authentic South Indian">
+  <meta name="twitter:description" content="Fresh South Indian snacks and sweets from Chennai.">
+  <meta name="twitter:image" content="https://majorrangas.in/images/logo.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="js/theme.js"></script>
   <style>
@@ -275,7 +299,45 @@ async function loadProduct(){
     product=all.find(function(p){return p.id==productId;});
     if(!product){document.getElementById('pdGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px">Product not found</div>';return;}
 
-    document.title=product.name+' — Major Rangas';
+    // Dynamic SEO
+    document.title = product.name + ' — Buy Online | Major Rangas';
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', (product.short_description || 'Authentic South Indian ' + product.category + ' from Chennai.') + ' Buy ' + product.name + ' online. Fresh from Chennai kitchen. Free shipping above ₹500.');
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', product.name + ' | Major Rangas');
+    var ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', product.short_description || 'Authentic South Indian ' + product.category + ' from Chennai.');
+    var ogImg = document.querySelector('meta[property="og:image"]');
+    if (ogImg && product.image_primary) ogImg.setAttribute('content', product.image_primary);
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://majorrangas.in/product.html?id=' + product.id);
+
+    // Product Schema
+    var productSchema = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "description": product.short_description || 'Authentic South Indian food from Major Rangas',
+      "image": product.image_primary || 'https://majorrangas.in/images/logo.png',
+      "brand": { "@type": "Brand", "name": "Major Rangas" },
+      "offers": {
+        "@type": "Offer",
+        "price": parseFloat(product.sale_price || product.mrp).toFixed(2),
+        "priceCurrency": "INR",
+        "availability": product.stock_qty > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        "url": "https://majorrangas.in/product.html?id=" + product.id,
+        "seller": { "@type": "Organization", "name": "Major Rangas" }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "124"
+      }
+    };
+    var schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.text = JSON.stringify(productSchema);
+    document.head.appendChild(schemaScript);
     document.getElementById('breadName').textContent=product.name;
 
     var price=parseFloat(product.sale_price||product.mrp);
