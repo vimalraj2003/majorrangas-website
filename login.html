@@ -1,187 +1,411 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Register — Major Rangas</title>
-  <meta name="description" content="Login or create your Major Rangas account to track orders, save addresses and manage your wishlist.">
-  <meta name="keywords" content="major rangas login, major rangas account">
-  <meta name="author" content="Major Rangas">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://majorrangas.in/login.html">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Major Rangas">
-  <meta property="og:title" content="My Account — Major Rangas">
-  <meta property="og:description" content="Login to your Major Rangas account.">
-  <meta property="og:url" content="https://majorrangas.in/login.html">
-  <meta property="og:image" content="https://majorrangas.in/images/logo.png">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="My Account — Major Rangas">
-  <meta name="twitter:description" content="Login to your Major Rangas account.">
-  <meta name="twitter:image" content="https://majorrangas.in/images/logo.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/images/logo.png">
-  <link rel="apple-touch-icon" href="/images/logo.png">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Login — Major Rangas | Authentic South Indian</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
-    :root{--gold:#C9830A;--teal:#0D9B8A;--teal-light:#12B5A2;--teal-bg:#E8F8F6;--white:#fff;--off-white:#FAFAF8;--cream:#F7F3EE;--text:#1A1A1A;--text2:#555;--text3:#888;--border:#E8E4DC;--shadow:0 2px 12px rgba(0,0,0,0.08);--font-serif:'Playfair Display',serif;--font-sans:'Inter',sans-serif;}
-    body{background:var(--bg);font-family:var(--font-sans);min-height:100vh;display:flex;flex-direction:column;}
-    a{text-decoration:none;color:inherit;}
-    .announce{background:var(--gold);color:#fff;text-align:center;font-size:0.8rem;font-weight:600;padding:10px 20px;}
-    .navbar{background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
-    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;}
-    .logo-main{font-family:var(--font-serif);font-size:1.4rem;color:var(--text);font-weight:700;letter-spacing:2px;}
-    .logo-sub{font-size:0.6rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;display:block;text-align:center;}
-    .back-link{color:var(--teal);font-size:0.82rem;font-weight:500;}
+    :root{
+      --terra:#C4511A;--terra-dark:#A03D10;--terra-light:#E8734A;
+      --turmeric:#D4A017;--turmeric-light:#F0C040;
+      --cream:#FDF6EC;--cream2:#F5ECD8;--cream3:#EDD9B8;
+      --brown:#3D1F08;--brown2:#5C3010;--brown3:#8B5E2A;
+      --text:#2C1506;--text2:#6B3A1F;--text3:#9B6B3A;
+      --border:#D4B896;--white:#FFFDF8;
+      --font-serif:'Playfair Display',Georgia,serif;
+      --font-sans:'Inter',sans-serif;
+    }
+    body{background:var(--cream);font-family:var(--font-sans);min-height:100vh;overflow-x:hidden;}
 
-    .login-page{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
-    .login-card{background:var(--white);border-radius:20px;overflow:hidden;width:100%;max-width:480px;box-shadow:0 8px 40px rgba(0,0,0,0.12);display:grid;grid-template-columns:1fr 1fr;}
-    .login-left{background:var(--teal);padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-    .login-left-logo{font-family:var(--font-serif);font-size:1.5rem;color:#fff;margin-bottom:8px;}
-    .login-left-sub{color:rgba(255,255,255,0.7);font-size:0.82rem;margin-bottom:24px;}
-    .login-left-icon{font-size:3rem;margin-bottom:12px;}
-    .login-benefits{list-style:none;text-align:left;margin-top:12px;}
-    .login-benefits li{color:rgba(255,255,255,0.7);font-size:0.75rem;padding:5px 0;display:flex;align-items:center;gap:8px;}
-    .login-benefits li::before{content:'✓';color:#fff;font-weight:700;}
+    /* KOLAM SVG BACKGROUND */
+    .kolam-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+    .kolam-bg svg{position:absolute;opacity:0.06;}
+    .kolam-bg .k1{top:-100px;left:-100px;width:500px;height:500px;}
+    .kolam-bg .k2{bottom:-80px;right:-80px;width:400px;height:400px;}
+    .kolam-bg .k3{top:40%;left:40%;width:300px;height:300px;opacity:0.03;}
 
-    .login-right{padding:32px 24px;}
-    .login-tabs{display:flex;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:22px;}
-    .login-tab{flex:1;padding:9px;background:none;border:none;font-size:0.82rem;font-weight:500;cursor:pointer;color:var(--text2);transition:all 0.2s;}
-    .login-tab.active{background:var(--teal);color:#fff;font-weight:600;}
-    .login-section{display:none;}
-    .login-section.active{display:block;}
-    .inp-group{margin-bottom:13px;}
-    .inp-group label{display:block;font-size:0.75rem;font-weight:500;color:var(--text2);margin-bottom:5px;}
-    .inp{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;color:var(--text);outline:none;font-family:var(--font-sans);transition:border-color 0.2s;}
-    .inp:focus{border-color:var(--teal);}
-    .btn-submit{width:100%;background:var(--teal);color:#fff;border:none;padding:13px;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;transition:background 0.2s;margin-top:4px;}
-    .btn-submit:hover{background:var(--teal-light);}
-    .divider{text-align:center;color:var(--text3);font-size:0.75rem;margin:14px 0;position:relative;}
-    .divider::before,.divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--border);}
-    .divider::before{left:0;}.divider::after{right:0;}
-    .google-btn{width:100%;border:1.5px solid var(--border);background:var(--white);padding:11px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s;color:var(--text);}
-    .google-btn:hover{border-color:var(--teal);background:var(--teal-bg);}
-    .err-msg{color:#E53935;font-size:0.75rem;margin-top:6px;display:none;}
-    .success-msg{color:var(--teal);font-size:0.75rem;margin-top:6px;display:none;}
-    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
-    @media(max-width:560px){.login-card{grid-template-columns:1fr;}.login-left{padding:28px 20px;}.login-left-logo{font-size:1.2rem;}.login-benefits{display:none;}}
+    /* DOT PATTERN */
+    .dot-pattern{position:fixed;inset:0;z-index:0;
+      background-image:radial-gradient(circle, rgba(196,81,26,0.12) 1.5px, transparent 1.5px);
+      background-size:28px 28px;}
+
+    /* TOP BORDER STRIPE */
+    .top-stripe{position:fixed;top:0;left:0;right:0;height:5px;z-index:100;
+      background:linear-gradient(90deg,var(--terra),var(--turmeric),var(--terra-light),var(--turmeric),var(--terra));}
+
+    /* PAGE LAYOUT */
+    .page{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+
+    /* LEFT PANEL */
+    .left-panel{background:var(--brown);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 50px;min-height:100vh;}
+
+    /* Kolam decorative overlay on left */
+    .left-panel::before{content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(196,81,26,0.3),rgba(61,31,8,0.8),rgba(92,48,16,0.9));z-index:0;}
+    .left-panel::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;
+      background:linear-gradient(to top,rgba(196,81,26,0.15),transparent);z-index:0;}
+
+    /* Decorative circles - kolam rings */
+    .kolam-ring{position:absolute;border-radius:50%;border:1px solid rgba(212,160,23,0.2);}
+    .ring-1{width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);}
+    .ring-2{width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);}
+    .ring-3{width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);}
+    .ring-4{width:200px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(212,160,23,0.3);}
+    .ring-5{width:100px;height:100px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(212,160,23,0.4);}
+
+    .left-content{position:relative;z-index:2;text-align:center;}
+    .brand-emblem{width:80px;height:80px;border-radius:50%;background:rgba(212,160,23,0.15);border:2px solid rgba(212,160,23,0.4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2rem;}
+    .brand-name{font-family:var(--font-serif);font-size:2.2rem;color:var(--turmeric-light);letter-spacing:3px;margin-bottom:6px;font-weight:700;}
+    .brand-tamil{font-family:'Noto Serif Tamil',serif;font-size:1rem;color:rgba(212,160,23,0.6);margin-bottom:16px;letter-spacing:1px;}
+    .brand-divider{display:flex;align-items:center;gap:12px;margin:16px 0;}
+    .divider-line{flex:1;height:1px;background:rgba(212,160,23,0.25);}
+    .divider-dot{width:6px;height:6px;border-radius:50%;background:var(--turmeric);opacity:0.6;}
+    .brand-tagline{color:rgba(253,246,236,0.55);font-size:0.82rem;letter-spacing:3px;text-transform:uppercase;line-height:1.8;}
+    .brand-benefits{margin-top:36px;text-align:left;}
+    .benefit-item{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+    .benefit-icon{width:36px;height:36px;border-radius:50%;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.25);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+    .benefit-text{color:rgba(253,246,236,0.6);font-size:0.82rem;line-height:1.5;}
+    .benefit-text strong{color:rgba(253,246,236,0.9);display:block;font-size:0.85rem;margin-bottom:2px;}
+
+    /* Kolam corner decorations */
+    .kolam-corner{position:absolute;opacity:0.12;}
+    .corner-tl{top:20px;left:20px;}
+    .corner-br{bottom:20px;right:20px;transform:rotate(180deg);}
+
+    /* RIGHT PANEL */
+    .right-panel{background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 50px;position:relative;overflow:hidden;}
+
+    /* Subtle pattern on right */
+    .right-panel::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;
+      background:radial-gradient(circle,rgba(196,81,26,0.04) 0%,transparent 70%);border-radius:50%;}
+    .right-panel::after{content:'';position:absolute;bottom:-80px;left:-80px;width:240px;height:240px;
+      background:radial-gradient(circle,rgba(212,160,23,0.05) 0%,transparent 70%);border-radius:50%;}
+
+    .form-wrap{width:100%;max-width:380px;position:relative;z-index:1;}
+
+    /* Decorative top line */
+    .form-top-line{display:flex;align-items:center;gap:10px;margin-bottom:28px;}
+    .ftl-line{flex:1;height:1px;background:var(--cream3);}
+    .ftl-icon{font-size:1.2rem;}
+
+    .form-title{font-family:var(--font-serif);font-size:1.8rem;color:var(--text);margin-bottom:6px;font-weight:700;}
+    .form-subtitle{color:var(--text3);font-size:0.82rem;margin-bottom:28px;line-height:1.6;}
+
+    /* TABS */
+    .tabs{display:flex;background:var(--cream2);border-radius:10px;padding:4px;margin-bottom:24px;}
+    .tab{flex:1;padding:10px;background:none;border:none;font-size:0.82rem;font-weight:500;cursor:pointer;border-radius:8px;color:var(--text3);transition:all 0.25s;font-family:var(--font-sans);}
+    .tab.active{background:var(--white);color:var(--terra);font-weight:600;box-shadow:0 1px 6px rgba(196,81,26,0.15);}
+
+    .form-section{display:none;}
+    .form-section.active{display:block;}
+
+    /* INPUT GROUPS */
+    .inp-group{margin-bottom:16px;position:relative;}
+    .inp-group label{display:block;font-size:0.72rem;font-weight:600;color:var(--text2);margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase;}
+    .inp-group input{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--border);border-radius:10px;font-size:0.9rem;color:var(--text);outline:none;font-family:var(--font-sans);background:var(--cream);transition:all 0.2s;}
+    .inp-group input:focus{border-color:var(--terra);background:var(--white);box-shadow:0 0 0 3px rgba(196,81,26,0.08);}
+    .inp-group .inp-icon{position:absolute;left:14px;top:50%;transform:translateY(8px);color:var(--text3);font-size:0.9rem;}
+
+    /* SUBMIT BUTTON */
+    .btn-submit{width:100%;background:var(--terra);color:var(--white);border:none;padding:14px;border-radius:10px;font-weight:700;font-size:0.92rem;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);position:relative;overflow:hidden;margin-top:4px;}
+    .btn-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);pointer-events:none;}
+    .btn-submit:hover{background:var(--terra-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(196,81,26,0.35);}
+    .btn-submit:active{transform:translateY(0);}
+
+    /* DIVIDER */
+    .or-divider{display:flex;align-items:center;gap:12px;margin:18px 0;}
+    .or-line{flex:1;height:1px;background:var(--cream3);}
+    .or-text{color:var(--text3);font-size:0.72rem;letter-spacing:1px;}
+
+    /* GOOGLE BUTTON */
+    .btn-google{width:100%;border:1.5px solid var(--border);background:var(--white);padding:12px;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s;color:var(--text);font-family:var(--font-sans);}
+    .btn-google:hover{border-color:var(--terra);background:var(--cream);transform:translateY(-1px);}
+
+    /* ERROR */
+    .err-msg{color:var(--terra);font-size:0.75rem;margin-top:8px;padding:8px 12px;background:rgba(196,81,26,0.06);border-radius:6px;border-left:3px solid var(--terra);display:none;}
+
+    /* FOOTER LINKS */
+    .form-footer{text-align:center;margin-top:20px;color:var(--text3);font-size:0.78rem;}
+    .form-footer a{color:var(--terra);font-weight:600;}
+
+    /* Bottom decorative strip */
+    .bottom-strip{position:fixed;bottom:0;left:0;right:0;height:3px;z-index:100;
+      background:repeating-linear-gradient(90deg,var(--terra) 0px,var(--terra) 20px,var(--turmeric) 20px,var(--turmeric) 40px,var(--terra-light) 40px,var(--terra-light) 60px,var(--cream3) 60px,var(--cream3) 80px);}
+
+    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
+
+    @media(max-width:768px){
+      .page{grid-template-columns:1fr;}
+      .left-panel{min-height:auto;padding:40px 24px;display:none;}
+      .right-panel{padding:40px 24px;min-height:100vh;}
+    }
   </style>
-  <script src="js/theme.js"></script>
 </head>
 <body>
-<div class="announce">🎉 Free Shipping on orders above ₹500!</div>
-<nav class="navbar">
-  <div class="nav-inner" style="justify-content:flex-start;gap:24px">
-    <a href="index.html" style="flex-shrink:0"><div style="background:#1A1A1A;padding:6px 18px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center">
-        <img src="images/logo.png" alt="Major Rangas" style="height:32px;width:auto;display:block;max-width:none">
-      </div></a>
-    <a href="index.html" style="color:var(--teal);font-size:0.82rem;font-weight:500">← Back to Store</a>
-    <a href="products.html" style="color:var(--teal);font-size:0.82rem;font-weight:500;margin-left:auto">Browse Products</a>
-  </div>
-</nav>
 
-<div class="login-page">
-  <div class="login-card">
-    <div class="login-left">
-      <div class="login-left-icon">🙏</div>
-      <div class="login-left-logo">Major Rangas</div>
-      <div class="login-left-sub">True Taste of South India</div>
-      <ul class="login-benefits">
-        <li>Track your orders</li>
-        <li>Save addresses</li>
-        <li>Wishlist products</li>
-        <li>Faster checkout</li>
-      </ul>
+<div class="top-stripe"></div>
+<div class="dot-pattern"></div>
+
+<!-- KOLAM SVG BACKGROUNDS -->
+<div class="kolam-bg">
+  <!-- Kolam pattern 1 -->
+  <svg class="k1" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="190" stroke="#C4511A" stroke-width="1"/>
+    <circle cx="200" cy="200" r="160" stroke="#C4511A" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="130" stroke="#C4511A" stroke-width="1"/>
+    <circle cx="200" cy="200" r="100" stroke="#C4511A" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="70" stroke="#C4511A" stroke-width="1"/>
+    <circle cx="200" cy="200" r="40" stroke="#C4511A" stroke-width="0.5"/>
+    <!-- Petals -->
+    <path d="M200 10 Q220 100 200 190 Q180 100 200 10Z" fill="#C4511A" opacity="0.3"/>
+    <path d="M390 200 Q300 220 210 200 Q300 180 390 200Z" fill="#C4511A" opacity="0.3"/>
+    <path d="M200 390 Q220 300 200 210 Q180 300 200 390Z" fill="#C4511A" opacity="0.3"/>
+    <path d="M10 200 Q100 220 190 200 Q100 180 10 200Z" fill="#C4511A" opacity="0.3"/>
+    <!-- Diagonal petals -->
+    <path d="M55 55 Q130 140 200 200 Q120 140 55 55Z" fill="#D4A017" opacity="0.25"/>
+    <path d="M345 55 Q270 140 200 200 Q280 140 345 55Z" fill="#D4A017" opacity="0.25"/>
+    <path d="M345 345 Q270 260 200 200 Q280 260 345 345Z" fill="#D4A017" opacity="0.25"/>
+    <path d="M55 345 Q130 260 200 200 Q120 260 55 345Z" fill="#D4A017" opacity="0.25"/>
+    <!-- Center dots -->
+    <circle cx="200" cy="200" r="8" fill="#C4511A" opacity="0.5"/>
+    <circle cx="200" cy="70" r="4" fill="#D4A017" opacity="0.4"/>
+    <circle cx="200" cy="330" r="4" fill="#D4A017" opacity="0.4"/>
+    <circle cx="70" cy="200" r="4" fill="#D4A017" opacity="0.4"/>
+    <circle cx="330" cy="200" r="4" fill="#D4A017" opacity="0.4"/>
+  </svg>
+  <!-- Kolam pattern 2 -->
+  <svg class="k2" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="150" cy="150" r="140" stroke="#C4511A" stroke-width="1"/>
+    <circle cx="150" cy="150" r="110" stroke="#D4A017" stroke-width="0.5"/>
+    <circle cx="150" cy="150" r="80" stroke="#C4511A" stroke-width="1"/>
+    <circle cx="150" cy="150" r="50" stroke="#D4A017" stroke-width="0.5"/>
+    <circle cx="150" cy="150" r="20" stroke="#C4511A" stroke-width="1"/>
+    <path d="M150 10 Q165 80 150 140 Q135 80 150 10Z" fill="#C4511A" opacity="0.25"/>
+    <path d="M290 150 Q220 165 160 150 Q220 135 290 150Z" fill="#C4511A" opacity="0.25"/>
+    <path d="M150 290 Q165 220 150 160 Q135 220 150 290Z" fill="#C4511A" opacity="0.25"/>
+    <path d="M10 150 Q80 165 140 150 Q80 135 10 150Z" fill="#C4511A" opacity="0.25"/>
+    <circle cx="150" cy="150" r="6" fill="#D4A017" opacity="0.5"/>
+  </svg>
+</div>
+
+<div class="page">
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <div class="kolam-ring ring-1"></div>
+    <div class="kolam-ring ring-2"></div>
+    <div class="kolam-ring ring-3"></div>
+    <div class="kolam-ring ring-4"></div>
+    <div class="kolam-ring ring-5"></div>
+
+    <!-- Corner kolam decorations -->
+    <svg class="kolam-corner corner-tl" width="80" height="80" viewBox="0 0 80 80" fill="none">
+      <path d="M0 40 Q20 20 40 0" stroke="#D4A017" stroke-width="1" opacity="0.5"/>
+      <path d="M0 60 Q30 30 60 0" stroke="#D4A017" stroke-width="0.5" opacity="0.4"/>
+      <path d="M0 80 Q40 40 80 0" stroke="#D4A017" stroke-width="1" opacity="0.3"/>
+      <circle cx="0" cy="40" r="3" fill="#D4A017" opacity="0.5"/>
+      <circle cx="40" cy="0" r="3" fill="#D4A017" opacity="0.5"/>
+    </svg>
+    <svg class="kolam-corner corner-br" width="80" height="80" viewBox="0 0 80 80" fill="none">
+      <path d="M0 40 Q20 20 40 0" stroke="#D4A017" stroke-width="1" opacity="0.5"/>
+      <path d="M0 60 Q30 30 60 0" stroke="#D4A017" stroke-width="0.5" opacity="0.4"/>
+      <path d="M0 80 Q40 40 80 0" stroke="#D4A017" stroke-width="1" opacity="0.3"/>
+      <circle cx="0" cy="40" r="3" fill="#D4A017" opacity="0.5"/>
+      <circle cx="40" cy="0" r="3" fill="#D4A017" opacity="0.5"/>
+    </svg>
+
+    <div class="left-content">
+      <div class="brand-emblem">🪔</div>
+      <div class="brand-name">MAJOR RANGAS</div>
+      <div class="brand-tamil">மேஜர் ரங்கஸ்</div>
+      <div class="brand-divider">
+        <div class="divider-line"></div>
+        <div class="divider-dot"></div>
+        <div class="divider-line"></div>
+      </div>
+      <div class="brand-tagline">Authentic South Indian<br>Snacks · Sweets · Podis</div>
+
+      <div class="brand-benefits">
+        <div class="benefit-item">
+          <div class="benefit-icon">📦</div>
+          <div class="benefit-text">
+            <strong>Track Your Orders</strong>
+            Real-time delivery updates
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">📍</div>
+          <div class="benefit-text">
+            <strong>Save Addresses</strong>
+            Faster checkout every time
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">❤️</div>
+          <div class="benefit-text">
+            <strong>Your Wishlist</strong>
+            Save products for later
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-icon">🎁</div>
+          <div class="benefit-text">
+            <strong>Exclusive Offers</strong>
+            Member-only discounts
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="login-right">
-      <div class="login-tabs">
-        <button class="login-tab active" onclick="switchTab('login',this)">Login</button>
-        <button class="login-tab" onclick="switchTab('register',this)">Register</button>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="form-wrap">
+      <div class="form-top-line">
+        <div class="ftl-line"></div>
+        <div class="ftl-icon">🪔</div>
+        <div class="ftl-line"></div>
+      </div>
+
+      <div class="form-title">Welcome Back</div>
+      <div class="form-subtitle">Sign in to your Major Rangas account to track orders, manage your wishlist and enjoy exclusive member benefits.</div>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('login',this)">Login</button>
+        <button class="tab" onclick="switchTab('register',this)">New Account</button>
       </div>
 
       <!-- LOGIN -->
-      <div class="login-section active" id="loginSection">
-        <div class="inp-group"><label>Email Address</label><input class="inp" type="email" id="loginEmail" placeholder="your@email.com"></div>
-        <div class="inp-group"><label>Password</label><input class="inp" type="password" id="loginPass" placeholder="Your password"></div>
+      <div class="form-section active" id="loginSection">
+        <div class="inp-group">
+          <label>Email Address</label>
+          <span class="inp-icon">✉️</span>
+          <input type="email" id="loginEmail" placeholder="your@email.com">
+        </div>
+        <div class="inp-group">
+          <label>Password</label>
+          <span class="inp-icon">🔒</span>
+          <input type="password" id="loginPass" placeholder="Your password">
+        </div>
         <div class="err-msg" id="loginErr"></div>
-        <button class="btn-submit" onclick="doLogin()">Login →</button>
-        <div class="divider">OR</div>
-        <button class="google-btn" onclick="googleSignIn()">
+        <button class="btn-submit" onclick="doLogin()">Sign In →</button>
+        <div class="or-divider"><div class="or-line"></div><div class="or-text">OR</div><div class="or-line"></div></div>
+        <button class="btn-google" onclick="window.location.href='login.html'">
           <img src="https://www.google.com/favicon.ico" width="16" alt="G"> Continue with Google
         </button>
+        <div class="form-footer">Don't have an account? <a href="#" onclick="switchTabByName('register')">Create one</a></div>
       </div>
 
       <!-- REGISTER -->
-      <div class="login-section" id="registerSection">
-        <div class="inp-group"><label>Full Name</label><input class="inp" type="text" id="regName" placeholder="Your name"></div>
-        <div class="inp-group"><label>Email Address</label><input class="inp" type="email" id="regEmail" placeholder="your@email.com"></div>
-        <div class="inp-group"><label>Phone Number</label><input class="inp" type="tel" id="regPhone" placeholder="10-digit mobile"></div>
-        <div class="inp-group"><label>Password</label><input class="inp" type="password" id="regPass" placeholder="Minimum 6 characters"></div>
+      <div class="form-section" id="registerSection">
+        <div class="inp-group">
+          <label>Full Name</label>
+          <span class="inp-icon">👤</span>
+          <input type="text" id="regName" placeholder="Your full name">
+        </div>
+        <div class="inp-group">
+          <label>Email Address</label>
+          <span class="inp-icon">✉️</span>
+          <input type="email" id="regEmail" placeholder="your@email.com">
+        </div>
+        <div class="inp-group">
+          <label>Mobile Number</label>
+          <span class="inp-icon">📱</span>
+          <input type="tel" id="regPhone" placeholder="10-digit mobile number">
+        </div>
+        <div class="inp-group">
+          <label>Password</label>
+          <span class="inp-icon">🔒</span>
+          <input type="password" id="regPass" placeholder="Minimum 6 characters">
+        </div>
         <div class="err-msg" id="regErr"></div>
         <button class="btn-submit" onclick="doRegister()">Create Account →</button>
-        <div class="divider">OR</div>
-        <button class="google-btn" onclick="googleSignIn()">
+        <div class="or-divider"><div class="or-line"></div><div class="or-text">OR</div><div class="or-line"></div></div>
+        <button class="btn-google" onclick="window.location.href='login.html'">
           <img src="https://www.google.com/favicon.ico" width="16" alt="G"> Continue with Google
         </button>
+        <div class="form-footer">Already have an account? <a href="#" onclick="switchTabByName('login')">Sign in</a></div>
+      </div>
+
+      <!-- Back to store -->
+      <div style="text-align:center;margin-top:24px;padding-top:20px;border-top:1px solid var(--cream3)">
+        <a href="index.html" style="color:var(--text3);font-size:0.78rem;display:inline-flex;align-items:center;gap:6px;transition:color 0.2s" onmouseover="this.style.color='var(--terra)'" onmouseout="this.style.color='var(--text3)'">
+          ← Back to Major Rangas
+        </a>
       </div>
     </div>
   </div>
 </div>
 
+<div class="bottom-strip"></div>
 <a href="https://wa.me/919500865686" target="_blank" class="wa-float">💬</a>
 
 <script>
-var API='https://majorrangas-backend-production.up.railway.app';
-if(localStorage.getItem('mr_customer_token')) window.location.href='account.html';
+var API = 'https://majorrangas-backend-production.up.railway.app';
+if (localStorage.getItem('mr_customer_token')) window.location.href = 'account.html';
 
-function switchTab(tab,btn){
-  document.querySelectorAll('.login-tab').forEach(function(t){t.classList.remove('active');});
-  document.querySelectorAll('.login-section').forEach(function(s){s.classList.remove('active');});
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.form-section').forEach(function(s){ s.classList.remove('active'); });
   btn.classList.add('active');
-  document.getElementById(tab+'Section').classList.add('active');
+  document.getElementById(tab + 'Section').classList.add('active');
 }
 
-function showErr(id,msg){var el=document.getElementById(id);el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},4000);}
-
-function redirect(){
-  var r=new URLSearchParams(window.location.search).get('redirect')||'account.html';
-  window.location.href=r;
+function switchTabByName(tab) {
+  var btn = document.querySelector('.tab:' + (tab === 'login' ? 'first-child' : 'last-child'));
+  switchTab(tab, btn);
 }
 
-async function doLogin(){
-  var email=document.getElementById('loginEmail').value.trim();
-  var pass=document.getElementById('loginPass').value;
-  if(!email||!pass){showErr('loginErr','Please fill all fields');return;}
-  try{
-    var res=await fetch(API+'/api/customers/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
-    var data=await res.json();
-    if(data.success){localStorage.setItem('mr_customer_token',data.token);localStorage.setItem('mr_customer',JSON.stringify(data.customer));redirect();}
-    else showErr('loginErr',data.error||'Login failed');
-  }catch(e){showErr('loginErr','Connection error. Try again.');}
+function showErr(id, msg) {
+  var el = document.getElementById(id);
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(function(){ el.style.display = 'none'; }, 4000);
 }
 
-async function doRegister(){
-  var name=document.getElementById('regName').value.trim();
-  var email=document.getElementById('regEmail').value.trim();
-  var phone=document.getElementById('regPhone').value.trim();
-  var pass=document.getElementById('regPass').value;
-  if(!name||!email||!pass){showErr('regErr','Please fill all required fields');return;}
-  if(pass.length<6){showErr('regErr','Password must be at least 6 characters');return;}
-  try{
-    var res=await fetch(API+'/api/customers/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,phone,password:pass})});
-    var data=await res.json();
-    if(data.success){localStorage.setItem('mr_customer_token',data.token);localStorage.setItem('mr_customer',JSON.stringify(data.customer));redirect();}
-    else showErr('regErr',data.error||'Registration failed');
-  }catch(e){showErr('regErr','Connection error. Try again.');}
+function redirect() {
+  var r = new URLSearchParams(window.location.search).get('redirect') || 'account.html';
+  window.location.href = r;
 }
 
-function googleSignIn(){alert('Google Sign-In coming soon! Please use Email & Password for now.');}
+async function doLogin() {
+  var email = document.getElementById('loginEmail').value.trim();
+  var pass = document.getElementById('loginPass').value;
+  if (!email || !pass) { showErr('loginErr', 'Please fill all fields'); return; }
+  try {
+    var res = await fetch(API + '/api/customers/login', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password: pass })
+    });
+    var data = await res.json();
+    if (data.success) {
+      localStorage.setItem('mr_customer_token', data.token);
+      localStorage.setItem('mr_customer', JSON.stringify(data.customer));
+      redirect();
+    } else showErr('loginErr', data.error || 'Invalid email or password');
+  } catch(e) { showErr('loginErr', 'Connection error. Please try again.'); }
+}
+
+async function doRegister() {
+  var name = document.getElementById('regName').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var phone = document.getElementById('regPhone').value.trim();
+  var pass = document.getElementById('regPass').value;
+  if (!name || !email || !pass) { showErr('regErr', 'Please fill all required fields'); return; }
+  if (pass.length < 6) { showErr('regErr', 'Password must be at least 6 characters'); return; }
+  try {
+    var res = await fetch(API + '/api/customers/register', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ name, email, phone, password: pass })
+    });
+    var data = await res.json();
+    if (data.success) {
+      localStorage.setItem('mr_customer_token', data.token);
+      localStorage.setItem('mr_customer', JSON.stringify(data.customer));
+      redirect();
+    } else showErr('regErr', data.error || 'Registration failed');
+  } catch(e) { showErr('regErr', 'Connection error. Please try again.'); }
+}
 </script>
 </body>
 </html>
