@@ -256,14 +256,21 @@
     .search-result-price{font-size:0.8rem;color:var(--gold);font-weight:700;}
 
     /* LOGIN POPUP */
-    .login-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:4000;display:none;align-items:center;justify-content:center;}
+    .login-overlay{position:fixed;inset:0;background:rgba(28,10,0,0.75);backdrop-filter:blur(4px);z-index:4000;display:none;align-items:center;justify-content:center;}
     .login-overlay.open{display:flex;}
-    .login-popup{background:var(--bg2);border-radius:16px;overflow:hidden;width:480px;display:grid;grid-template-columns:1fr 1fr;box-shadow:var(--shadow-md);}
-    .login-left{background:var(--teal);padding:40px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-    .login-left h2{color:#fff;font-family:var(--font-serif);font-size:1.6rem;margin-bottom:8px;}
-    .login-left p{color:rgba(255,255,255,0.75);font-size:0.82rem;}
-    .login-right{padding:32px 24px;}
-    .login-right h3{font-size:1rem;font-weight:600;margin-bottom:20px;color:var(--text);}
+    .login-popup{background:#FFFDF8;border-radius:16px;overflow:hidden;width:520px;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 20px 60px rgba(0,0,0,0.25);}
+    .login-left{background:#3D1F08;padding:36px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
+    .login-left::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(196,81,26,0.3),rgba(61,31,8,0.8));z-index:0;}
+    .login-left-ring{position:absolute;border-radius:50%;border:1px solid rgba(212,160,23,0.2);}
+    .login-left-content{position:relative;z-index:1;}
+    .login-left h2{color:#F0C040;font-family:var(--font-serif);font-size:1.5rem;margin-bottom:4px;letter-spacing:2px;}
+    .login-left .tamil{color:rgba(212,160,23,0.55);font-size:0.78rem;margin-bottom:12px;}
+    .login-left p{color:rgba(253,246,236,0.55);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;line-height:1.8;}
+    .login-left ul{list-style:none;margin-top:16px;text-align:left;}
+    .login-left ul li{color:rgba(253,246,236,0.6);font-size:0.75rem;padding:5px 0;display:flex;align-items:center;gap:8px;}
+    .login-left ul li::before{content:'✓';color:#F0C040;font-weight:700;}
+    .login-right{padding:28px 24px;background:#FFFDF8;}
+    .login-right h3{font-size:1rem;font-weight:600;margin-bottom:16px;color:#2C1506;}
     .login-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px;}
     .login-tab{flex:1;padding:8px;background:none;border:none;font-size:0.8rem;cursor:pointer;color:var(--text2);transition:all 0.2s;}
     .login-tab.active{background:var(--teal);color:#fff;font-weight:600;}
@@ -278,7 +285,7 @@
     .google-btn{width:100%;border:1px solid var(--border);background:var(--white);padding:10px;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;}
     .google-btn:hover{border-color:var(--teal);background:var(--teal-bg);}
     .login-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;}
-    .login-err{color:#E53935;font-size:0.75rem;margin-top:4px;display:none;}
+    .login-err{color:#C4511A;font-size:0.75rem;margin-top:4px;padding:6px 10px;background:rgba(196,81,26,0.06);border-radius:6px;border-left:3px solid #C4511A;display:none;}
     .login-popup-wrap{position:relative;}
 
     /* WHATSAPP */
@@ -540,9 +547,21 @@
   <div class="login-popup-wrap" onclick="event.stopPropagation()">
     <div class="login-popup">
       <div class="login-left">
-        <div style="font-size:3rem;margin-bottom:12px">🙏</div>
-        <h2>Major Rangas</h2>
-        <p>True Taste of South India</p>
+        <div class="login-left-ring" style="width:240px;height:240px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+        <div class="login-left-ring" style="width:180px;height:180px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+        <div class="login-left-ring" style="width:120px;height:120px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(212,160,23,0.3)"></div>
+        <div class="login-left-content">
+          <div style="font-size:2rem;margin-bottom:10px">🪔</div>
+          <h2>MAJOR RANGAS</h2>
+          <div class="tamil">மேஜர் ரங்கஸ்</div>
+          <p>Authentic South Indian<br>Snacks · Sweets · Podis</p>
+          <ul>
+            <li>Track your orders</li>
+            <li>Save addresses</li>
+            <li>Wishlist products</li>
+            <li>Exclusive offers</li>
+          </ul>
+        </div>
       </div>
       <div class="login-right">
         <div class="login-tabs">
