@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +66,7 @@
   <meta name="description" content="Authentic South Indian snacks, sweets and podis from Chennai. Murukku, Thattai, Laddu, Idly Podi and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{
@@ -108,22 +110,22 @@
     /* HERO - SLIDER */
     .hero{margin-top:100px;position:relative;overflow:hidden;background:var(--cream);}
     .hero-slides{display:flex;transition:transform 0.6s cubic-bezier(0.77,0,0.175,1);}
-    .hero-slide{min-width:100%;display:grid;grid-template-columns:1fr 1fr;min-height:480px;}
-    .hero-text{padding:60px 80px;display:flex;flex-direction:column;justify-content:center;}
-    .hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-bg);color:var(--teal);font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:20px;width:fit-content;}
-    .hero-title{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3.2rem);color:var(--text);line-height:1.1;margin-bottom:12px;}
-    .hero-title span{color:var(--gold);font-style:italic;}
-    .hero-desc{color:var(--text2);font-size:0.95rem;line-height:1.8;max-width:380px;margin-bottom:28px;}
-    .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
-    .btn-teal{background:var(--teal);color:#fff;padding:13px 28px;border-radius:25px;font-size:0.82rem;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;display:inline-block;}
-    .btn-teal:hover{background:var(--teal-light);}
-    .btn-outline{border:2px solid var(--border2);color:var(--text);padding:11px 24px;border-radius:25px;font-size:0.82rem;font-weight:600;transition:all 0.2s;display:inline-block;}
-    .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
-    .hero-image{position:relative;overflow:hidden;}
-    .hero-image img{width:100%;height:100%;object-fit:cover;}
+    .hero-slide{min-width:100%;position:relative;}
+    .hero-image{position:relative;width:100%;aspect-ratio:16/6;background:var(--cream);overflow:hidden;}
+    .hero-image img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;}
     .hero-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#f0e8d8,#e8dcc8);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
     .hero-img-placeholder .ph-num{font-family:var(--font-serif);font-size:6rem;color:rgba(201,131,10,0.1);font-weight:700;}
     .hero-img-placeholder .ph-txt{color:rgba(0,0,0,0.2);font-size:0.8rem;letter-spacing:2px;}
+    .hero-text{position:absolute;left:0;bottom:0;padding:32px 56px;max-width:520px;background:linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);z-index:5;}
+    .hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-bg);color:var(--teal);font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:16px;width:fit-content;}
+    .hero-title{font-family:var(--font-serif);font-size:clamp(1.6rem,3vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:10px;text-shadow:0 1px 4px rgba(0,0,0,0.4);}
+    .hero-title span{color:var(--gold);font-style:italic;}
+    .hero-desc{color:rgba(255,255,255,0.88);font-size:0.9rem;line-height:1.7;max-width:380px;margin-bottom:20px;text-shadow:0 1px 3px rgba(0,0,0,0.4);}
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+    .btn-teal{background:var(--teal);color:#fff;padding:13px 28px;border-radius:25px;font-size:0.82rem;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;display:inline-block;}
+    .btn-teal:hover{background:var(--teal-light);}
+    .btn-outline{border:2px solid rgba(255,255,255,0.6);color:#fff;padding:11px 24px;border-radius:25px;font-size:0.82rem;font-weight:600;transition:all 0.2s;display:inline-block;}
+    .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
     .hero-dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;}
     .hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(201,131,10,0.3);cursor:pointer;transition:all 0.3s;}
     .hero-dot.active{background:var(--gold);width:24px;border-radius:4px;}
@@ -132,6 +134,7 @@
     .hero-prev{left:16px;}
     .hero-next{right:16px;}
     .hero-progress{position:absolute;bottom:0;left:0;height:3px;background:var(--gold);transition:width 0.1s linear;z-index:10;}
+
 
     /* CATEGORY SCROLL */
     .categories{background:var(--white);padding:28px 0;border-bottom:1px solid var(--border);}
@@ -314,9 +317,8 @@
     @media(max-width:900px){
       .main-layout{grid-template-columns:1fr;}
       .sidebar{display:none;}
-      .hero-slide{grid-template-columns:1fr;}
-      .hero-image{height:260px;}
-      .hero-text{padding:32px 24px;}
+      .hero-image{aspect-ratio:4/5;height:auto;}
+      .hero-text{padding:20px 24px;max-width:100%;}
       .why-inner{grid-template-columns:1fr 1fr;}
       .footer-grid{grid-template-columns:1fr 1fr;}
       .prod-grid{grid-template-columns:repeat(2,1fr);}
@@ -574,9 +576,7 @@
           <div class="login-err" id="loginErr"></div>
           <button class="login-submit" onclick="doLogin()">Login →</button>
           <div class="login-divider">OR</div>
-          <button class="google-btn" onclick="closeLogin();window.location.href='login.html'">
-            <img src="https://www.google.com/favicon.ico" width="16" alt="G"> Continue with Google
-          </button>
+          <div id="googleSignInBtn" style="display:flex;justify-content:center;"></div>
         </div>
         <div id="registerSection" style="display:none">
           <input class="login-inp" type="text" id="regName" placeholder="Your name">
@@ -929,6 +929,33 @@ function showToast(msg, type) {
   var t = document.getElementById('toast');
   t.textContent = msg; t.className = 'toast' + (type?' '+type:'') + ' show';
   setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+// GOOGLE SIGN-IN
+window.addEventListener('load', function() {
+  if (window.google && google.accounts) {
+    google.accounts.id.initialize({
+      client_id: '703577695935-u744a533o8d3ci3m1drnun9s70a2aels.apps.googleusercontent.com',
+      callback: handleGoogleLogin
+    });
+    var gBtn = document.getElementById('googleSignInBtn');
+    if (gBtn) google.accounts.id.renderButton(gBtn, { theme:'outline', size:'large', width:280, text:'continue_with' });
+  }
+});
+
+async function handleGoogleLogin(response) {
+  try {
+    var res = await fetch(API + '/api/customers/google', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({credential:response.credential}) });
+    var data = await res.json();
+    if (data.success) {
+      localStorage.setItem('mr_customer_token', data.token);
+      localStorage.setItem('mr_customer', JSON.stringify(data.customer));
+      closeLogin(); updateAccountBtn();
+      showToast('Welcome, ' + data.customer.name + '! 🙏', 'success');
+    } else {
+      showToast(data.error || 'Google sign-in failed', 'error');
+    }
+  } catch(e) { showToast('Connection error', 'error'); }
 }
 
 // INIT
