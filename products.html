@@ -184,6 +184,16 @@
     }
   </style>
   <script src="js/theme.js"></script>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Major Rangas">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  <meta name="msapplication-TileImage" content="/images/logo.png">
+  <meta name="msapplication-TileColor" content="#C4511A">
+  <meta name="theme-color" content="#C4511A">
 </head>
 <body>
 <div class="announce" id="announceBar">🎉 Free Shipping on orders above ₹500! <a href="#" style="color:#fff;text-decoration:underline;margin-left:6px">Shop Now →</a></div>
@@ -454,6 +464,16 @@ async function loadProds(){
 }
 
 updateCartCount();updateAccountNav();loadProds();
+</script>
+<script src="/js/pwa.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(reg) { console.log('SW registered'); })
+      .catch(function(err) { console.log('SW error:', err); });
+  });
+}
 </script>
 </body>
 </html>

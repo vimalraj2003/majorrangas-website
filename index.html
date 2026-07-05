@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +65,6 @@
   <meta name="description" content="Authentic South Indian snacks, sweets and podis from Chennai. Murukku, Thattai, Laddu, Idly Podi and more.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     :root{
@@ -110,22 +108,22 @@
     /* HERO - SLIDER */
     .hero{margin-top:100px;position:relative;overflow:hidden;background:var(--cream);}
     .hero-slides{display:flex;transition:transform 0.6s cubic-bezier(0.77,0,0.175,1);}
-    .hero-slide{min-width:100%;position:relative;}
-    .hero-image{position:relative;width:100%;aspect-ratio:16/6;background:var(--cream);overflow:hidden;}
-    .hero-image img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;}
-    .hero-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#f0e8d8,#e8dcc8);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
-    .hero-img-placeholder .ph-num{font-family:var(--font-serif);font-size:6rem;color:rgba(201,131,10,0.1);font-weight:700;}
-    .hero-img-placeholder .ph-txt{color:rgba(0,0,0,0.2);font-size:0.8rem;letter-spacing:2px;}
-    .hero-text{position:absolute;left:0;bottom:0;padding:32px 56px;max-width:520px;background:linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);z-index:5;}
-    .hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-bg);color:var(--teal);font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:16px;width:fit-content;}
-    .hero-title{font-family:var(--font-serif);font-size:clamp(1.6rem,3vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:10px;text-shadow:0 1px 4px rgba(0,0,0,0.4);}
+    .hero-slide{min-width:100%;display:grid;grid-template-columns:1fr 1fr;min-height:480px;}
+    .hero-text{padding:60px 80px;display:flex;flex-direction:column;justify-content:center;}
+    .hero-tag{display:inline-flex;align-items:center;gap:6px;background:var(--teal-bg);color:var(--teal);font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:20px;width:fit-content;}
+    .hero-title{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3.2rem);color:var(--text);line-height:1.1;margin-bottom:12px;}
     .hero-title span{color:var(--gold);font-style:italic;}
-    .hero-desc{color:rgba(255,255,255,0.88);font-size:0.9rem;line-height:1.7;max-width:380px;margin-bottom:20px;text-shadow:0 1px 3px rgba(0,0,0,0.4);}
+    .hero-desc{color:var(--text2);font-size:0.95rem;line-height:1.8;max-width:380px;margin-bottom:28px;}
     .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
     .btn-teal{background:var(--teal);color:#fff;padding:13px 28px;border-radius:25px;font-size:0.82rem;font-weight:600;border:none;cursor:pointer;transition:all 0.2s;display:inline-block;}
     .btn-teal:hover{background:var(--teal-light);}
-    .btn-outline{border:2px solid rgba(255,255,255,0.6);color:#fff;padding:11px 24px;border-radius:25px;font-size:0.82rem;font-weight:600;transition:all 0.2s;display:inline-block;}
+    .btn-outline{border:2px solid var(--border2);color:var(--text);padding:11px 24px;border-radius:25px;font-size:0.82rem;font-weight:600;transition:all 0.2s;display:inline-block;}
     .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+    .hero-image{position:relative;overflow:hidden;}
+    .hero-image img{width:100%;height:100%;object-fit:cover;}
+    .hero-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#f0e8d8,#e8dcc8);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
+    .hero-img-placeholder .ph-num{font-family:var(--font-serif);font-size:6rem;color:rgba(201,131,10,0.1);font-weight:700;}
+    .hero-img-placeholder .ph-txt{color:rgba(0,0,0,0.2);font-size:0.8rem;letter-spacing:2px;}
     .hero-dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;}
     .hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(201,131,10,0.3);cursor:pointer;transition:all 0.3s;}
     .hero-dot.active{background:var(--gold);width:24px;border-radius:4px;}
@@ -134,7 +132,6 @@
     .hero-prev{left:16px;}
     .hero-next{right:16px;}
     .hero-progress{position:absolute;bottom:0;left:0;height:3px;background:var(--gold);transition:width 0.1s linear;z-index:10;}
-
 
     /* CATEGORY SCROLL */
     .categories{background:var(--white);padding:28px 0;border-bottom:1px solid var(--border);}
@@ -259,35 +256,37 @@
     .search-result-price{font-size:0.8rem;color:var(--gold);font-weight:700;}
 
     /* LOGIN POPUP */
-    .login-overlay{position:fixed;inset:0;background:rgba(28,10,0,0.75);backdrop-filter:blur(4px);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px;}
+    .login-overlay{position:fixed;inset:0;background:rgba(28,10,0,0.75);backdrop-filter:blur(4px);z-index:4000;display:none;align-items:center;justify-content:center;}
     .login-overlay.open{display:flex;}
-    .login-popup-wrap{position:relative;width:100%;max-width:400px;}
-    .login-popup{background:#FFFDF8;border-radius:20px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,0.35);}
-    .login-header{position:relative;padding:34px 28px 20px;text-align:center;background:linear-gradient(155deg,#5C1A1F 0%,#3D1013 100%);overflow:hidden;}
-    .login-header::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 6px 6px, rgba(217,164,65,0.16) 1.2px, transparent 1.2px);background-size:22px 22px;}
-    .login-emblem{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E8C171,#D9A441 60%,#B97F27 100%);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 16px rgba(0,0,0,0.3);position:relative;z-index:1;font-size:1.4rem;}
-    .login-brand{font-family:var(--font-serif);color:#F6EEDD;font-size:1.28rem;letter-spacing:3px;font-weight:700;position:relative;z-index:1;}
-    .login-tamil{color:rgba(217,164,65,0.65);font-size:0.72rem;margin-top:3px;position:relative;z-index:1;}
-    .login-tagline{color:rgba(246,238,221,0.5);font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;margin-top:9px;position:relative;z-index:1;}
-    .login-perks{display:flex;justify-content:center;gap:16px;padding:12px 20px;background:#F6EEDD;border-bottom:1px solid rgba(0,0,0,0.06);flex-wrap:wrap;}
-    .login-perks span{font-size:0.65rem;color:#6B4A2A;display:flex;align-items:center;gap:5px;font-weight:600;white-space:nowrap;}
-    .login-body{padding:26px 28px 30px;background:#FFFDF8;}
-    .login-tabs{display:flex;gap:26px;border-bottom:1px solid var(--border);margin-bottom:22px;}
-    .login-tab{background:none;border:none;padding:0 0 10px;font-size:0.88rem;font-weight:600;color:var(--text3);cursor:pointer;position:relative;transition:color 0.2s;}
-    .login-tab.active{color:#5C1A1F;}
-    .login-tab.active::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:#D9A441;border-radius:2px;}
-    .login-inp{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.88rem;outline:none;margin-bottom:12px;color:var(--text);transition:border-color 0.2s,box-shadow 0.2s;}
-    .login-inp:focus{border-color:#D9A441;box-shadow:0 0 0 3px rgba(217,164,65,0.14);}
-    .login-submit{width:100%;background:linear-gradient(135deg,#5C1A1F,#3D1013);color:#fff;border:none;padding:13px;border-radius:10px;font-weight:700;font-size:0.9rem;cursor:pointer;margin-top:4px;letter-spacing:0.3px;transition:opacity 0.2s;}
-    .login-submit:hover{opacity:0.9;}
-    .login-divider{text-align:center;color:var(--text3);font-size:0.78rem;margin:16px 0;position:relative;}
+    .login-popup{background:#FFFDF8;border-radius:16px;overflow:hidden;width:520px;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 20px 60px rgba(0,0,0,0.25);}
+    .login-left{background:#3D1F08;padding:36px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
+    .login-left::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(196,81,26,0.3),rgba(61,31,8,0.8));z-index:0;}
+    .login-left-ring{position:absolute;border-radius:50%;border:1px solid rgba(212,160,23,0.2);}
+    .login-left-content{position:relative;z-index:1;}
+    .login-left h2{color:#F0C040;font-family:var(--font-serif);font-size:1.5rem;margin-bottom:4px;letter-spacing:2px;}
+    .login-left .tamil{color:rgba(212,160,23,0.55);font-size:0.78rem;margin-bottom:12px;}
+    .login-left p{color:rgba(253,246,236,0.55);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;line-height:1.8;}
+    .login-left ul{list-style:none;margin-top:16px;text-align:left;}
+    .login-left ul li{color:rgba(253,246,236,0.6);font-size:0.75rem;padding:5px 0;display:flex;align-items:center;gap:8px;}
+    .login-left ul li::before{content:'✓';color:#F0C040;font-weight:700;}
+    .login-right{padding:28px 24px;background:#FFFDF8;}
+    .login-right h3{font-size:1rem;font-weight:600;margin-bottom:16px;color:#2C1506;}
+    .login-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px;}
+    .login-tab{flex:1;padding:8px;background:none;border:none;font-size:0.8rem;cursor:pointer;color:var(--text2);transition:all 0.2s;}
+    .login-tab.active{background:var(--teal);color:#fff;font-weight:600;}
+    .login-inp{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;font-size:0.88rem;outline:none;margin-bottom:10px;color:var(--text);}
+    .login-inp:focus{border-color:var(--teal);}
+    .login-submit{width:100%;background:var(--teal);color:#fff;border:none;padding:12px;border-radius:8px;font-weight:700;font-size:0.9rem;cursor:pointer;margin-top:4px;}
+    .login-submit:hover{background:var(--teal-light);}
+    .login-divider{text-align:center;color:var(--text3);font-size:0.78rem;margin:12px 0;position:relative;}
     .login-divider::before,.login-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);}
     .login-divider::before{left:0;}
     .login-divider::after{right:0;}
-    .login-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.15);border:none;color:#F6EEDD;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:background 0.2s;}
-    .login-close:hover{background:rgba(255,255,255,0.28);}
+    .google-btn{width:100%;border:1px solid var(--border);background:var(--white);padding:10px;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;}
+    .google-btn:hover{border-color:var(--teal);background:var(--teal-bg);}
+    .login-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;}
     .login-err{color:#C4511A;font-size:0.75rem;margin-top:4px;padding:6px 10px;background:rgba(196,81,26,0.06);border-radius:6px;border-left:3px solid #C4511A;display:none;}
-
+    .login-popup-wrap{position:relative;}
 
     /* WHATSAPP */
     .wa-btn{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);cursor:pointer;text-decoration:none;transition:all 0.2s;}
@@ -315,8 +314,9 @@
     @media(max-width:900px){
       .main-layout{grid-template-columns:1fr;}
       .sidebar{display:none;}
-      .hero-image{aspect-ratio:4/5;height:auto;}
-      .hero-text{padding:20px 24px;max-width:100%;}
+      .hero-slide{grid-template-columns:1fr;}
+      .hero-image{height:260px;}
+      .hero-text{padding:32px 24px;}
       .why-inner{grid-template-columns:1fr 1fr;}
       .footer-grid{grid-template-columns:1fr 1fr;}
       .prod-grid{grid-template-columns:repeat(2,1fr);}
@@ -330,6 +330,16 @@
     }
   </style>
   <script src="js/theme.js"></script>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Major Rangas">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  <meta name="msapplication-TileImage" content="/images/logo.png">
+  <meta name="msapplication-TileColor" content="#C4511A">
+  <meta name="theme-color" content="#C4511A">
 </head>
 <body>
 
@@ -546,19 +556,24 @@
 <div class="login-overlay" id="loginOverlay" onclick="closeLogin()">
   <div class="login-popup-wrap" onclick="event.stopPropagation()">
     <div class="login-popup">
-      <button class="login-close" onclick="closeLogin()">✕</button>
-      <div class="login-header">
-        <div class="login-emblem">🪔</div>
-        <div class="login-brand">MAJOR RANGAS</div>
-        <div class="login-tamil">மேஜர் ரங்கஸ்</div>
-        <div class="login-tagline">Authentic South Indian · Snacks · Sweets · Podis</div>
+      <div class="login-left">
+        <div class="login-left-ring" style="width:240px;height:240px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+        <div class="login-left-ring" style="width:180px;height:180px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+        <div class="login-left-ring" style="width:120px;height:120px;top:50%;left:50%;transform:translate(-50%,-50%);border-color:rgba(212,160,23,0.3)"></div>
+        <div class="login-left-content">
+          <div style="font-size:2rem;margin-bottom:10px">🪔</div>
+          <h2>MAJOR RANGAS</h2>
+          <div class="tamil">மேஜர் ரங்கஸ்</div>
+          <p>Authentic South Indian<br>Snacks · Sweets · Podis</p>
+          <ul>
+            <li>Track your orders</li>
+            <li>Save addresses</li>
+            <li>Wishlist products</li>
+            <li>Exclusive offers</li>
+          </ul>
+        </div>
       </div>
-      <div class="login-perks">
-        <span>📦 Track orders</span>
-        <span>💛 Wishlist</span>
-        <span>🎁 Offers</span>
-      </div>
-      <div class="login-body">
+      <div class="login-right">
         <div class="login-tabs">
           <button class="login-tab active" onclick="switchLoginTab('login',this)">Login</button>
           <button class="login-tab" onclick="switchLoginTab('register',this)">Register</button>
@@ -569,7 +584,9 @@
           <div class="login-err" id="loginErr"></div>
           <button class="login-submit" onclick="doLogin()">Login →</button>
           <div class="login-divider">OR</div>
-          <div id="googleSignInBtn" style="display:flex;justify-content:center;"></div>
+          <button class="google-btn" onclick="closeLogin();window.location.href='login.html'">
+            <img src="https://www.google.com/favicon.ico" width="16" alt="G"> Continue with Google
+          </button>
         </div>
         <div id="registerSection" style="display:none">
           <input class="login-inp" type="text" id="regName" placeholder="Your name">
@@ -585,7 +602,7 @@
 </div>
 
 <!-- WHATSAPP -->
-<a href="https://wa.me/919500865686?text=Hi%2C%20I%27d%20like%20to%20know%20about%20your%20products" target="_blank" class="wa-btn">
+<a href="https://wa.me/919500865686" target="_blank" class="wa-btn">
   💬
   <span class="wa-tooltip">Chat with us!</span>
 </a>
@@ -924,33 +941,6 @@ function showToast(msg, type) {
   setTimeout(function(){ t.classList.remove('show'); }, 3000);
 }
 
-// GOOGLE SIGN-IN
-window.addEventListener('load', function() {
-  if (window.google && google.accounts) {
-    google.accounts.id.initialize({
-      client_id: '703577695935-u744a533o8d3ci3m1drnun9s70a2aels.apps.googleusercontent.com',
-      callback: handleGoogleLogin
-    });
-    var gBtn = document.getElementById('googleSignInBtn');
-    if (gBtn) google.accounts.id.renderButton(gBtn, { theme:'outline', size:'large', width:280, text:'continue_with' });
-  }
-});
-
-async function handleGoogleLogin(response) {
-  try {
-    var res = await fetch(API + '/api/customers/google', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({credential:response.credential}) });
-    var data = await res.json();
-    if (data.success) {
-      localStorage.setItem('mr_customer_token', data.token);
-      localStorage.setItem('mr_customer', JSON.stringify(data.customer));
-      closeLogin(); updateAccountBtn();
-      showToast('Welcome, ' + data.customer.name + '! 🙏', 'success');
-    } else {
-      showToast(data.error || 'Google sign-in failed', 'error');
-    }
-  } catch(e) { showToast('Connection error', 'error'); }
-}
-
 // INIT
 updateCartCount();
 updateAccountBtn();
@@ -958,6 +948,16 @@ buildDots();
 resetProg();
 loadSettings();
 loadProds();
+</script>
+<script src="/js/pwa.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(reg) { console.log('SW registered'); })
+      .catch(function(err) { console.log('SW error:', err); });
+  });
+}
 </script>
 </body>
 </html>
