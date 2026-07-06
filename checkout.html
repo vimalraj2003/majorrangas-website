@@ -252,6 +252,38 @@ async function loadSavedAddress(token) {
 window.appliedDiscount = 0;
 window.appliedCouponCode = '';
 
+// Save abandoned cart when user fills in details
+function saveAbandonedCart() {
+  var email = document.getElementById('customerEmail') ? document.getElementById('customerEmail').value : '';
+  var phone = document.getElementById('customerPhone') ? document.getElementById('customerPhone').value : '';
+  var name = document.getElementById('customerName') ? document.getElementById('customerName').value : '';
+  if (!email && !phone) return;
+  var cart = JSON.parse(localStorage.getItem('mr_cart') || '[]');
+  if (!cart.length) return;
+  var total = cart.reduce(function(s,i){ return s + parseFloat(i.mrp)*i.quantity; }, 0);
+  fetch(CONFIG.API_URL + '/api/abandoned/save', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      customer_email: email,
+      customer_phone: phone,
+      customer_name: name,
+      cart_data: cart,
+      cart_total: total.toFixed(2)
+    })
+  }).catch(function(){});
+}
+
+// Mark cart as recovered when order placed
+function markCartRecovered(email) {
+  fetch(CONFIG.API_URL + '/api/abandoned/recovered', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ customer_email: email })
+  }).catch(function(){});
+}
+window.appliedCouponCode = '';
+
 async function applyCoupon() {
   const code = document.getElementById('couponCode').value.trim();
   const msg = document.getElementById('couponMsg');
@@ -271,6 +303,14 @@ async function applyCoupon() {
       msg.textContent = `✓ Coupon applied! You save ₹${data.discount.toFixed(2)}`;
       loadSummary();
 checkLoginStatus();
+
+// Save abandoned cart on blur of key fields
+setTimeout(function() {
+  ['customerEmail','customerPhone'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('blur', saveAbandonedCart);
+  });
+}, 1000);
     } else {
       // Check login status
 function checkLoginStatus() {
@@ -382,6 +422,7 @@ async function placeOrder() {
           body: JSON.stringify({ code: window.appliedCouponCode })
         }).catch(()=>{});
       }
+      markCartRecovered(orderData.customer_email);
       cart = []; saveCart();
       window.location.href = `success.html?order=${data.order_number}&method=cod`;
       return;

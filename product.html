@@ -415,6 +415,9 @@ async function loadProduct(){
       +'</div>';
 
     loadRelated(all, product.category, product.id);
+    loadReviews(product.id);
+    var cust = JSON.parse(localStorage.getItem('mr_customer') || '{}');
+    if (cust.name) document.getElementById('reviewName').value = cust.name;
   }catch(e){
     document.getElementById('pdGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px">Failed to load product</div>';
   }
