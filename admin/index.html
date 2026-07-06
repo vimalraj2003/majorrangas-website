@@ -145,6 +145,8 @@
       <div class="nav-item" id="nav-shipping"><span>🚚</span> Shipping</div>
       <div class="nav-item" id="nav-seo"><span>🔍</span> SEO</div>
       <div class="nav-item" id="nav-alerts"><span>🔔</span> Alerts</div>
+      <div class="nav-item" id="nav-reviews"><span>⭐</span> Reviews</div>
+      <div class="nav-item" id="nav-abandoned"><span>🛒</span> Abandoned Carts</div>
     </div>
     <div class="sidebar-bottom">
       <div class="admin-name" id="adminName"></div>
@@ -431,6 +433,29 @@
         </div>
       </div>
 
+      <!-- REVIEWS -->
+      <div class="page" id="page-reviews">
+        <div class="table-wrap">
+          <div class="table-header"><h3>Customer Reviews</h3></div>
+          <table><thead><tr><th>Product</th><th>Customer</th><th>Rating</th><th>Review</th><th>Verified</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="reviewsTable"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- ABANDONED CARTS -->
+      <div class="page" id="page-abandoned">
+        <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+          <div class="stat-card"><div class="stat-label">Abandoned Carts</div><div class="stat-value stat-gold" id="abandonedCount">—</div></div>
+          <div class="stat-card"><div class="stat-label">Recovered</div><div class="stat-value" id="recoveredCount">—</div></div>
+          <div class="stat-card"><div class="stat-label">Lost Revenue</div><div class="stat-value stat-gold" id="lostRevenue">—</div></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header"><h3>Abandoned Carts</h3></div>
+          <table><thead><tr><th>Customer</th><th>Email/Phone</th><th>Items</th><th>Total</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody id="abandonedTable"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
       <!-- ALERTS -->
       <div class="page" id="page-alerts">
         <div class="settings-card" style="max-width:500px;margin-bottom:20px">
@@ -593,7 +618,7 @@ function initApp() {
 }
 
 // NAV
-var pages = ['dashboard','orders','products','inventory','banner','announcement','coupons','payments','shipping','seo','alerts'];
+var pages = ['dashboard','orders','products','inventory','banner','announcement','coupons','payments','shipping','seo','alerts','reviews','abandoned'];
 pages.forEach(function(p) {
   document.getElementById('nav-' + p).onclick = function() {
     showPage(p);
@@ -607,7 +632,7 @@ function showPage(page) {
   document.getElementById('page-' + page).classList.add('active');
   var navEl = document.getElementById('nav-' + page);
   if (navEl) navEl.classList.add('active');
-  var titles = { dashboard:'Dashboard', orders:'Orders', products:'Products', inventory:'Inventory', banner:'Banner & Theme', announcement:'Announcement Bar', coupons:'Discount Coupons', payments:'Payment Settings', shipping:'Shipping Settings', seo:'SEO Settings', alerts:'Stock Alerts' };
+  var titles = { dashboard:'Dashboard', orders:'Orders', products:'Products', inventory:'Inventory', banner:'Banner & Theme', announcement:'Announcement Bar', coupons:'Discount Coupons', payments:'Payment Settings', shipping:'Shipping Settings', seo:'SEO Settings', alerts:'Stock Alerts', reviews:'Customer Reviews', abandoned:'Abandoned Carts' };
   document.getElementById('pageTitle').textContent = titles[page] || page;
   if (page === 'dashboard') loadDashboard();
   if (page === 'orders') loadOrders('');
@@ -615,6 +640,8 @@ function showPage(page) {
   if (page === 'inventory') loadInventory();
   if (page === 'coupons') loadCoupons();
   if (page === 'alerts') loadLowStock();
+  if (page === 'reviews') loadReviews();
+  if (page === 'abandoned') loadAbandoned();
 }
 
 // DASHBOARD
@@ -1143,6 +1170,66 @@ loadSettingsData = async function() {
     if (s.seo_description) document.getElementById('set-seoDesc').value = s.seo_description;
   } catch(e) {}
 };
+
+
+// REVIEWS
+async function loadReviews() {
+  try {
+    var res = await fetch(API + '/api/reviews/admin/all', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.reviews.forEach(function(r) {
+      var stars = '★'.repeat(r.rating) + '☆'.repeat(5-r.rating);
+      html += '<tr>'
+        + '<td style="color:var(--gold);font-size:0.82rem">' + r.product_name + '</td>'
+        + '<td>' + r.customer_name + '</td>'
+        + '<td style="color:#FFB300">' + stars + '</td>'
+        + '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.body || r.title || '—') + '</td>'
+        + '<td>' + (r.is_verified ? '<span style="color:var(--green);font-size:0.72rem;font-weight:700">✓ Verified</span>' : '<span style="color:var(--gray);font-size:0.72rem">Guest</span>') + '</td>'
+        + '<td>' + new Date(r.created_at).toLocaleDateString('en-IN') + '</td>'
+        + '<td><button class="btn-sm btn-red" onclick="deleteReview(' + r.id + ')">Delete</button></td>'
+        + '</tr>';
+    });
+    document.getElementById('reviewsTable').innerHTML = html || '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:20px">No reviews yet</td></tr>';
+  } catch(e) {}
+}
+
+async function deleteReview(id) {
+  if (!confirm('Delete this review?')) return;
+  try {
+    await fetch(API + '/api/reviews/admin/' + id, { method: 'DELETE', headers: authH() });
+    showToast('Review deleted!'); loadReviews();
+  } catch(e) {}
+}
+
+// ABANDONED CARTS
+async function loadAbandoned() {
+  try {
+    var res = await fetch(API + '/api/abandoned/admin', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    document.getElementById('abandonedCount').textContent = data.stats.abandoned;
+    document.getElementById('recoveredCount').textContent = data.stats.recovered;
+    document.getElementById('lostRevenue').textContent = '₹' + data.stats.lost_value;
+    var html = '';
+    data.carts.forEach(function(c) {
+      var items = typeof c.cart_data === 'string' ? JSON.parse(c.cart_data) : c.cart_data;
+      var itemNames = items.map(function(i){ return i.name + ' x' + i.quantity; }).join(', ');
+      var waMsg = encodeURIComponent('Hi ' + (c.customer_name||'') + ', you left items in your Major Rangas cart! Complete your order: ' + itemNames + ' (₹' + c.cart_total + '). Shop now: https://majorrangas.in');
+      html += '<tr>'
+        + '<td>' + (c.customer_name || '—') + '</td>'
+        + '<td style="font-size:0.78rem">' + (c.customer_email || '') + '<br>' + (c.customer_phone || '') + '</td>'
+        + '<td style="font-size:0.78rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + itemNames + '</td>'
+        + '<td style="color:var(--gold);font-weight:700">₹' + parseFloat(c.cart_total||0).toFixed(2) + '</td>'
+        + '<td>' + new Date(c.created_at).toLocaleDateString('en-IN') + '</td>'
+        + '<td>'
+        + (c.customer_phone ? '<a href="https://wa.me/' + c.customer_phone.replace(/[^0-9]/g,'') + '?text=' + waMsg + '" target="_blank" class="btn-sm btn-green" style="text-decoration:none;display:inline-block">WhatsApp</a>' : '—')
+        + '</td></tr>';
+    });
+    document.getElementById('abandonedTable').innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">No abandoned carts</td></tr>';
+  } catch(e) {}
+}
 
 if (token) initApp();
 </script>
