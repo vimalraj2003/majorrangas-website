@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Major Rangas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0D0D0D;--bg2:#1A1A1A;--gold:#C9A84C;--gold-light:#E5C976;--white:#FFF;--gray:#888;--border:#2A2A2A;--green:#4CAF50;--red:#F44336;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;}
+    a{text-decoration:none;color:inherit;}
+
+    .login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+    .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:40px;width:360px;text-align:center;}
+    .login-box h1{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.8rem;margin-bottom:8px;}
+    .login-box p{color:var(--gray);font-size:0.85rem;margin-bottom:28px;}
+    .inp{width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:0.9rem;margin-bottom:14px;outline:none;}
+    .inp:focus{border-color:var(--gold);}
+    .btn-gold-full{width:100%;background:var(--gold);color:var(--bg);border:none;padding:13px;border-radius:6px;font-weight:700;font-size:0.95rem;cursor:pointer;}
+    .btn-gold-full:hover{background:var(--gold-light);}
+    .err{color:#ff6b6b;font-size:0.82rem;margin-top:8px;}
+
+    .app{display:none;}
+    .app.show{display:flex;min-height:100vh;}
+    .sidebar{width:230px;background:var(--bg2);border-right:1px solid var(--border);padding:20px 0;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;}
+    .sidebar-logo{padding:0 20px 20px;border-bottom:1px solid var(--border);}
+    .sidebar-logo h2{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;}
+    .sidebar-logo p{color:var(--gray);font-size:0.7rem;margin-top:2px;}
+    .sidebar-nav{padding:16px 0;flex:1;}
+    .nav-group{color:#444;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;padding:12px 20px 6px;}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:var(--gray);cursor:pointer;transition:all 0.2s;font-size:0.88rem;border-left:2px solid transparent;}
+    .nav-item:hover,.nav-item.active{color:var(--gold);background:rgba(201,168,76,0.06);border-left-color:var(--gold);}
+    .sidebar-bottom{padding:16px 20px;border-top:1px solid var(--border);}
+    .admin-name{color:var(--gray);font-size:0.75rem;margin-bottom:8px;}
+    .logout-btn{width:100%;padding:8px;background:none;border:1px solid var(--border);color:var(--gray);border-radius:4px;cursor:pointer;font-size:0.82rem;}
+    .logout-btn:hover{border-color:var(--red);color:var(--red);}
+
+    .main{flex:1;overflow-y:auto;}
+    .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;}
+    .topbar h2{font-size:1.05rem;}
+    .content{padding:28px;}
+    .page{display:none;}
+    .page.active{display:block;}
+
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+    .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px;}
+    .stat-label{color:var(--gray);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+    .stat-value{font-size:1.8rem;font-weight:700;font-family:'Playfair Display',serif;}
+    .stat-gold{color:var(--gold);}
+
+    .table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:24px;}
+    .table-header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+    .table-header h3{font-size:0.95rem;}
+    table{width:100%;border-collapse:collapse;}
+    th{background:#111;color:var(--gold);font-size:0.72rem;text-transform:uppercase;letter-spacing:1px;padding:12px 16px;text-align:left;font-weight:600;}
+    td{padding:12px 16px;border-bottom:1px solid var(--border);color:#CCC;font-size:0.85rem;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(255,255,255,0.02);}
+    .badge{padding:3px 10px;border-radius:10px;font-size:0.7rem;font-weight:600;}
+    .badge-placed{background:rgba(201,168,76,0.15);color:var(--gold);}
+    .badge-confirmed{background:rgba(33,150,243,0.15);color:#64B5F6;}
+    .badge-shipped{background:rgba(156,39,176,0.15);color:#CE93D8;}
+    .badge-delivered{background:rgba(76,175,80,0.15);color:#81C784;}
+    .badge-cancelled{background:rgba(244,67,54,0.15);color:#EF9A9A;}
+    .badge-paid{background:rgba(76,175,80,0.15);color:#81C784;}
+    .badge-pending{background:rgba(255,152,0,0.15);color:#FFB74D;}
+    .badge-active{background:rgba(76,175,80,0.12);color:#81C784;}
+    .badge-inactive{background:rgba(244,67,54,0.12);color:#EF9A9A;}
+    .btn-sm{padding:5px 12px;border-radius:4px;font-size:0.78rem;cursor:pointer;border:none;font-weight:600;}
+    .btn-blue{background:rgba(33,150,243,0.15);color:#64B5F6;}
+    .btn-red{background:rgba(244,67,54,0.15);color:#EF9A9A;}
+    .btn-green{background:rgba(76,175,80,0.15);color:#81C784;}
+    .btn-gold-sm{background:var(--gold);color:var(--bg);padding:9px 22px;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem;}
+    .btn-gold-sm:hover{background:var(--gold-light);}
+
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;}
+    .modal-overlay.open{display:flex;}
+    .modal{background:var(--bg2);border:1px solid #333;border-radius:10px;padding:28px;width:500px;max-height:85vh;overflow-y:auto;}
+    .modal h3{font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:20px;}
+    .form-group{margin-bottom:14px;}
+    .form-group label{display:block;color:var(--gray);font-size:0.78rem;margin-bottom:5px;}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:0.88rem;outline:none;font-family:'Inter',sans-serif;}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
+    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .modal-actions{display:flex;gap:10px;margin-top:20px;}
+    .modal-save{flex:1;padding:11px;border:none;border-radius:5px;cursor:pointer;font-weight:600;font-size:0.88rem;background:var(--gold);color:var(--bg);}
+    .modal-cancel{flex:1;padding:11px;border:none;border-radius:5px;cursor:pointer;font-weight:600;font-size:0.88rem;background:var(--border);color:var(--gray);}
+    select option{background:var(--bg2);}
+
+    .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .settings-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:22px;}
+    .settings-card h3{color:var(--gold);font-size:0.9rem;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);font-family:'Playfair Display',serif;}
+    .full-card{grid-column:1/-1;}
+    .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px;}
+    .theme-opt{border:2px solid var(--border);border-radius:6px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.2s;}
+    .theme-opt.selected{border-color:var(--gold);}
+    .theme-swatch{width:32px;height:32px;border-radius:50%;margin:0 auto 6px;}
+    .theme-opt span{font-size:0.72rem;color:var(--gray);}
+    .img-preview{height:100px;background:#111;border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;color:#444;font-size:0.75rem;margin-top:8px;overflow:hidden;}
+    .img-preview img{width:100%;height:100%;object-fit:cover;}
+    .save-bar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--border);padding:16px 28px;display:flex;align-items:center;justify-content:space-between;z-index:5;}
+    .save-status{color:var(--gray);font-size:0.82rem;}
+    .save-status.saved{color:#81C784;}
+
+    .preview-box{background:#111;border:1px solid var(--border);border-radius:6px;padding:16px;text-align:center;}
+    .prev-bar{border-radius:2px;padding:6px;font-size:0.65rem;font-weight:700;letter-spacing:1.5px;margin-bottom:10px;}
+    .prev-title{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:4px;}
+    .prev-sub{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;}
+
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--gold);color:var(--bg);padding:12px 20px;border-radius:5px;font-weight:600;font-size:0.85rem;z-index:999;transform:translateY(80px);opacity:0;transition:all 0.3s;}
+    .toast.show{transform:translateY(0);opacity:1;}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-page" id="loginPage">
+  <div class="login-box">
+    <h1>MAJOR RANGAS</h1>
+    <p>Admin Panel — Secure Login</p>
+    <input class="inp" type="email" id="loginEmail" placeholder="Email" value="vimalraj.cse@gmail.com">
+    <input class="inp" type="password" id="loginPassword" placeholder="Password">
+    <button class="btn-gold-full" id="loginBtn">Login →</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <div class="sidebar">
+    <div class="sidebar-logo"><h2>MAJOR RANGAS</h2><p>Admin Panel</p></div>
+    <div class="sidebar-nav">
+      <div class="nav-group">Main</div>
+      <div class="nav-item active" id="nav-dashboard"><span>📊</span> Dashboard</div>
+      <div class="nav-item" id="nav-orders"><span>📦</span> Orders</div>
+      <div class="nav-item" id="nav-products"><span>🛍️</span> Products</div>
+      <div class="nav-item" id="nav-inventory"><span>📋</span> Inventory</div>
+      <div class="nav-group">Customise</div>
+      <div class="nav-item" id="nav-banner"><span>🎨</span> Banner & Theme</div>
+      <div class="nav-item" id="nav-announcement"><span>📢</span> Announcement</div>
+      <div class="nav-group">Store</div>
+      <div class="nav-item" id="nav-coupons"><span>🎟️</span> Coupons</div>
+      <div class="nav-item" id="nav-payments"><span>💳</span> Payment Settings</div>
+      <div class="nav-item" id="nav-shipping"><span>🚚</span> Shipping</div>
+      <div class="nav-item" id="nav-seo"><span>🔍</span> SEO</div>
+      <div class="nav-item" id="nav-alerts"><span>🔔</span> Alerts</div>
+      <div class="nav-item" id="nav-reviews"><span>⭐</span> Reviews</div>
+      <div class="nav-item" id="nav-abandoned"><span>🛒</span> Abandoned Carts</div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="admin-name" id="adminName"></div>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar"><h2 id="pageTitle">Dashboard</h2></div>
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value" id="statOrders">—</div></div>
+          <div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value stat-gold" id="statRevenue">—</div></div>
+          <div class="stat-card"><div class="stat-label">Active Products</div><div class="stat-value" id="statProducts">—</div></div>
+          <div class="stat-card"><div class="stat-label">Pending Orders</div><div class="stat-value stat-gold" id="statPending">—</div></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header"><h3>Recent Orders</h3><button class="btn-sm btn-blue" id="viewAllBtn">View All</button></div>
+          <table><thead><tr><th>Order #</th><th>Customer</th><th>Amount</th><th>Payment</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody id="recentOrdersTable"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- ORDERS -->
+      <div class="page" id="page-orders">
+        <div class="table-wrap">
+          <div class="table-header">
+            <h3>All Orders</h3>
+            <select id="orderFilter" style="background:var(--bg);border:1px solid var(--border);color:var(--white);padding:6px 12px;border-radius:4px;font-size:0.82rem">
+              <option value="">All Status</option>
+              <option value="placed">Placed</option><option value="confirmed">Confirmed</option>
+              <option value="processing">Processing</option><option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <table><thead><tr><th>Order #</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="ordersTable"><tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="page" id="page-products">
+        <div class="table-wrap">
+          <div class="table-header"><h3>Products</h3><button class="btn-sm btn-green" id="addProductBtn">+ Add Product</button></div>
+          <table><thead><tr><th>Name</th><th>Category</th><th>MRP</th><th>Sale</th><th>Stock</th><th>SKU</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="productsTable"><tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- INVENTORY -->
+      <div class="page" id="page-inventory">
+        <div class="table-wrap">
+          <div class="table-header"><h3>Stock Levels</h3></div>
+          <table><thead><tr><th>Product</th><th>Category</th><th>SKU</th><th>Stock</th><th>Status</th><th>Update</th></tr></thead>
+          <tbody id="inventoryTable"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- BANNER & THEME -->
+      <div class="page" id="page-banner">
+        <div class="settings-grid">
+
+          <div class="settings-card">
+            <h3>Theme Color</h3>
+            <div class="theme-grid">
+              <div class="theme-opt selected" id="theme-brown"><div class="theme-swatch" style="background:#1C1208;border:2px solid #C9A84C"></div><span>Warm Brown</span></div>
+              <div class="theme-opt" id="theme-black"><div class="theme-swatch" style="background:#0D0D0D;border:2px solid #333"></div><span>Pure Black</span></div>
+              <div class="theme-opt" id="theme-green"><div class="theme-swatch" style="background:#0a1208;border:2px solid #C9A84C"></div><span>Dark Green</span></div>
+              <div class="theme-opt" id="theme-navy"><div class="theme-swatch" style="background:#080C14;border:2px solid #C9A84C"></div><span>Deep Navy</span></div>
+              <div class="theme-opt" id="theme-maroon"><div class="theme-swatch" style="background:#140608;border:2px solid #C9A84C"></div><span>Dark Maroon</span></div>
+              <div class="theme-opt" id="theme-charcoal"><div class="theme-swatch" style="background:#111318;border:2px solid #C9A84C"></div><span>Charcoal</span></div>
+              <div class="theme-opt" id="theme-white"><div class="theme-swatch" style="background:#FFFFFF;border:2px solid #C9A84C"></div><span>Pure White</span></div>
+              <div class="theme-opt" id="theme-cream"><div class="theme-swatch" style="background:#F8F3E8;border:2px solid #C9A84C"></div><span>Warm Cream</span></div>
+              <div class="theme-opt" id="theme-ivory"><div class="theme-swatch" style="background:#F5F0E8;border:2px solid #A88732"></div><span>Ivory Gold</span></div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Live Preview</h3>
+            <div class="preview-box">
+              <div class="prev-bar" id="prevBar" style="background:#C9A84C;color:#1C1208">FREE SHIPPING ABOVE ₹500</div>
+              <div id="prevBg" style="background:#1C1208;padding:16px;border-radius:4px;margin-top:8px">
+                <div style="color:rgba(201,168,76,0.5);font-size:0.6rem;letter-spacing:3px;margin-bottom:6px">CHENNAI'S FINEST</div>
+                <div class="prev-title" id="prevL1" style="color:#F5E6C8">Taste of</div>
+                <div class="prev-title" id="prevL2" style="color:#C9A84C;font-style:italic">Our Homeland</div>
+                <div class="prev-sub" id="prevSub" style="color:rgba(201,168,76,0.4);margin-top:6px">SNACKS · SWEETS · PODIS</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>Hero Text</h3>
+            <div class="form-group"><label>Headline Line 1 (white)</label><input type="text" id="set-s1t1" placeholder="Taste of"></div>
+            <div class="form-group"><label>Headline Line 2 (gold italic)</label><input type="text" id="set-s1t2" placeholder="Our Homeland"></div>
+            <div class="form-group"><label>Slide 2 Line 1</label><input type="text" id="set-s2t1" placeholder="Fresh From"></div>
+            <div class="form-group"><label>Slide 2 Line 2</label><input type="text" id="set-s2t2" placeholder="Chennai Kitchen"></div>
+          </div>
+
+          <div class="settings-card">
+            <h3>More Slides Text</h3>
+            <div class="form-group"><label>Slide 3 Line 1</label><input type="text" id="set-s3t1" placeholder="Authentic"></div>
+            <div class="form-group"><label>Slide 3 Line 2</label><input type="text" id="set-s3t2" placeholder="South Indian"></div>
+            <div class="form-group"><label>Slide 4 Line 1</label><input type="text" id="set-s4t1" placeholder="Traditional"></div>
+            <div class="form-group"><label>Slide 4 Line 2</label><input type="text" id="set-s4t2" placeholder="Recipes Always"></div>
+          </div>
+
+          <div class="settings-card full-card">
+            <h3>Slider Images (4 Slides)</h3>
+            <p style="color:var(--gray);font-size:0.8rem;margin-bottom:16px">Upload to <a href="https://imgbb.com" target="_blank" style="color:var(--gold)">imgbb.com</a> → copy Direct Link → paste below</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div>
+                <div class="form-group"><label>Slide 1 Image URL</label><input type="text" id="set-img1" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev1">Slide 1 preview</div>
+              </div>
+              <div>
+                <div class="form-group"><label>Slide 2 Image URL</label><input type="text" id="set-img2" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev2">Slide 2 preview</div>
+              </div>
+              <div>
+                <div class="form-group"><label>Slide 3 Image URL</label><input type="text" id="set-img3" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev3">Slide 3 preview</div>
+              </div>
+              <div>
+                <div class="form-group"><label>Slide 4 Image URL</label><input type="text" id="set-img4" placeholder="https://i.ibb.co/..."></div>
+                <div class="img-preview" id="prev4">Slide 4 preview</div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:16px;max-width:300px">
+              <label>Autoplay Speed</label>
+              <select id="set-autoplay">
+                <option value="3">3 seconds</option>
+                <option value="5" selected>5 seconds</option>
+                <option value="7">7 seconds</option>
+                <option value="10">10 seconds</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-card full-card">
+            <h3>Other Settings</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div>
+                <div class="form-group"><label>Featured Category</label>
+                  <select id="set-featuredCat">
+                    <option value="All">All</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Sweets">Sweets</option>
+                    <option value="Podis">Podis</option>
+                  </select>
+                </div>
+                <div class="form-group"><label>Show Brand Story Section</label>
+                  <select id="set-showStory">
+                    <option value="true">Yes — Show</option>
+                    <option value="false">No — Hide</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div class="form-group"><label>Brand Story Text</label>
+                  <textarea id="set-storyText" rows="4" placeholder="Your brand story..."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="save-bar">
+          <div class="save-status" id="saveStatus">Ready to save</div>
+          <button class="btn-gold-sm" id="saveBannerBtn">Save & Apply to Website →</button>
+        </div>
+      </div>
+
+      <!-- ANNOUNCEMENT -->
+      <div class="page" id="page-announcement">
+        <div class="settings-card" style="max-width:600px">
+          <h3>Announcement Bar</h3>
+          <div class="form-group">
+            <label>Text shown at top of website</label>
+            <input type="text" id="set-announcement" placeholder="FREE SHIPPING ON ORDERS ABOVE ₹500">
+          </div>
+          <div id="announcePrev" style="background:#C9A84C;color:#1C1208;padding:8px;text-align:center;font-size:0.72rem;font-weight:700;letter-spacing:2px;border-radius:4px;margin-top:8px">
+            FREE SHIPPING ON ORDERS ABOVE ₹500
+          </div>
+          <div style="margin-top:16px"><button class="btn-gold-sm" id="saveAnnounceBtn">Save Announcement</button></div>
+        </div>
+      </div>
+
+      <!-- COUPONS -->
+      <div class="page" id="page-coupons">
+        <div class="table-wrap" style="margin-bottom:20px">
+          <div class="table-header"><h3>Discount Coupons</h3><button class="btn-sm btn-green" id="addCouponBtn">+ Add Coupon</button></div>
+          <table><thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min Order</th><th>Used/Max</th><th>Expires</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="couponsTable"><tr><td colspan="8" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+        <div class="settings-card" style="max-width:500px">
+          <h3>Quick Add Coupon</h3>
+          <div class="form-row-2">
+            <div class="form-group"><label>Coupon Code *</label><input type="text" id="newCouponCode" placeholder="e.g. WELCOME10" style="text-transform:uppercase"></div>
+            <div class="form-group"><label>Discount Type</label>
+              <select id="newCouponType">
+                <option value="percentage">Percentage (%)</option>
+                <option value="fixed">Fixed Amount (₹)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label>Discount Value *</label><input type="number" id="newCouponValue" placeholder="10"></div>
+            <div class="form-group"><label>Min Order Amount (₹)</label><input type="number" id="newCouponMin" placeholder="200"></div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label>Max Uses</label><input type="number" id="newCouponMax" placeholder="100"></div>
+            <div class="form-group"><label>Expires On</label><input type="date" id="newCouponExpiry"></div>
+          </div>
+          <button class="btn-gold-sm" id="createCouponBtn" style="margin-top:8px">Create Coupon →</button>
+        </div>
+      </div>
+
+      <!-- PAYMENT SETTINGS -->
+      <div class="page" id="page-payments">
+        <div class="settings-card" style="max-width:500px">
+          <h3>Payment Gateway Settings</h3>
+          <div class="form-group">
+            <label>Razorpay (Online Payment)</label>
+            <select id="set-razorpay">
+              <option value="true">Enabled ✅</option>
+              <option value="false">Disabled ❌</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Cash on Delivery (COD)</label>
+            <select id="set-cod">
+              <option value="true">Enabled ✅</option>
+              <option value="false">Disabled ❌</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="color:#888;font-size:0.75rem">Note: At least one payment method must be enabled</label>
+          </div>
+          <button class="btn-gold-sm" id="savePaymentBtn" style="margin-top:8px">Save Payment Settings →</button>
+        </div>
+      </div>
+
+      <!-- SHIPPING -->
+      <div class="page" id="page-shipping">
+        <div class="settings-card" style="max-width:500px">
+          <h3>Shipping Settings</h3>
+          <div class="form-group">
+            <label>Free Shipping Above (₹)</label>
+            <input type="number" id="set-freeShipping" placeholder="500">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Orders above this amount get free shipping</div>
+          </div>
+          <div class="form-group">
+            <label>Standard Shipping Charge (₹)</label>
+            <input type="number" id="set-shippingCharge" placeholder="60">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Applied on orders below free shipping threshold</div>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Number (for order notifications)</label>
+            <input type="text" id="set-whatsapp" placeholder="91XXXXXXXXXX">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Include country code, no + or spaces</div>
+          </div>
+          <button class="btn-gold-sm" id="saveShippingBtn" style="margin-top:8px">Save Shipping Settings →</button>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div class="page" id="page-seo">
+        <div class="settings-card" style="max-width:600px">
+          <h3>SEO Settings</h3>
+          <div class="form-group">
+            <label>Page Title (shown in browser tab & Google)</label>
+            <input type="text" id="set-seoTitle" placeholder="Major Rangas — Authentic South Indian Snacks">
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Keep under 60 characters</div>
+          </div>
+          <div class="form-group">
+            <label>Meta Description (shown in Google search results)</label>
+            <textarea id="set-seoDesc" rows="3" placeholder="Authentic South Indian snacks, sweets and podis from Chennai..."></textarea>
+            <div style="color:var(--gray);font-size:0.75rem;margin-top:4px">Keep under 160 characters</div>
+          </div>
+          <button class="btn-gold-sm" id="saveSeoBtn" style="margin-top:8px">Save SEO Settings →</button>
+        </div>
+      </div>
+
+      <!-- REVIEWS -->
+      <div class="page" id="page-reviews">
+        <div class="table-wrap">
+          <div class="table-header"><h3>Customer Reviews</h3></div>
+          <table><thead><tr><th>Product</th><th>Customer</th><th>Rating</th><th>Review</th><th>Verified</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="reviewsTable"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- ABANDONED CARTS -->
+      <div class="page" id="page-abandoned">
+        <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+          <div class="stat-card"><div class="stat-label">Abandoned Carts</div><div class="stat-value stat-gold" id="abandonedCount">—</div></div>
+          <div class="stat-card"><div class="stat-label">Recovered</div><div class="stat-value" id="recoveredCount">—</div></div>
+          <div class="stat-card"><div class="stat-label">Lost Revenue</div><div class="stat-value stat-gold" id="lostRevenue">—</div></div>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header"><h3>Abandoned Carts</h3></div>
+          <table><thead><tr><th>Customer</th><th>Email/Phone</th><th>Items</th><th>Total</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody id="abandonedTable"><tr><td colspan="6" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div class="page" id="page-alerts">
+        <div class="settings-card" style="max-width:500px;margin-bottom:20px">
+          <h3>Low Stock Alerts</h3>
+          <div class="form-group">
+            <label>Alert when stock falls below</label>
+            <input type="number" id="set-lowStock" placeholder="10">
+          </div>
+          <button class="btn-gold-sm" id="saveAlertsBtn" style="margin-top:8px">Save Alert Settings →</button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-header"><h3>Low Stock Products</h3></div>
+          <table><thead><tr><th>Product</th><th>Category</th><th>Stock</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="lowStockTable"><tr><td colspan="5" style="text-align:center;color:var(--gray);padding:30px">Loading...</td></tr></tbody></table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <h3>Update Order Status</h3>
+    <input type="hidden" id="modalOrderId">
+    <div class="form-group"><label>Order Status</label>
+      <select id="modalOrderStatus">
+        <option value="placed">Placed</option><option value="confirmed">Confirmed</option>
+        <option value="processing">Processing</option><option value="shipped">Shipped</option>
+        <option value="delivered">Delivered</option><option value="cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Tracking Number</label><input type="text" id="modalTracking" placeholder="e.g. BD12345678IN"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="cancelOrderModal">Cancel</button>
+      <button class="modal-save" id="saveOrderModal">Update</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <h3 id="productModalTitle">Add Product</h3>
+    <input type="hidden" id="productId">
+    <div class="form-group"><label>Product Name *</label><input id="pName" type="text"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Category *</label>
+        <select id="pCategory"><option value="Snacks">Snacks</option><option value="Sweets">Sweets</option><option value="Podis">Podis</option><option value="Combos">Combos</option></select>
+      </div>
+      <div class="form-group"><label>Sub Category</label><input id="pSubCategory" type="text"></div>
+    </div>
+    <div class="form-group"><label>Short Description</label><textarea id="pDescription" rows="2"></textarea></div>
+    <div class="form-group"><label>Ingredients</label><input id="pIngredients" type="text"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>MRP (₹) *</label><input id="pMrp" type="number"></div>
+      <div class="form-group"><label>Sale Price (₹)</label><input id="pSalePrice" type="number"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Weight *</label><input id="pWeight" type="number"></div>
+      <div class="form-group"><label>Unit</label><select id="pUnit"><option value="g">g</option><option value="kg">kg</option><option value="pcs">pcs</option></select></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Stock Qty *</label><input id="pStock" type="number"></div>
+      <div class="form-group"><label>SKU Code</label><input id="pSku" type="text"></div>
+    </div>
+    <div class="form-group"><label>Image 1 (Primary)</label><input id="pImage" type="text" placeholder="https://..." oninput="prevProdImg(1,this.value)"></div>
+    <div class="img-preview" id="prodImgPrev1" style="height:70px;margin-bottom:10px"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Image 2</label><input id="pImage2" type="text" placeholder="https://..." oninput="prevProdImg(2,this.value)"></div>
+      <div class="form-group"><label>Image 3</label><input id="pImage3" type="text" placeholder="https://..." oninput="prevProdImg(3,this.value)"></div>
+    </div>
+    <div class="form-group"><label>Image 4</label><input id="pImage4" type="text" placeholder="https://..." oninput="prevProdImg(4,this.value)"></div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Is this a Combo?</label><select id="pIsCombo" onchange="toggleComboField()"><option value="false">No</option><option value="true">Yes</option></select></div>
+      <div class="form-group" id="comboItemsWrap" style="display:none"><label>What's Inside (shown to customer)</label><input id="pComboItems" type="text" placeholder="e.g. 2x Murukku + 1x Idly Podi + 1x Laddu"></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Active</label><select id="pActive"><option value="true">Yes</option><option value="false">No</option></select></div>
+      <div class="form-group"><label>Featured</label><select id="pFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="cancelProductModal">Cancel</button>
+      <button class="modal-save" id="saveProductModal">Save Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- STOCK MODAL -->
+<div class="modal-overlay" id="stockModal">
+  <div class="modal" style="width:360px">
+    <h3>Update Stock</h3>
+    <input type="hidden" id="stockProductId">
+    <div class="form-group"><label id="stockProductName" style="color:var(--white);font-size:0.9rem"></label></div>
+    <div class="form-group"><label>New Stock Quantity</label><input id="stockQty" type="number" min="0"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" id="cancelStockModal">Cancel</button>
+      <button class="modal-save" id="saveStockModal">Update Stock</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var API = 'https://majorrangas-backend-production.up.railway.app';
+var token = localStorage.getItem('mr_admin_token');
+var adminInfo = JSON.parse(localStorage.getItem('mr_admin_info') || '{}');
+var currentTheme = 'brown';
+
+function showToast(msg, isErr) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = isErr ? '#F44336' : '#C9A84C';
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+
+function authH() {
+  return { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// LOGIN
+document.getElementById('loginBtn').onclick = async function() {
+  var email = document.getElementById('loginEmail').value;
+  var pass = document.getElementById('loginPassword').value;
+  document.getElementById('loginErr').textContent = '';
+  try {
+    var res = await fetch(API + '/api/admin/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: pass })
+    });
+    var data = await res.json();
+    if (!data.success) { document.getElementById('loginErr').textContent = data.error || 'Login failed'; return; }
+    token = data.token;
+    adminInfo = data.admin;
+    localStorage.setItem('mr_admin_token', token);
+    localStorage.setItem('mr_admin_info', JSON.stringify(adminInfo));
+    initApp();
+  } catch(e) { document.getElementById('loginErr').textContent = 'Connection failed'; }
+};
+
+document.getElementById('logoutBtn').onclick = function() {
+  localStorage.removeItem('mr_admin_token');
+  localStorage.removeItem('mr_admin_info');
+  location.reload();
+};
+
+function initApp() {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').classList.add('show');
+  document.getElementById('adminName').textContent = adminInfo.name || 'Admin';
+  loadDashboard();
+  loadSettingsData();
+}
+
+// NAV
+var pages = ['dashboard','orders','products','inventory','banner','announcement','coupons','payments','shipping','seo','alerts','reviews','abandoned'];
+pages.forEach(function(p) {
+  document.getElementById('nav-' + p).onclick = function() {
+    showPage(p);
+  };
+});
+document.getElementById('viewAllBtn').onclick = function() { showPage('orders'); };
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('page-' + page).classList.add('active');
+  var navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  var titles = { dashboard:'Dashboard', orders:'Orders', products:'Products', inventory:'Inventory', banner:'Banner & Theme', announcement:'Announcement Bar', coupons:'Discount Coupons', payments:'Payment Settings', shipping:'Shipping Settings', seo:'SEO Settings', alerts:'Stock Alerts', reviews:'Customer Reviews', abandoned:'Abandoned Carts' };
+  document.getElementById('pageTitle').textContent = titles[page] || page;
+  if (page === 'dashboard') loadDashboard();
+  if (page === 'orders') loadOrders('');
+  if (page === 'products') loadProducts();
+  if (page === 'inventory') loadInventory();
+  if (page === 'coupons') loadCoupons();
+  if (page === 'alerts') loadLowStock();
+  if (page === 'reviews') loadReviews();
+  if (page === 'abandoned') loadAbandoned();
+}
+
+// DASHBOARD
+async function loadDashboard() {
+  try {
+    var sRes = await fetch(API + '/api/admin/stats', { headers: authH() });
+    var oRes = await fetch(API + '/api/admin/orders?limit=8', { headers: authH() });
+    var stats = await sRes.json();
+    var orders = await oRes.json();
+    if (stats.success) {
+      document.getElementById('statOrders').textContent = stats.stats.total_orders;
+      document.getElementById('statRevenue').textContent = '₹' + stats.stats.total_revenue.toLocaleString('en-IN');
+      document.getElementById('statProducts').textContent = stats.stats.active_products;
+      document.getElementById('statPending').textContent = stats.stats.pending_orders;
+    }
+    if (orders.success) {
+      var html = '';
+      orders.orders.forEach(function(o) {
+        html += '<tr><td style="color:var(--gold);font-weight:600">' + o.order_number + '</td>'
+          + '<td>' + o.customer_name + '</td>'
+          + '<td>₹' + parseFloat(o.total_amount).toFixed(2) + '</td>'
+          + '<td><span class="badge badge-' + o.payment_status + '">' + o.payment_status + '</span></td>'
+          + '<td><span class="badge badge-' + o.order_status + '">' + o.order_status + '</span></td>'
+          + '<td>' + new Date(o.created_at).toLocaleDateString('en-IN') + '</td></tr>';
+      });
+      document.getElementById('recentOrdersTable').innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">No orders yet</td></tr>';
+    }
+  } catch(e) {}
+}
+
+// ORDERS
+async function loadOrders(status) {
+  try {
+    var url = API + '/api/admin/orders?limit=100' + (status ? '&status=' + status : '');
+    var res = await fetch(url, { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.orders.forEach(function(o) {
+      var items = typeof o.items === 'string' ? JSON.parse(o.items) : o.items;
+      html += '<tr><td style="color:var(--gold);font-weight:600">' + o.order_number + '</td>'
+        + '<td>' + o.customer_name + '</td><td>' + o.customer_phone + '</td>'
+        + '<td>' + items.length + ' items</td>'
+        + '<td>₹' + parseFloat(o.total_amount).toFixed(2) + '</td>'
+        + '<td><span class="badge badge-' + o.payment_status + '">' + o.payment_status + '</span></td>'
+        + '<td><span class="badge badge-' + o.order_status + '">' + o.order_status + '</span></td>'
+        + '<td>' + new Date(o.created_at).toLocaleDateString('en-IN') + '</td>'
+        + '<td style="display:flex;gap:6px">'
+        + '<button class="btn-sm btn-blue" onclick="openOrderModal(' + o.id + ',\'' + o.order_status + '\',\'' + (o.tracking_number||'') + '\')">Update</button>'
+        + '<a href="' + API + '/api/invoice/' + o.order_number + '" target="_blank" class="btn-sm btn-green" style="display:inline-block">Invoice</a>'
+        + '</td></tr>';
+    });
+    document.getElementById('ordersTable').innerHTML = html || '<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No orders</td></tr>';
+  } catch(e) {}
+}
+
+document.getElementById('orderFilter').onchange = function() { loadOrders(this.value); };
+
+function openOrderModal(id, status, tracking) {
+  document.getElementById('modalOrderId').value = id;
+  document.getElementById('modalOrderStatus').value = status;
+  document.getElementById('modalTracking').value = tracking || '';
+  document.getElementById('orderModal').classList.add('open');
+}
+document.getElementById('cancelOrderModal').onclick = function() { closeModal('orderModal'); };
+document.getElementById('saveOrderModal').onclick = async function() {
+  var id = document.getElementById('modalOrderId').value;
+  var status = document.getElementById('modalOrderStatus').value;
+  var tracking = document.getElementById('modalTracking').value;
+  try {
+    var res = await fetch(API + '/api/admin/orders/' + id + '/status', {
+      method: 'PUT', headers: authH(),
+      body: JSON.stringify({ order_status: status, tracking_number: tracking })
+    });
+    var data = await res.json();
+    if (data.success) { showToast('Order updated!'); closeModal('orderModal'); loadOrders(''); }
+    else showToast('Update failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// PRODUCTS
+async function loadProducts() {
+  try {
+    var res = await fetch(API + '/api/admin/products', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.products.forEach(function(p) {
+      html += '<tr><td>' + p.name + '</td><td>' + p.category + '</td>'
+        + '<td>₹' + parseFloat(p.mrp).toFixed(2) + '</td>'
+        + '<td>' + (p.sale_price ? '₹' + parseFloat(p.sale_price).toFixed(2) : '—') + '</td>'
+        + '<td>' + p.stock_qty + '</td>'
+        + '<td style="color:var(--gray);font-size:0.75rem">' + (p.sku || '—') + '</td>'
+        + '<td>' + (p.is_featured ? '<span class="badge" style="background:rgba(201,168,76,0.15);color:var(--gold)">Yes</span>' : '—') + '</td>'
+        + '<td><span class="badge badge-' + (p.is_active ? 'active' : 'inactive') + '">' + (p.is_active ? 'Active' : 'Hidden') + '</span></td>'
+        + '<td style="display:flex;gap:6px">'
+        + '<button class="btn-sm btn-blue" onclick="openEditProduct(' + p.id + ')">Edit</button>'
+        + '<button class="btn-sm btn-green" onclick="openStockModal(' + p.id + ',\'' + p.name.replace(/'/g, '') + '\',' + p.stock_qty + ')">Stock</button>'
+        + '</td></tr>';
+    });
+    document.getElementById('productsTable').innerHTML = html || '<tr><td colspan="9" style="text-align:center;color:var(--gray);padding:30px">No products</td></tr>';
+    window._products = data.products;
+  } catch(e) {}
+}
+
+function toggleComboField() {
+  var isCombo = document.getElementById('pIsCombo').value === 'true';
+  document.getElementById('comboItemsWrap').style.display = isCombo ? 'block' : 'none';
+}
+
+document.getElementById('addProductBtn').onclick = function() { openAddProduct(); };
+document.getElementById('cancelProductModal').onclick = function() { closeModal('productModal'); };
+
+function openAddProduct() {
+  document.getElementById('productModalTitle').textContent = 'Add Product';
+  document.getElementById('productId').value = '';
+  ['pName','pSubCategory','pDescription','pIngredients','pMrp','pSalePrice','pWeight','pStock','pSku','pImage','pImage2','pImage3','pImage4','pComboItems'].forEach(function(id) { document.getElementById(id).value = ''; });
+  ['prodImgPrev1','prodImgPrev2','prodImgPrev3','prodImgPrev4'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML='';});
+  document.getElementById('pCategory').value = 'Snacks';
+  document.getElementById('pUnit').value = 'g';
+  document.getElementById('pActive').value = 'true';
+  document.getElementById('pFeatured').value = 'false';
+  document.getElementById('pIsCombo').value = 'false';
+  toggleComboField();
+  document.getElementById('productModal').classList.add('open');
+}
+
+function openEditProduct(id) {
+  var products = window._products || [];
+  var p = products.find(function(x) { return x.id === id; });
+  if (!p) return;
+  document.getElementById('productModalTitle').textContent = 'Edit Product';
+  document.getElementById('productId').value = p.id;
+  document.getElementById('pName').value = p.name || '';
+  document.getElementById('pCategory').value = p.category || 'Snacks';
+  document.getElementById('pSubCategory').value = p.sub_category || '';
+  document.getElementById('pDescription').value = p.short_description || '';
+  document.getElementById('pIngredients').value = p.ingredients || '';
+  document.getElementById('pMrp').value = p.mrp || '';
+  document.getElementById('pSalePrice').value = p.sale_price || '';
+  document.getElementById('pWeight').value = p.weight || '';
+  document.getElementById('pUnit').value = p.unit || 'g';
+  document.getElementById('pStock').value = p.stock_qty || 0;
+  document.getElementById('pSku').value = p.sku || '';
+  document.getElementById('pImage').value = p.image_primary || '';
+  document.getElementById('pImage2').value = p.image_2 || '';
+  document.getElementById('pImage3').value = p.image_3 || '';
+  document.getElementById('pImage4').value = p.image_4 || '';
+  prevProdImg(1, p.image_primary); prevProdImg(2, p.image_2); prevProdImg(3, p.image_3); prevProdImg(4, p.image_4);
+  document.getElementById('pActive').value = p.is_active ? 'true' : 'false';
+  document.getElementById('pFeatured').value = p.is_featured ? 'true' : 'false';
+  document.getElementById('pIsCombo').value = p.is_combo ? 'true' : 'false';
+  document.getElementById('pComboItems').value = p.combo_items || '';
+  toggleComboField();
+  document.getElementById('productModal').classList.add('open');
+}
+
+document.getElementById('saveProductModal').onclick = async function() {
+  var id = document.getElementById('productId').value;
+  var name = document.getElementById('pName').value.trim();
+  if (!name) { showToast('Name required', true); return; }
+  var payload = {
+    name: name,
+    category: document.getElementById('pCategory').value,
+    sub_category: document.getElementById('pSubCategory').value,
+    short_description: document.getElementById('pDescription').value,
+    ingredients: document.getElementById('pIngredients').value,
+    mrp: document.getElementById('pMrp').value,
+    sale_price: document.getElementById('pSalePrice').value || null,
+    weight: document.getElementById('pWeight').value,
+    unit: document.getElementById('pUnit').value,
+    stock_qty: document.getElementById('pStock').value,
+    sku: document.getElementById('pSku').value,
+    image_primary: document.getElementById('pImage').value,
+    image_2: document.getElementById('pImage2').value,
+    image_3: document.getElementById('pImage3').value,
+    image_4: document.getElementById('pImage4').value,
+    is_active: document.getElementById('pActive').value === 'true',
+    is_featured: document.getElementById('pFeatured').value === 'true',
+    is_combo: document.getElementById('pIsCombo').value === 'true',
+    combo_items: document.getElementById('pComboItems').value,
+    slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  };
+  try {
+    var url = id ? API + '/api/admin/products/' + id : API + '/api/admin/products';
+    var method = id ? 'PUT' : 'POST';
+    var res = await fetch(url, { method: method, headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) { showToast(id ? 'Product updated!' : 'Product added!'); closeModal('productModal'); loadProducts(); }
+    else showToast(data.error || 'Save failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// INVENTORY
+async function loadInventory() {
+  try {
+    var res = await fetch(API + '/api/admin/products', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.products.forEach(function(p) {
+      var low = p.stock_qty < 10, out = p.stock_qty === 0;
+      var statusColor = out ? '#EF9A9A' : low ? '#FFB74D' : '#81C784';
+      var statusBg = out ? 'rgba(244,67,54,0.15)' : low ? 'rgba(255,152,0,0.15)' : 'rgba(76,175,80,0.12)';
+      var statusText = out ? 'Out of Stock' : low ? 'Low Stock' : 'In Stock';
+      html += '<tr><td>' + p.name + '</td><td>' + p.category + '</td>'
+        + '<td style="color:var(--gray);font-size:0.75rem">' + (p.sku || '—') + '</td>'
+        + '<td style="color:' + (out ? '#F44336' : low ? '#FF9800' : '#81C784') + ';font-weight:600">' + p.stock_qty + '</td>'
+        + '<td><span class="badge" style="background:' + statusBg + ';color:' + statusColor + '">' + statusText + '</span></td>'
+        + '<td><button class="btn-sm btn-blue" onclick="openStockModal(' + p.id + ',\'' + p.name.replace(/'/g, '') + '\',' + p.stock_qty + ')">Update</button></td></tr>';
+    });
+    document.getElementById('inventoryTable').innerHTML = html;
+  } catch(e) {}
+}
+
+function openStockModal(id, name, current) {
+  document.getElementById('stockProductId').value = id;
+  document.getElementById('stockProductName').textContent = name;
+  document.getElementById('stockQty').value = current;
+  document.getElementById('stockModal').classList.add('open');
+}
+document.getElementById('cancelStockModal').onclick = function() { closeModal('stockModal'); };
+document.getElementById('saveStockModal').onclick = async function() {
+  var id = document.getElementById('stockProductId').value;
+  var qty = parseInt(document.getElementById('stockQty').value);
+  try {
+    var res = await fetch(API + '/api/admin/products/' + id + '/stock', {
+      method: 'PUT', headers: authH(), body: JSON.stringify({ stock_qty: qty })
+    });
+    var data = await res.json();
+    if (data.success) { showToast('Stock updated!'); closeModal('stockModal'); loadInventory(); loadProducts(); }
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// SETTINGS
+function prevProdImg(n, url) {
+  var box = document.getElementById('prodImgPrev'+n);
+  if (!box) return;
+  if (url && url.trim()) {
+    var img = document.createElement('img');
+    img.src = url; img.style.cssText='width:70px;height:70px;object-fit:cover;border-radius:6px';
+    img.onerror = function() { box.innerHTML=''; };
+    box.innerHTML=''; box.appendChild(img);
+  } else { box.innerHTML=''; }
+}
+
+function setImgPreview(boxId, url) {
+  var box = document.getElementById(boxId);
+  if (!box) return;
+  if (url && url.trim()) {
+    var img = document.createElement('img');
+    img.src = url;
+    img.onerror = function() { box.textContent = 'Invalid URL'; };
+    box.innerHTML = '';
+    box.appendChild(img);
+  } else {
+    box.textContent = 'No image set';
+  }
+}
+
+document.getElementById('set-img1').oninput = function() { setImgPreview('prev1', this.value); markUnsaved(); };
+document.getElementById('set-img2').oninput = function() { setImgPreview('prev2', this.value); markUnsaved(); };
+document.getElementById('set-img3').oninput = function() { setImgPreview('prev3', this.value); markUnsaved(); };
+document.getElementById('set-img4').oninput = function() { setImgPreview('prev4', this.value); markUnsaved(); };
+document.getElementById('set-s1t1').oninput = function() { document.getElementById('prevL1').textContent = this.value; markUnsaved(); };
+document.getElementById('set-s1t2').oninput = function() { document.getElementById('prevL2').textContent = this.value; markUnsaved(); };
+document.getElementById('set-announcement').oninput = function() { document.getElementById('announcePrev').textContent = this.value || 'FREE SHIPPING ABOVE ₹500'; };
+
+function markUnsaved() {
+  document.getElementById('saveStatus').textContent = 'Unsaved changes';
+  document.getElementById('saveStatus').className = 'save-status';
+}
+
+var themeNames = ['brown','black','green','navy','maroon','charcoal','white','cream','ivory'];
+themeNames.forEach(function(t) {
+  document.getElementById('theme-' + t).onclick = function() {
+    currentTheme = t;
+    document.querySelectorAll('.theme-opt').forEach(function(el) { el.classList.remove('selected'); });
+    this.classList.add('selected');
+    var bgs = { brown:'#1C1208', black:'#0D0D0D', green:'#0a1208', navy:'#080C14', maroon:'#140608', charcoal:'#111318', white:'#FFFFFF', cream:'#F8F3E8', ivory:'#F5F0E8' };
+    document.getElementById('prevBg').style.background = bgs[t] || '#1C1208';
+    markUnsaved();
+  };
+});
+
+async function loadSettingsData() {
+  try {
+    var res = await fetch(API + '/api/settings');
+    var data = await res.json();
+    if (!data.success) return;
+    var s = data.settings;
+    if (s.theme_color) {
+      currentTheme = s.theme_color;
+      document.querySelectorAll('.theme-opt').forEach(function(el) { el.classList.remove('selected'); });
+      var el = document.getElementById('theme-' + s.theme_color);
+      if (el) el.classList.add('selected');
+    }
+    if (s.announcement_text) { document.getElementById('set-announcement').value = s.announcement_text; document.getElementById('announcePrev').textContent = s.announcement_text; }
+    if (s.banner_slide_1_title) { document.getElementById('set-s1t1').value = s.banner_slide_1_title; document.getElementById('prevL1').textContent = s.banner_slide_1_title; }
+    if (s.banner_slide_1_subtitle) { document.getElementById('set-s1t2').value = s.banner_slide_1_subtitle; document.getElementById('prevL2').textContent = s.banner_slide_1_subtitle; }
+    if (s.banner_slide_2_title) document.getElementById('set-s2t1').value = s.banner_slide_2_title;
+    if (s.banner_slide_2_subtitle) document.getElementById('set-s2t2').value = s.banner_slide_2_subtitle;
+    if (s.banner_slide_3_title) document.getElementById('set-s3t1').value = s.banner_slide_3_title;
+    if (s.banner_slide_3_subtitle) document.getElementById('set-s3t2').value = s.banner_slide_3_subtitle;
+    if (s.banner_slide_4_title) document.getElementById('set-s4t1').value = s.banner_slide_4_title;
+    if (s.banner_slide_4_subtitle) document.getElementById('set-s4t2').value = s.banner_slide_4_subtitle;
+    if (s.banner_image_1) { document.getElementById('set-img1').value = s.banner_image_1; setImgPreview('prev1', s.banner_image_1); }
+    if (s.banner_image_2) { document.getElementById('set-img2').value = s.banner_image_2; setImgPreview('prev2', s.banner_image_2); }
+    if (s.banner_image_3) { document.getElementById('set-img3').value = s.banner_image_3; setImgPreview('prev3', s.banner_image_3); }
+    if (s.banner_image_4) { document.getElementById('set-img4').value = s.banner_image_4; setImgPreview('prev4', s.banner_image_4); }
+    if (s.slider_autoplay_seconds) document.getElementById('set-autoplay').value = s.slider_autoplay_seconds;
+    if (s.featured_category) document.getElementById('set-featuredCat').value = s.featured_category;
+    if (s.show_story_section) document.getElementById('set-showStory').value = s.show_story_section;
+    if (s.story_text) document.getElementById('set-storyText').value = s.story_text;
+    document.getElementById('saveStatus').textContent = 'Settings loaded ✓';
+    document.getElementById('saveStatus').className = 'save-status saved';
+  } catch(e) {}
+}
+
+document.getElementById('saveBannerBtn').onclick = async function() {
+  var payload = {
+    theme_color: currentTheme,
+    banner_slide_1_title: document.getElementById('set-s1t1').value,
+    banner_slide_1_subtitle: document.getElementById('set-s1t2').value,
+    banner_slide_2_title: document.getElementById('set-s2t1').value,
+    banner_slide_2_subtitle: document.getElementById('set-s2t2').value,
+    banner_slide_3_title: document.getElementById('set-s3t1').value,
+    banner_slide_3_subtitle: document.getElementById('set-s3t2').value,
+    banner_slide_4_title: document.getElementById('set-s4t1').value,
+    banner_slide_4_subtitle: document.getElementById('set-s4t2').value,
+    banner_image_1: document.getElementById('set-img1').value,
+    banner_image_2: document.getElementById('set-img2').value,
+    banner_image_3: document.getElementById('set-img3').value,
+    banner_image_4: document.getElementById('set-img4').value,
+    slider_autoplay_seconds: document.getElementById('set-autoplay').value,
+    featured_category: document.getElementById('set-featuredCat').value,
+    show_story_section: document.getElementById('set-showStory').value,
+    story_text: document.getElementById('set-storyText').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) {
+      showToast('Settings saved! Website updated ✓');
+      document.getElementById('saveStatus').textContent = 'Saved ✓';
+      document.getElementById('saveStatus').className = 'save-status saved';
+    } else showToast('Save failed', true);
+  } catch(e) { showToast('Error saving', true); }
+};
+
+document.getElementById('saveAnnounceBtn').onclick = async function() {
+  var text = document.getElementById('set-announcement').value;
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify({ announcement_text: text }) });
+    var data = await res.json();
+    if (data.success) showToast('Announcement saved!');
+    else showToast('Save failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+
+// COUPONS
+async function loadCoupons() {
+  try {
+    var res = await fetch(API + '/api/coupons', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.coupons.forEach(function(c) {
+      var val = c.discount_type === 'percentage' ? c.discount_value + '%' : '₹' + c.discount_value;
+      var exp = c.expires_at ? new Date(c.expires_at).toLocaleDateString('en-IN') : 'Never';
+      html += '<tr>'
+        + '<td style="color:var(--gold);font-weight:700;letter-spacing:1px">' + c.code + '</td>'
+        + '<td>' + c.discount_type + '</td>'
+        + '<td>' + val + '</td>'
+        + '<td>₹' + c.min_order_amount + '</td>'
+        + '<td>' + c.used_count + ' / ' + c.max_uses + '</td>'
+        + '<td>' + exp + '</td>'
+        + '<td><span class="badge badge-' + (c.is_active ? 'active' : 'inactive') + '">' + (c.is_active ? 'Active' : 'Inactive') + '</span></td>'
+        + '<td style="display:flex;gap:6px">'
+        + '<button class="btn-sm btn-blue" onclick="toggleCoupon(' + c.id + ')">' + (c.is_active ? 'Disable' : 'Enable') + '</button>'
+        + '<button class="btn-sm btn-red" onclick="deleteCoupon(' + c.id + ')">Delete</button>'
+        + '</td></tr>';
+    });
+    document.getElementById('couponsTable').innerHTML = html || '<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:20px">No coupons yet</td></tr>';
+  } catch(e) {}
+}
+
+document.getElementById('createCouponBtn').onclick = async function() {
+  var code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+  var type = document.getElementById('newCouponType').value;
+  var value = document.getElementById('newCouponValue').value;
+  var min = document.getElementById('newCouponMin').value || 0;
+  var max = document.getElementById('newCouponMax').value || 100;
+  var expiry = document.getElementById('newCouponExpiry').value || null;
+  if (!code || !value) { showToast('Code and value required', true); return; }
+  try {
+    var res = await fetch(API + '/api/coupons', {
+      method: 'POST', headers: authH(),
+      body: JSON.stringify({ code, discount_type: type, discount_value: value, min_order_amount: min, max_uses: max, expires_at: expiry })
+    });
+    var data = await res.json();
+    if (data.success) { showToast('Coupon created!'); loadCoupons(); ['newCouponCode','newCouponValue','newCouponMin','newCouponMax','newCouponExpiry'].forEach(function(id){document.getElementById(id).value='';}); }
+    else showToast(data.error || 'Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+async function toggleCoupon(id) {
+  try {
+    await fetch(API + '/api/coupons/' + id + '/toggle', { method: 'PUT', headers: authH() });
+    showToast('Coupon updated!'); loadCoupons();
+  } catch(e) {}
+}
+
+async function deleteCoupon(id) {
+  if (!confirm('Delete this coupon?')) return;
+  try {
+    await fetch(API + '/api/coupons/' + id, { method: 'DELETE', headers: authH() });
+    showToast('Coupon deleted!'); loadCoupons();
+  } catch(e) {}
+}
+
+// PAYMENT SETTINGS
+document.getElementById('savePaymentBtn').onclick = async function() {
+  var payload = {
+    razorpay_enabled: document.getElementById('set-razorpay').value,
+    cod_enabled: document.getElementById('set-cod').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('Payment settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// SHIPPING SETTINGS
+document.getElementById('saveShippingBtn').onclick = async function() {
+  var payload = {
+    free_shipping_above: document.getElementById('set-freeShipping').value,
+    shipping_charge: document.getElementById('set-shippingCharge').value,
+    whatsapp_number: document.getElementById('set-whatsapp').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('Shipping settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// SEO SETTINGS
+document.getElementById('saveSeoBtn').onclick = async function() {
+  var payload = {
+    seo_title: document.getElementById('set-seoTitle').value,
+    seo_description: document.getElementById('set-seoDesc').value
+  };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('SEO settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+// ALERTS
+document.getElementById('saveAlertsBtn').onclick = async function() {
+  var payload = { low_stock_threshold: document.getElementById('set-lowStock').value };
+  try {
+    var res = await fetch(API + '/api/settings', { method: 'PUT', headers: authH(), body: JSON.stringify(payload) });
+    var data = await res.json();
+    if (data.success) showToast('Alert settings saved!');
+    else showToast('Failed', true);
+  } catch(e) { showToast('Error', true); }
+};
+
+async function loadLowStock() {
+  try {
+    var settRes = await fetch(API + '/api/settings');
+    var settData = await settRes.json();
+    var threshold = parseInt(((settData.settings || {}).low_stock_threshold) || 10);
+    if (settData.settings && settData.settings.low_stock_threshold) {
+      document.getElementById('set-lowStock').value = settData.settings.low_stock_threshold;
+    }
+    var res = await fetch(API + '/api/admin/products', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var lowItems = data.products.filter(function(p) { return p.stock_qty <= threshold; });
+    var html = '';
+    lowItems.forEach(function(p) {
+      var out = p.stock_qty === 0;
+      var color = out ? '#F44336' : '#FF9800';
+      var bg = out ? 'rgba(244,67,54,0.15)' : 'rgba(255,152,0,0.15)';
+      var fc = out ? '#EF9A9A' : '#FFB74D';
+      var label = out ? 'Out of Stock' : 'Low Stock';
+      var safeName = p.name.replace(/'/g, '');
+      var row = '<tr>';
+      row += '<td>' + p.name + '</td>';
+      row += '<td>' + p.category + '</td>';
+      row += '<td style="color:' + color + ';font-weight:700">' + p.stock_qty + '</td>';
+      row += '<td><span class="badge" style="background:' + bg + ';color:' + fc + '">' + label + '</span></td>';
+      row += '<td><button class="btn-sm btn-blue" onclick="openStockModal(' + p.id + ',\'' + safeName + '\',' + p.stock_qty + ')">Update</button></td>';
+      row += '</tr>';
+      html += row;
+    });
+    document.getElementById('lowStockTable').innerHTML = html || '<tr><td colspan="5" style="text-align:center;color:#81C784;padding:20px">All products well stocked!</td></tr>';
+  } catch(e) {}
+}
+
+// Load extra settings into forms
+var origLoadSettings = loadSettingsData;
+loadSettingsData = async function() {
+  await origLoadSettings();
+  try {
+    var res = await fetch(API + '/api/settings');
+    var data = await res.json();
+    if (!data.success) return;
+    var s = data.settings;
+    if (s.razorpay_enabled !== undefined) document.getElementById('set-razorpay').value = s.razorpay_enabled;
+    if (s.cod_enabled !== undefined) document.getElementById('set-cod').value = s.cod_enabled;
+    if (s.free_shipping_above) document.getElementById('set-freeShipping').value = s.free_shipping_above;
+    if (s.shipping_charge) document.getElementById('set-shippingCharge').value = s.shipping_charge;
+    if (s.whatsapp_number) document.getElementById('set-whatsapp').value = s.whatsapp_number;
+    if (s.seo_title) document.getElementById('set-seoTitle').value = s.seo_title;
+    if (s.seo_description) document.getElementById('set-seoDesc').value = s.seo_description;
+  } catch(e) {}
+};
+
+
+// REVIEWS
+async function loadReviews() {
+  try {
+    var res = await fetch(API + '/api/reviews/admin/all', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    var html = '';
+    data.reviews.forEach(function(r) {
+      var stars = '★'.repeat(r.rating) + '☆'.repeat(5-r.rating);
+      html += '<tr>'
+        + '<td style="color:var(--gold);font-size:0.82rem">' + r.product_name + '</td>'
+        + '<td>' + r.customer_name + '</td>'
+        + '<td style="color:#FFB300">' + stars + '</td>'
+        + '<td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.body || r.title || '—') + '</td>'
+        + '<td>' + (r.is_verified ? '<span style="color:var(--green);font-size:0.72rem;font-weight:700">✓ Verified</span>' : '<span style="color:var(--gray);font-size:0.72rem">Guest</span>') + '</td>'
+        + '<td>' + new Date(r.created_at).toLocaleDateString('en-IN') + '</td>'
+        + '<td><button class="btn-sm btn-red" onclick="deleteReview(' + r.id + ')">Delete</button></td>'
+        + '</tr>';
+    });
+    document.getElementById('reviewsTable').innerHTML = html || '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:20px">No reviews yet</td></tr>';
+  } catch(e) {}
+}
+
+async function deleteReview(id) {
+  if (!confirm('Delete this review?')) return;
+  try {
+    await fetch(API + '/api/reviews/admin/' + id, { method: 'DELETE', headers: authH() });
+    showToast('Review deleted!'); loadReviews();
+  } catch(e) {}
+}
+
+// ABANDONED CARTS
+async function loadAbandoned() {
+  try {
+    var res = await fetch(API + '/api/abandoned/admin', { headers: authH() });
+    var data = await res.json();
+    if (!data.success) return;
+    document.getElementById('abandonedCount').textContent = data.stats.abandoned;
+    document.getElementById('recoveredCount').textContent = data.stats.recovered;
+    document.getElementById('lostRevenue').textContent = '₹' + data.stats.lost_value;
+    var html = '';
+    data.carts.forEach(function(c) {
+      var items = typeof c.cart_data === 'string' ? JSON.parse(c.cart_data) : c.cart_data;
+      var itemNames = items.map(function(i){ return i.name + ' x' + i.quantity; }).join(', ');
+      var waMsg = encodeURIComponent('Hi ' + (c.customer_name||'') + ', you left items in your Major Rangas cart! Complete your order: ' + itemNames + ' (₹' + c.cart_total + '). Shop now: https://majorrangas.in');
+      html += '<tr>'
+        + '<td>' + (c.customer_name || '—') + '</td>'
+        + '<td style="font-size:0.78rem">' + (c.customer_email || '') + '<br>' + (c.customer_phone || '') + '</td>'
+        + '<td style="font-size:0.78rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + itemNames + '</td>'
+        + '<td style="color:var(--gold);font-weight:700">₹' + parseFloat(c.cart_total||0).toFixed(2) + '</td>'
+        + '<td>' + new Date(c.created_at).toLocaleDateString('en-IN') + '</td>'
+        + '<td>'
+        + (c.customer_phone ? '<a href="https://wa.me/' + c.customer_phone.replace(/[^0-9]/g,'') + '?text=' + waMsg + '" target="_blank" class="btn-sm btn-green" style="text-decoration:none;display:inline-block">WhatsApp</a>' : '—')
+        + '</td></tr>';
+    });
+    document.getElementById('abandonedTable').innerHTML = html || '<tr><td colspan="6" style="text-align:center;color:var(--gray);padding:20px">No abandoned carts</td></tr>';
+  } catch(e) {}
+}
+
+if (token) initApp();
+</script>
+</body>
+</html>
