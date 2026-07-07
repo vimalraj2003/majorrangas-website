@@ -1,192 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
   <title>My Account — Major Rangas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="/images/logo.png"><link rel="manifest" href="/manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="/js/theme.js"></script>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    :root{--gold:#C9830A;--teal:#0D9B8A;--teal-light:#12B5A2;--teal-bg:#E8F8F6;--white:#fff;--off-white:#FAFAF8;--cream:#F7F3EE;--text:#1A1A1A;--text2:#555;--text3:#888;--border:#E8E4DC;--shadow:0 2px 12px rgba(0,0,0,0.08);--shadow-md:0 4px 24px rgba(0,0,0,0.12);--font-serif:'Playfair Display',serif;--font-sans:'Inter',sans-serif;}
-    body{background:var(--bg);font-family:var(--font-sans);min-height:100vh;}
+    *{margin:0;padding:0;box-sizing:border-box;}html,body{margin:0!important;padding:0!important;}
+    :root{--terra:#C4511A;--terra-dark:#A03D10;--gold:#D4A017;--gold-light:#F0C040;--cream:#FDF6EC;--cream2:#F5ECD8;--cream3:#EDD9B8;--brown:#2C1506;--brown2:#5C3010;--text:#1A0800;--text2:#5C3010;--text3:#9B6B3A;--border:#D4B896;--border2:#E8D5B4;--white:#FFFDF8;--font-serif:'Playfair Display',Georgia,serif;--font-sans:'Inter',sans-serif;--shadow:0 2px 12px rgba(44,21,6,0.08);--shadow-md:0 6px 28px rgba(44,21,6,0.14);}
+    body{background:var(--cream);color:var(--text);font-family:var(--font-sans);min-height:100vh;}
     a{text-decoration:none;color:inherit;}
-    .announce{background:var(--gold);color:#fff;text-align:center;font-size:0.8rem;font-weight:600;padding:10px;}
-    .navbar{background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
-    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;}
-    .logo-main{font-family:var(--font-serif);font-size:1.4rem;color:var(--text);font-weight:700;letter-spacing:2px;}
-    .logo-sub{font-size:0.6rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;display:block;text-align:center;}
-
-    .account-page{max-width:1100px;margin:0 auto;padding:32px;display:grid;grid-template-columns:260px 1fr;gap:24px;}
-    .sidebar{position:sticky;top:24px;height:fit-content;}
-    .user-card{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:24px;text-align:center;margin-bottom:14px;box-shadow:var(--shadow);}
-    .user-avatar{width:72px;height:72px;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--font-serif);font-size:1.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
-    .user-name{font-weight:700;font-size:1rem;color:var(--text);margin-bottom:3px;}
-    .user-email{color:var(--text3);font-size:0.78rem;}
-    .side-nav{background:var(--bg2);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
-    .side-nav-item{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;font-size:0.88rem;color:var(--text2);border-bottom:1px solid var(--border);transition:all 0.2s;font-weight:500;}
+    .top-stripe{position:fixed;top:0;left:0;right:0;height:4px;z-index:1001;background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 30px,var(--gold) 30px,var(--gold) 60px);}
+    .navbar{background:var(--brown);position:fixed;top:4px;left:0;right:0;z-index:999;box-shadow:var(--shadow);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;}
+    .logo-img{height:38px;background:#1A0800;padding:5px 14px;border-radius:6px;}
+    .nav-links a{color:rgba(253,246,236,0.55);font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;margin-left:20px;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--gold-light);}
+    .account-wrap{max-width:1100px;margin:0 auto;padding:90px 24px 60px;display:grid;grid-template-columns:260px 1fr;gap:24px;}
+    /* SIDEBAR */
+    .user-card{background:var(--brown);padding:24px;text-align:center;margin-bottom:12px;border-left:4px solid var(--terra);}
+    .user-avatar{width:72px;height:72px;border-radius:50%;background:var(--terra);color:var(--cream);font-family:var(--font-serif);font-size:1.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+    .user-name{font-weight:700;font-size:1rem;color:var(--gold-light);margin-bottom:3px;}
+    .user-email{color:rgba(253,246,236,0.4);font-size:0.78rem;}
+    .side-nav{background:var(--white);border:1px solid var(--border2);}
+    .side-nav-item{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;font-size:0.85rem;color:var(--text2);border-bottom:1px solid var(--border2);transition:all 0.2s;font-weight:500;}
     .side-nav-item:last-child{border-bottom:none;}
-    .side-nav-item:hover{background:var(--cream);color:var(--teal);}
-    .side-nav-item.active{background:var(--teal-bg);color:var(--teal);font-weight:600;}
-    .side-nav-item .nav-icon{font-size:1.1rem;width:24px;text-align:center;}
+    .side-nav-item:hover{background:var(--cream2);color:var(--terra);}
+    .side-nav-item.active{background:rgba(196,81,26,0.06);color:var(--terra);font-weight:600;border-left:3px solid var(--terra);}
     .logout-item{color:#E53935!important;}
-    .logout-item:hover{background:#FFF0F0!important;color:#E53935!important;}
-
-    .content-area{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:28px;box-shadow:var(--shadow);}
-    .section{display:none;}
-    .section.active{display:block;}
-    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border);}
-    .section-title{font-family:var(--font-serif);font-size:1.3rem;color:var(--text);}
-
+    .logout-item:hover{background:#FFF0F0!important;}
+    /* CONTENT */
+    .content-area{background:var(--white);border:1px solid var(--border2);padding:28px;}
+    .section{display:none;}.section.active{display:block;}
+    .section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border2);}
+    .section-hd h2{font-family:var(--font-serif);font-size:1.4rem;color:var(--brown);}
     /* ORDERS */
-    .order-card{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px;transition:box-shadow 0.2s;}
-    .order-card:hover{box-shadow:var(--shadow);}
-    .order-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-    .order-num{color:var(--teal);font-weight:700;font-size:0.9rem;}
-    .order-date{color:var(--text3);font-size:0.75rem;margin-top:2px;}
-    .order-badge{padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;}
-    .badge-placed{background:rgba(201,131,10,0.12);color:var(--gold);}
-    .badge-confirmed{background:rgba(13,155,138,0.1);color:var(--teal);}
+    .order-card{border:1px solid var(--border2);padding:18px;margin-bottom:14px;border-left:3px solid transparent;transition:all 0.2s;}
+    .order-card:hover{border-left-color:var(--terra);}
+    .order-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+    .order-num{color:var(--terra);font-weight:700;font-size:0.9rem;font-family:var(--font-serif);}
+    .order-date{color:var(--text3);font-size:0.72rem;margin-top:2px;}
+    .order-badge{padding:4px 12px;font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+    .badge-placed{background:rgba(212,160,23,0.1);color:var(--gold);}
+    .badge-confirmed{background:rgba(196,81,26,0.1);color:var(--terra);}
     .badge-shipped{background:rgba(103,58,183,0.1);color:#6732C9;}
     .badge-delivered{background:rgba(56,142,60,0.1);color:#388E3C;}
-    .badge-cancelled{background:rgba(229,57,53,0.1);color:#E53935;}
-    .order-items{color:var(--text2);font-size:0.82rem;line-height:1.6;margin-bottom:12px;}
+    .order-items-text{color:var(--text2);font-size:0.82rem;margin-bottom:12px;}
     .order-bottom{display:flex;align-items:center;justify-content:space-between;}
-    .order-total{font-weight:700;font-size:1rem;color:var(--text);}
-    .order-actions{display:flex;gap:8px;}
-    .btn-sm{padding:7px 16px;border-radius:20px;font-size:0.75rem;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;}
+    .order-total{font-weight:700;font-size:1rem;color:var(--brown);font-family:var(--font-serif);}
+    .btn-sm{padding:7px 16px;font-size:0.72rem;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;letter-spacing:1px;text-transform:uppercase;}
     .btn-sm-outline{border:1.5px solid var(--border);background:none;color:var(--text2);}
-    .btn-sm-outline:hover{border-color:var(--teal);color:var(--teal);}
-    .btn-sm-teal{background:var(--teal);color:#fff;}
-
+    .btn-sm-outline:hover{border-color:var(--terra);color:var(--terra);}
+    .btn-sm-terra{background:var(--terra);color:#fff;}
+    /* PROFILE + FORMS */
+    .inp-group{margin-bottom:16px;}
+    .inp-group label{display:block;font-size:0.65rem;font-weight:700;color:var(--text3);margin-bottom:5px;letter-spacing:2px;text-transform:uppercase;}
+    .inp{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:4px;font-size:0.88rem;color:var(--text);outline:none;font-family:var(--font-sans);background:var(--cream);transition:border-color 0.2s;}
+    .inp:focus{border-color:var(--terra);background:var(--white);}
+    .inp:disabled{opacity:0.5;cursor:not-allowed;}
+    .btn-save{background:var(--terra);color:#fff;border:none;padding:12px 28px;font-weight:700;font-size:0.78rem;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;}
+    .btn-save:hover{background:var(--terra-dark);}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
     /* WISHLIST */
     .wish-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-    .wish-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;}
-    .wish-img{aspect-ratio:1;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;}
+    .wish-card{border:1px solid var(--border2);overflow:hidden;background:var(--white);}
+    .wish-img{aspect-ratio:1;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;overflow:hidden;}
     .wish-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
-    .wish-remove{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.5);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;}
+    .wish-remove{position:absolute;top:8px;right:8px;background:rgba(44,21,6,0.6);border:none;color:#fff;width:26px;height:26px;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;}
     .wish-info{padding:12px;}
-    .wish-name{font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:3px;}
-    .wish-price{color:var(--gold);font-weight:700;font-size:0.9rem;margin-bottom:8px;}
-    .wish-add{width:100%;background:var(--teal);color:#fff;border:none;padding:8px;font-size:0.78rem;font-weight:600;cursor:pointer;border-radius:6px;transition:background 0.2s;}
-    .wish-add:hover{background:var(--teal-light);}
-
+    .wish-name{font-size:0.85rem;font-weight:600;color:var(--brown);margin-bottom:3px;}
+    .wish-price{color:var(--terra);font-weight:700;font-size:0.9rem;margin-bottom:8px;font-family:var(--font-serif);}
+    .wish-add{width:100%;background:var(--terra);color:#fff;border:none;padding:8px;font-size:0.72rem;font-weight:700;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;}
     /* ADDRESSES */
-    .addr-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px;}
-    .addr-card{border:1.5px solid var(--border);border-radius:12px;padding:16px;position:relative;transition:all 0.2s;}
-    .addr-card.default{border-color:var(--teal);background:var(--teal-bg);}
-    .addr-default-badge{position:absolute;top:10px;right:10px;background:var(--teal);color:#fff;font-size:0.62rem;font-weight:700;padding:2px 8px;border-radius:10px;}
-    .addr-name{font-weight:700;font-size:0.9rem;color:var(--text);margin-bottom:5px;}
+    .addr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+    .addr-card{border:1.5px solid var(--border2);padding:16px;position:relative;transition:all 0.2s;}
+    .addr-card.default{border-color:var(--terra);background:rgba(196,81,26,0.03);}
+    .addr-default-badge{position:absolute;top:10px;right:10px;background:var(--terra);color:#fff;font-size:0.6rem;font-weight:700;padding:2px 8px;letter-spacing:1px;text-transform:uppercase;}
+    .addr-name{font-weight:700;font-size:0.9rem;color:var(--brown);margin-bottom:5px;}
     .addr-text{color:var(--text2);font-size:0.82rem;line-height:1.7;}
     .addr-actions{display:flex;gap:8px;margin-top:10px;}
-    .btn-del{background:none;border:1px solid rgba(229,57,53,0.3);color:#E53935;padding:5px 14px;border-radius:20px;font-size:0.72rem;cursor:pointer;}
-    .add-addr-form{background:var(--cream);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:14px;}
-    .addr-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-    .form-inp{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.85rem;color:var(--text);outline:none;font-family:var(--font-sans);}
-    .form-inp:focus{border-color:var(--teal);}
-
-    /* PROFILE */
-    .profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-    .inp-group label{display:block;font-size:0.75rem;font-weight:500;color:var(--text2);margin-bottom:5px;}
-    .inp{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;color:var(--text);outline:none;transition:border-color 0.2s;}
-    .inp:focus{border-color:var(--teal);}
-    .inp:disabled{background:var(--cream);cursor:not-allowed;opacity:0.6;}
-    .btn-save{background:var(--teal);color:#fff;border:none;padding:12px 28px;border-radius:25px;font-weight:600;font-size:0.88rem;cursor:pointer;transition:background 0.2s;}
-    .btn-save:hover{background:var(--teal-light);}
-
+    .btn-del{background:none;border:1px solid rgba(229,57,53,0.3);color:#E53935;padding:5px 14px;font-size:0.72rem;cursor:pointer;}
+    .add-addr-form{background:var(--cream2);border:1px solid var(--border2);padding:20px;margin-top:14px;}
+    .add-addr-form .grid-2{margin-bottom:10px;}
+    .form-inp{width:100%;padding:10px 14px;border:1.5px solid var(--border);background:var(--white);font-size:0.85rem;color:var(--text);outline:none;font-family:var(--font-sans);}
+    .form-inp:focus{border-color:var(--terra);}
     .empty-state{text-align:center;padding:60px 20px;color:var(--text3);}
     .empty-state .icon{font-size:3rem;margin-bottom:12px;}
-    .empty-state a{color:var(--teal);font-weight:600;}
-    .toast{position:fixed;bottom:28px;right:28px;background:var(--teal);color:#fff;padding:12px 20px;border-radius:10px;font-size:0.85rem;z-index:9999;transform:translateY(80px);opacity:0;transition:all 0.3s;}
+    .empty-state a{color:var(--terra);font-weight:600;}
+    .toast{position:fixed;bottom:28px;right:28px;background:var(--brown);color:var(--cream);padding:12px 20px;border-radius:4px;border-left:3px solid var(--terra);font-size:0.85rem;z-index:9999;transform:translateY(80px);opacity:0;transition:all 0.3s;}
     .toast.show{transform:translateY(0);opacity:1;}
-    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
-
-    @media(max-width:768px){
-      .account-page{grid-template-columns:1fr;padding:16px;}
-      .sidebar{position:static;}
-      .wish-grid{grid-template-columns:1fr 1fr;}
-      .addr-grid{grid-template-columns:1fr;}
-      .profile-grid{grid-template-columns:1fr;}
-    }
+    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
+    @media(max-width:768px){.account-wrap{grid-template-columns:1fr;padding:80px 16px 40px;}.wish-grid{grid-template-columns:1fr 1fr;}.addr-grid{grid-template-columns:1fr;}.grid-2{grid-template-columns:1fr;}}
   </style>
-  <script src="js/theme.js"></script>
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Major Rangas">
-  <link rel="apple-touch-icon" href="/images/logo.png">
-  <meta name="msapplication-TileImage" content="/images/logo.png">
-  <meta name="msapplication-TileColor" content="#C4511A">
-  <meta name="theme-color" content="#C4511A">
 </head>
 <body>
-<div class="announce">🎉 Free Shipping on orders above ₹500!</div>
+<div class="top-stripe"></div>
 <nav class="navbar">
-  <div class="nav-inner" style="justify-content:flex-start;gap:24px">
-    <a href="index.html" style="flex-shrink:0"><div style="background:#1A1A1A;padding:6px 18px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center">
-        <img src="images/logo.png" alt="Major Rangas" style="height:32px;width:auto;display:block;max-width:none">
-      </div></a>
-    <a href="products.html" style="color:var(--teal);font-size:0.82rem;font-weight:500">← Shop</a>
-    <a href="track.html" style="color:var(--teal);font-size:0.82rem;font-weight:500;margin-left:auto">Track Order</a>
+  <div class="nav-inner">
+    <a href="index.html"><img src="/images/logo.png" alt="Major Rangas" class="logo-img"></a>
+    <div class="nav-links">
+      <a href="products.html">Shop</a>
+      <a href="track.html">Track Order</a>
+      <a href="index.html">Home</a>
+    </div>
   </div>
 </nav>
 
-<div class="account-page" style="margin-top:20px">
-  <aside class="sidebar">
+<div class="account-wrap">
+  <aside>
     <div class="user-card">
       <div class="user-avatar" id="userAvatar">V</div>
       <div class="user-name" id="userName">Loading...</div>
       <div class="user-email" id="userEmail"></div>
     </div>
     <div class="side-nav">
-      <div class="side-nav-item active" onclick="showSec('orders',this)"><span class="nav-icon">📦</span> My Orders</div>
-      <div class="side-nav-item" onclick="showSec('wishlist',this)"><span class="nav-icon">❤️</span> Wishlist</div>
-      <div class="side-nav-item" onclick="showSec('addresses',this)"><span class="nav-icon">📍</span> Addresses</div>
-      <div class="side-nav-item" onclick="showSec('profile',this)"><span class="nav-icon">👤</span> Profile</div>
-      <div class="side-nav-item logout-item" onclick="doLogout()"><span class="nav-icon">🚪</span> Logout</div>
+      <div class="side-nav-item active" onclick="showSec('orders',this)">📦 My Orders</div>
+      <div class="side-nav-item" onclick="showSec('wishlist',this)">❤️ Wishlist</div>
+      <div class="side-nav-item" onclick="showSec('addresses',this)">📍 Addresses</div>
+      <div class="side-nav-item" onclick="showSec('profile',this)">👤 Profile</div>
+      <div class="side-nav-item logout-item" onclick="doLogout()">🚪 Logout</div>
     </div>
   </aside>
 
   <div class="content-area">
-    <!-- ORDERS -->
     <div class="section active" id="sec-orders">
-      <div class="section-header"><h2 class="section-title">My Orders</h2></div>
+      <div class="section-hd"><h2>My Orders</h2></div>
       <div id="ordersList"><div class="empty-state"><div class="icon">📦</div><p>Loading orders...</p></div></div>
     </div>
-
-    <!-- WISHLIST -->
     <div class="section" id="sec-wishlist">
-      <div class="section-header"><h2 class="section-title">My Wishlist</h2></div>
+      <div class="section-hd"><h2>My Wishlist</h2></div>
       <div class="wish-grid" id="wishGrid"></div>
     </div>
-
-    <!-- ADDRESSES -->
     <div class="section" id="sec-addresses">
-      <div class="section-header">
-        <h2 class="section-title">Saved Addresses</h2>
-        <button onclick="toggleAddrForm()" class="btn-save" style="font-size:0.8rem;padding:9px 20px">+ Add New</button>
-      </div>
+      <div class="section-hd"><h2>Saved Addresses</h2><button class="btn-save" onclick="toggleAddrForm()" style="font-size:0.72rem;padding:9px 18px">+ Add New</button></div>
       <div class="addr-grid" id="addrGrid"></div>
       <div class="add-addr-form" id="addAddrForm" style="display:none">
-        <div class="addr-form-grid">
-          <div><label style="font-size:0.75rem;color:var(--text2);display:block;margin-bottom:4px">Name</label><input class="form-inp" id="addrName" placeholder="Full name"></div>
-          <div><label style="font-size:0.75rem;color:var(--text2);display:block;margin-bottom:4px">Phone</label><input class="form-inp" id="addrPhone" placeholder="Phone number"></div>
+        <div class="grid-2">
+          <div><label style="font-size:0.65rem;color:var(--text3);display:block;margin-bottom:4px;letter-spacing:2px;text-transform:uppercase">Name</label><input class="form-inp" id="addrName" placeholder="Full name"></div>
+          <div><label style="font-size:0.65rem;color:var(--text3);display:block;margin-bottom:4px;letter-spacing:2px;text-transform:uppercase">Phone</label><input class="form-inp" id="addrPhone" placeholder="Phone number"></div>
         </div>
-        <div style="margin-bottom:10px"><label style="font-size:0.75rem;color:var(--text2);display:block;margin-bottom:4px">Address</label><textarea class="form-inp" id="addrAddress" rows="2" placeholder="House no, Street, Area"></textarea></div>
-        <div class="addr-form-grid">
-          <div><label style="font-size:0.75rem;color:var(--text2);display:block;margin-bottom:4px">City</label><input class="form-inp" id="addrCity" placeholder="City"></div>
-          <div><label style="font-size:0.75rem;color:var(--text2);display:block;margin-bottom:4px">State</label><input class="form-inp" id="addrState" placeholder="State"></div>
-          <div><label style="font-size:0.75rem;color:var(--text2);display:block;margin-bottom:4px">Pincode</label><input class="form-inp" id="addrPin" placeholder="6-digit pincode"></div>
+        <div style="margin-bottom:10px"><label style="font-size:0.65rem;color:var(--text3);display:block;margin-bottom:4px;letter-spacing:2px;text-transform:uppercase">Address</label><textarea class="form-inp" id="addrAddress" rows="2" placeholder="House no, Street, Area"></textarea></div>
+        <div class="grid-2" style="margin-bottom:12px">
+          <div><label style="font-size:0.65rem;color:var(--text3);display:block;margin-bottom:4px;letter-spacing:2px;text-transform:uppercase">City</label><input class="form-inp" id="addrCity" placeholder="City"></div>
+          <div><label style="font-size:0.65rem;color:var(--text3);display:block;margin-bottom:4px;letter-spacing:2px;text-transform:uppercase">State</label><input class="form-inp" id="addrState" placeholder="State"></div>
+          <div><label style="font-size:0.65rem;color:var(--text3);display:block;margin-bottom:4px;letter-spacing:2px;text-transform:uppercase">Pincode</label><input class="form-inp" id="addrPin" placeholder="Pincode"></div>
         </div>
-        <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text2);margin:12px 0;cursor:pointer"><input type="checkbox" id="addrDefault"> Set as default</label>
+        <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text2);margin-bottom:14px;cursor:pointer"><input type="checkbox" id="addrDefault"> Set as default address</label>
         <button class="btn-save" onclick="saveAddr()">Save Address</button>
       </div>
     </div>
-
-    <!-- PROFILE -->
     <div class="section" id="sec-profile">
-      <div class="section-header"><h2 class="section-title">My Profile</h2></div>
-      <div class="profile-grid">
+      <div class="section-hd"><h2>My Profile</h2></div>
+      <div class="grid-2">
         <div class="inp-group"><label>Full Name</label><input class="inp" id="profName" type="text"></div>
         <div class="inp-group"><label>Phone Number</label><input class="inp" id="profPhone" type="tel"></div>
       </div>
@@ -203,30 +169,11 @@
 var API='https://majorrangas-backend-production.up.railway.app';
 var token=localStorage.getItem('mr_customer_token');
 var customer=JSON.parse(localStorage.getItem('mr_customer')||'{}');
-if(!token) window.location.href='login.html';
-
+if(!token)window.location.href='login.html';
 function authH(){return{'Content-Type':'application/json','Authorization':'Bearer '+token};}
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
-
-function initUser(){
-  document.getElementById('userName').textContent=customer.name||'User';
-  document.getElementById('userEmail').textContent=customer.email||'';
-  var av=document.getElementById('userAvatar');
-  if(customer.avatar_url) av.innerHTML='<img src="'+customer.avatar_url+'" style="width:100%;height:100%;border-radius:50%;object-fit:cover">';
-  else av.textContent=(customer.name||'U').charAt(0).toUpperCase();
-}
-
-function showSec(sec,el){
-  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
-  document.querySelectorAll('.side-nav-item').forEach(function(i){i.classList.remove('active');});
-  document.getElementById('sec-'+sec).classList.add('active');
-  if(el) el.classList.add('active');
-  if(sec==='orders') loadOrders();
-  if(sec==='wishlist') loadWishlist();
-  if(sec==='addresses') loadAddresses();
-  if(sec==='profile') loadProfile();
-}
-
+function initUser(){document.getElementById('userName').textContent=customer.name||'User';document.getElementById('userEmail').textContent=customer.email||'';var av=document.getElementById('userAvatar');if(customer.name)av.textContent=customer.name.charAt(0).toUpperCase();}
+function showSec(sec,el){document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});document.querySelectorAll('.side-nav-item').forEach(function(i){i.classList.remove('active');});document.getElementById('sec-'+sec).classList.add('active');if(el)el.classList.add('active');if(sec==='orders')loadOrders();if(sec==='wishlist')loadWishlist();if(sec==='addresses')loadAddresses();if(sec==='profile')loadProfile();}
 async function loadOrders(){
   try{
     var res=await fetch(API+'/api/customers/orders',{headers:authH()});
@@ -238,100 +185,57 @@ async function loadOrders(){
       var names=items.map(function(i){return i.name+' x'+i.quantity;}).join(', ');
       return '<div class="order-card">'
         +'<div class="order-top"><div><div class="order-num">'+o.order_number+'</div><div class="order-date">'+new Date(o.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})+'</div></div>'
-        +'<span class="order-badge badge-'+o.order_status+'">'+o.order_status.toUpperCase()+'</span></div>'
-        +'<div class="order-items">'+names+'</div>'
+        +'<span class="order-badge badge-'+(o.order_status||'placed')+'">'+o.order_status+'</span></div>'
+        +'<div class="order-items-text">'+names+'</div>'
         +'<div class="order-bottom"><div class="order-total">₹'+parseFloat(o.total_amount).toFixed(2)+'</div>'
-        +'<div class="order-actions">'
-        +'<button class="btn-sm btn-sm-outline" onclick="window.location.href=\'track.html?order='+o.order_number+'\'">Track</button>'
-        +'<a href="'+API+'/api/invoice/'+o.order_number+'" target="_blank" class="btn-sm btn-sm-teal" style="text-decoration:none">Invoice</a>'
-        +'</div></div></div>';
+        +'<div style="display:flex;gap:8px"><button class="btn-sm btn-sm-outline" onclick="window.location.href=\'track.html?order='+o.order_number+'\'">Track</button>'
+        +'<a href="'+API+'/api/invoice/'+o.order_number+'" target="_blank" class="btn-sm btn-sm-terra" style="text-decoration:none">Invoice</a></div></div></div>';
     }).join('');
-  }catch(e){document.getElementById('ordersList').innerHTML='<div class="empty-state"><div class="icon">⚠️</div><p>Failed to load orders</p></div>';}
+  }catch(e){document.getElementById('ordersList').innerHTML='<div class="empty-state"><div class="icon">⚠️</div><p>Failed to load</p></div>';}
 }
-
 async function loadWishlist(){
   try{
     var res=await fetch(API+'/api/customers/wishlist',{headers:authH()});
     var data=await res.json();
     var grid=document.getElementById('wishGrid');
-    if(!data.success||!data.wishlist.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="icon">❤️</div><p>Your wishlist is empty</p><a href="products.html">Browse Products →</a></div>';return;}
+    if(!data.success||!data.wishlist.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="icon">❤️</div><p>Wishlist empty</p><a href="products.html">Browse Products →</a></div>';return;}
     var emoji=function(c){return c==='Sweets'?'🍬':c==='Podis'?'🌶️':'🥨';};
     grid.innerHTML=data.wishlist.map(function(p){
       var price=parseFloat(p.sale_price||p.mrp);
-      return '<div class="wish-card">'
-        +'<div class="wish-img">'+(p.image_primary?'<img src="'+p.image_primary+'" alt="'+p.name+'">':emoji(p.category))
+      return '<div class="wish-card"><div class="wish-img">'+(p.image_primary?'<img src="'+p.image_primary+'" alt="'+p.name+'">':emoji(p.category))
         +'<button class="wish-remove" onclick="removeWish('+p.product_id+')">✕</button></div>'
         +'<div class="wish-info"><div class="wish-name">'+p.name+'</div><div class="wish-price">₹'+price.toFixed(0)+'</div>'
-        +'<button class="wish-add" onclick="addToCart('+p.product_id+',\''+p.name.replace(/'/g,'')+'\',' +price+',\''+( p.image_primary||'')+'\',\''+p.category+'\')">Add to Cart</button>'
-        +'</div></div>';
+        +'<button class="wish-add" onclick="quickAddCart('+p.product_id+',\''+p.name.replace(/'/g,'')+'\',' +price+',\''+( p.image_primary||'')+'\',\''+p.category+'\')">Add to Cart</button></div></div>';
     }).join('');
   }catch(e){}
 }
-
-async function removeWish(id){
-  await fetch(API+'/api/customers/wishlist/'+id,{method:'DELETE',headers:authH()});
-  showToast('Removed from wishlist'); loadWishlist();
-}
-
-function addToCart(id,name,price,img,cat){
-  var cart=JSON.parse(localStorage.getItem('mr_cart')||'[]');
-  var ex=cart.find(function(i){return i.id===id;});
-  if(ex) ex.quantity++; else cart.push({id:id,name:name,mrp:price,image_primary:img,category:cat,quantity:1});
-  localStorage.setItem('mr_cart',JSON.stringify(cart));
-  showToast(name+' added to cart!'); 
-}
-
+function quickAddCart(id,name,price,img,cat){var cart=JSON.parse(localStorage.getItem('mr_cart')||'[]');var ex=cart.find(function(i){return i.id===id;});if(ex)ex.quantity++;else cart.push({id:id,name:name,mrp:price,image_primary:img,category:cat,quantity:1});localStorage.setItem('mr_cart',JSON.stringify(cart));showToast(name+' added to cart!');}
+async function removeWish(id){await fetch(API+'/api/customers/wishlist/'+id,{method:'DELETE',headers:authH()});showToast('Removed from wishlist');loadWishlist();}
 async function loadAddresses(){
   try{
     var res=await fetch(API+'/api/customers/addresses',{headers:authH()});
     var data=await res.json();
     var grid=document.getElementById('addrGrid');
-    if(!data.success||!data.addresses.length){grid.innerHTML='<div style="color:var(--text3);font-size:0.85rem;padding:10px;grid-column:1/-1">No saved addresses yet</div>';return;}
-    grid.innerHTML=data.addresses.map(function(a){
-      return '<div class="addr-card'+(a.is_default?' default':'')+'">'+
-        (a.is_default?'<div class="addr-default-badge">Default</div>':'')+
-        '<div class="addr-name">'+a.name+'</div>'+
-        '<div class="addr-text">'+a.address+'<br>'+a.city+', '+a.state+' - '+a.pincode+'<br>📞 '+a.phone+'</div>'+
-        '<div class="addr-actions"><button class="btn-del" onclick="delAddr('+a.id+')">Delete</button></div></div>';
-    }).join('');
+    if(!data.success||!data.addresses.length){grid.innerHTML='<div style="color:var(--text3);font-size:0.85rem;grid-column:1/-1">No saved addresses yet</div>';return;}
+    grid.innerHTML=data.addresses.map(function(a){return '<div class="addr-card'+(a.is_default?' default':'')+'">'+( a.is_default?'<div class="addr-default-badge">Default</div>':'')+'<div class="addr-name">'+a.name+'</div><div class="addr-text">'+a.address+'<br>'+a.city+', '+a.state+' - '+a.pincode+'<br>📞 '+a.phone+'</div><div class="addr-actions"><button class="btn-del" onclick="delAddr('+a.id+')">Delete</button></div></div>';}).join('');
   }catch(e){}
 }
-
 function toggleAddrForm(){var f=document.getElementById('addAddrForm');f.style.display=f.style.display==='none'?'block':'none';}
-
 async function saveAddr(){
   var payload={name:document.getElementById('addrName').value,phone:document.getElementById('addrPhone').value,address:document.getElementById('addrAddress').value,city:document.getElementById('addrCity').value,state:document.getElementById('addrState').value,pincode:document.getElementById('addrPin').value,is_default:document.getElementById('addrDefault').checked};
   if(!payload.name||!payload.address||!payload.city){showToast('Please fill all fields');return;}
   try{var res=await fetch(API+'/api/customers/addresses',{method:'POST',headers:authH(),body:JSON.stringify(payload)});var data=await res.json();if(data.success){showToast('Address saved!');toggleAddrForm();loadAddresses();}else showToast('Failed to save');}catch(e){showToast('Error');}
 }
-
-async function delAddr(id){
-  if(!confirm('Delete this address?'))return;
-  await fetch(API+'/api/customers/addresses/'+id,{method:'DELETE',headers:authH()});
-  showToast('Address deleted'); loadAddresses();
-}
-
+async function delAddr(id){if(!confirm('Delete this address?'))return;await fetch(API+'/api/customers/addresses/'+id,{method:'DELETE',headers:authH()});showToast('Deleted');loadAddresses();}
 function loadProfile(){document.getElementById('profName').value=customer.name||'';document.getElementById('profEmail').value=customer.email||'';document.getElementById('profPhone').value=customer.phone||'';}
-
 async function saveProfile(){
-  var name=document.getElementById('profName').value;
-  var phone=document.getElementById('profPhone').value;
+  var name=document.getElementById('profName').value;var phone=document.getElementById('profPhone').value;
   try{var res=await fetch(API+'/api/customers/profile',{method:'PUT',headers:authH(),body:JSON.stringify({name,phone})});var data=await res.json();if(data.success){customer.name=name;customer.phone=phone;localStorage.setItem('mr_customer',JSON.stringify(customer));showToast('Profile updated!');initUser();}else showToast('Failed');}catch(e){showToast('Error');}
 }
-
 function doLogout(){localStorage.removeItem('mr_customer_token');localStorage.removeItem('mr_customer');window.location.href='index.html';}
-
-initUser(); loadOrders();
+initUser();loadOrders();
 </script>
 <script src="/js/pwa.js"></script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js')
-      .then(function(reg) { console.log('SW registered'); })
-      .catch(function(err) { console.log('SW error:', err); });
-  });
-}
-</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}</script>
 </body>
 </html>

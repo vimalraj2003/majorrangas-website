@@ -1,112 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Track Your Order — Major Rangas</title>
-  <meta name="description" content="Track your Major Rangas order status. Enter your order number to see real-time delivery updates.">
-  <meta name="keywords" content="track order major rangas, order status major rangas">
-  <meta name="author" content="Major Rangas">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://majorrangas.in/track.html">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Major Rangas">
-  <meta property="og:title" content="Track Order — Major Rangas">
-  <meta property="og:description" content="Track your Major Rangas order in real-time.">
-  <meta property="og:url" content="https://majorrangas.in/track.html">
-  <meta property="og:image" content="https://majorrangas.in/images/logo.png">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Track Order — Major Rangas">
-  <meta name="twitter:description" content="Track your Major Rangas order in real-time.">
-  <meta name="twitter:image" content="https://majorrangas.in/images/logo.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/images/logo.png">
-  <link rel="apple-touch-icon" href="/images/logo.png">
-  
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+  <title>Track Order — Major Rangas</title>
+  <link rel="icon" href="/images/logo.png"><link rel="manifest" href="/manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="/js/theme.js"></script>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    :root{--gold:#C9830A;--teal:#0D9B8A;--teal-light:#12B5A2;--teal-bg:#E8F8F6;--white:#fff;--off-white:#FAFAF8;--cream:#F7F3EE;--text:#1A1A1A;--text2:#555;--text3:#888;--border:#E8E4DC;--shadow:0 2px 12px rgba(0,0,0,0.08);--font-serif:'Playfair Display',serif;--font-sans:'Inter',sans-serif;}
-    body{background:var(--bg);font-family:var(--font-sans);min-height:100vh;}
+    *{margin:0;padding:0;box-sizing:border-box;}html,body{margin:0!important;padding:0!important;}
+    :root{--terra:#C4511A;--terra-dark:#A03D10;--gold:#D4A017;--gold-light:#F0C040;--cream:#FDF6EC;--cream2:#F5ECD8;--cream3:#EDD9B8;--brown:#2C1506;--brown2:#5C3010;--text:#1A0800;--text2:#5C3010;--text3:#9B6B3A;--border:#D4B896;--border2:#E8D5B4;--white:#FFFDF8;--font-serif:'Playfair Display',Georgia,serif;--font-sans:'Inter',sans-serif;--shadow:0 2px 12px rgba(44,21,6,0.08);}
+    body{background:var(--cream);color:var(--text);font-family:var(--font-sans);min-height:100vh;}
     a{text-decoration:none;color:inherit;}
-    .announce{background:var(--gold);color:#fff;text-align:center;font-size:0.8rem;font-weight:600;padding:10px;}
-    .navbar{background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
-    .nav-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;}
-    .logo-main{font-family:var(--font-serif);font-size:1.4rem;color:var(--text);font-weight:700;letter-spacing:2px;}
-    .logo-sub{font-size:0.6rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;display:block;text-align:center;}
-    .track-page{max-width:720px;margin:0 auto;padding:40px 20px;}
-    .track-header{text-align:center;margin-bottom:32px;}
-    .track-header h1{font-family:var(--font-serif);font-size:2rem;color:var(--text);margin-bottom:8px;}
-    .track-header p{color:var(--text3);font-size:0.9rem;}
-    .track-input-wrap{display:flex;gap:10px;margin-bottom:32px;}
-    .track-input{flex:1;padding:13px 18px;border:2px solid var(--border);border-radius:12px;font-size:0.95rem;outline:none;color:var(--text);font-family:var(--font-sans);transition:border-color 0.2s;}
-    .track-input:focus{border-color:var(--teal);}
-    .track-btn{background:var(--teal);color:#fff;border:none;padding:13px 28px;border-radius:12px;font-weight:700;font-size:0.9rem;cursor:pointer;white-space:nowrap;transition:background 0.2s;}
-    .track-btn:hover{background:var(--teal-light);}
-    .track-result{background:var(--bg2);border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
-    .track-result-head{background:var(--teal);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
-    .track-result-head .order-num{color:#fff;font-weight:700;font-size:1rem;}
-    .track-result-head .order-status{background:rgba(255,255,255,0.2);color:#fff;padding:4px 14px;border-radius:20px;font-size:0.75rem;font-weight:700;}
+    .top-stripe{position:fixed;top:0;left:0;right:0;height:4px;z-index:1001;background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 30px,var(--gold) 30px,var(--gold) 60px);}
+    .navbar{background:var(--brown);position:fixed;top:4px;left:0;right:0;z-index:999;box-shadow:var(--shadow);}
+    .nav-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;}
+    .logo-img{height:38px;width:auto;background:#1A0800;padding:5px 14px;border-radius:6px;}
+    .nav-links{display:flex;gap:16px;}
+    .nav-links a{color:rgba(253,246,236,0.55);font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;font-weight:500;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--gold-light);}
+    .track-page{max-width:720px;margin:0 auto;padding:100px 24px 60px;}
+    .track-header{margin-bottom:36px;}
+    .track-eyebrow{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--terra);margin-bottom:10px;}
+    .track-header h1{font-family:var(--font-serif);font-size:2.2rem;color:var(--brown);margin-bottom:8px;}
+    .track-header p{color:var(--text3);font-size:0.88rem;}
+    .track-input-wrap{display:flex;gap:10px;margin-bottom:36px;}
+    .track-input{flex:1;padding:14px 18px;border:1.5px solid var(--border);border-radius:4px;font-size:0.95rem;outline:none;color:var(--text);font-family:var(--font-sans);background:var(--white);transition:border-color 0.2s;}
+    .track-input:focus{border-color:var(--terra);}
+    .track-btn{background:var(--terra);color:#fff;border:none;padding:14px 28px;border-radius:4px;font-weight:700;font-size:0.78rem;cursor:pointer;white-space:nowrap;letter-spacing:1.5px;text-transform:uppercase;}
+    .track-btn:hover{background:var(--terra-dark);}
+    .track-result{background:var(--white);border:1px solid var(--border2);}
+    .track-result-head{background:var(--brown);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+    .track-result-head .order-num{color:var(--gold-light);font-family:var(--font-serif);font-size:1.1rem;}
+    .track-result-head .status-badge{background:rgba(212,160,23,0.15);color:var(--gold-light);padding:4px 14px;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:1px solid rgba(212,160,23,0.3);}
     .track-body{padding:24px;}
-    .track-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border);}
-    .track-info-item .label{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+    .track-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border2);}
+    .track-info-item .label{font-size:0.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;}
     .track-info-item .val{font-size:0.9rem;color:var(--text);font-weight:500;}
     .track-steps{margin-bottom:24px;}
     .track-step{display:flex;gap:16px;margin-bottom:20px;position:relative;}
-    .track-step:not(:last-child)::after{content:'';position:absolute;left:14px;top:32px;bottom:-10px;width:2px;background:var(--border);}
-    .track-step.done::after{background:var(--teal);}
+    .track-step:not(:last-child)::after{content:'';position:absolute;left:14px;top:32px;bottom:-10px;width:2px;background:var(--border2);}
+    .track-step.done::after{background:var(--terra);}
     .step-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;border:2px solid var(--border);background:var(--white);}
-    .track-step.done .step-icon{background:var(--teal);border-color:var(--teal);color:#fff;}
-    .track-step.current .step-icon{border-color:var(--teal);color:var(--teal);}
-    .step-info .step-label{font-weight:600;font-size:0.88rem;color:var(--text);margin-bottom:2px;}
-    .step-info .step-desc{font-size:0.78rem;color:var(--text3);}
-    .track-items{border-top:1px solid var(--border);padding-top:20px;}
-    .track-items h4{font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:12px;}
-    .track-item{display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border);}
+    .track-step.done .step-icon{background:var(--terra);border-color:var(--terra);color:#fff;}
+    .track-step.current .step-icon{border-color:var(--terra);color:var(--terra);}
+    .step-label{font-weight:600;font-size:0.88rem;color:var(--text);margin-bottom:2px;}
+    .step-desc{font-size:0.78rem;color:var(--text3);}
+    .track-items-section{border-top:1px solid var(--border2);padding-top:20px;}
+    .track-items-section h4{font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+    .track-item{display:flex;justify-content:space-between;font-size:0.85rem;padding:7px 0;border-bottom:1px solid var(--border2);}
     .track-item:last-child{border-bottom:none;}
     .track-item span:first-child{color:var(--text2);}
     .track-item span:last-child{color:var(--text);font-weight:600;}
-    .track-total{display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:2px solid var(--border);font-weight:700;font-size:1rem;}
-    .track-total span:last-child{color:var(--teal);}
-    .invoice-link{display:inline-flex;align-items:center;gap:6px;color:var(--teal);font-size:0.82rem;font-weight:600;margin-top:16px;}
-    .err-box{background:#FFF0F0;border:1px solid rgba(229,57,53,0.2);border-radius:12px;padding:20px;text-align:center;color:#E53935;font-size:0.88rem;}
-    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
+    .track-total-row{display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:2px solid var(--brown);font-weight:700;font-size:1rem;}
+    .track-total-row span:last-child{color:var(--terra);}
+    .invoice-link{display:inline-flex;align-items:center;gap:6px;color:var(--terra);font-size:0.82rem;font-weight:600;margin-top:16px;letter-spacing:1px;text-transform:uppercase;}
+    .err-box{background:rgba(196,81,26,0.05);border:1px solid rgba(196,81,26,0.2);border-left:3px solid var(--terra);padding:20px;text-align:center;color:var(--terra);font-size:0.88rem;}
+    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
   </style>
-  <script src="js/theme.js"></script>
-  <!-- PWA -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Major Rangas">
-  <link rel="apple-touch-icon" href="/images/logo.png">
-  <meta name="msapplication-TileImage" content="/images/logo.png">
-  <meta name="msapplication-TileColor" content="#C4511A">
-  <meta name="theme-color" content="#C4511A">
 </head>
 <body>
-<div class="announce">🎉 Free Shipping on orders above ₹500!</div>
+<div class="top-stripe"></div>
 <nav class="navbar">
-  <div class="nav-inner" style="justify-content:flex-start;gap:24px">
-    <a href="index.html" style="flex-shrink:0"><div style="background:#1A1A1A;padding:6px 18px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center">
-        <img src="images/logo.png" alt="Major Rangas" style="height:32px;width:auto;display:block;max-width:none">
-      </div></a>
-    <a href="index.html" style="color:var(--teal);font-size:0.82rem;font-weight:500">← Home</a>
-    <a href="account.html" style="color:var(--teal);font-size:0.82rem;font-weight:500;margin-left:auto">My Account</a>
+  <div class="nav-inner">
+    <a href="index.html"><img src="/images/logo.png" alt="Major Rangas" class="logo-img"></a>
+    <div class="nav-links">
+      <a href="products.html">Shop</a>
+      <a href="account.html">My Account</a>
+      <a href="index.html">Home</a>
+    </div>
   </div>
 </nav>
 
 <div class="track-page">
   <div class="track-header">
-    <h1>Track Your Order</h1>
-    <p>Enter your order number to see the current status</p>
+    <div class="track-eyebrow">Major Rangas · Delivery</div>
+    <h1>Track Your <em style="color:var(--terra);font-style:italic">Order</em></h1>
+    <p>Enter your order number to see real-time delivery status</p>
   </div>
   <div class="track-input-wrap">
-    <input type="text" class="track-input" id="trackInput" placeholder="e.g. MR2606123456" value="">
+    <input type="text" class="track-input" id="trackInput" placeholder="e.g. MR2606123456">
     <button class="track-btn" onclick="trackOrder()">Track →</button>
   </div>
   <div id="trackResult"></div>
@@ -116,17 +88,8 @@
 
 <script>
 var API='https://majorrangas-backend-production.up.railway.app';
-
-var steps=[
-  {key:'placed',label:'Order Placed',desc:'Your order has been received'},
-  {key:'confirmed',label:'Confirmed',desc:'Order confirmed & being prepared'},
-  {key:'processing',label:'Processing',desc:'Being packed with care'},
-  {key:'shipped',label:'Shipped',desc:'On the way to you'},
-  {key:'delivered',label:'Delivered',desc:'Order delivered successfully'}
-];
-
-function getStepIdx(status){return steps.findIndex(function(s){return s.key===status;});}
-
+var steps=[{key:'placed',label:'Order Placed',desc:'Your order has been received'},{key:'confirmed',label:'Confirmed',desc:'Order confirmed & being prepared'},{key:'processing',label:'Processing',desc:'Being packed with care'},{key:'shipped',label:'Shipped',desc:'On the way to you'},{key:'delivered',label:'Delivered',desc:'Order delivered successfully'}];
+function getStepIdx(s){return steps.findIndex(function(x){return x.key===s;});}
 async function trackOrder(){
   var num=document.getElementById('trackInput').value.trim().toUpperCase();
   if(!num){alert('Please enter an order number');return;}
@@ -143,41 +106,29 @@ async function trackOrder(){
       var done=i<curIdx,cur=i===curIdx;
       return '<div class="track-step'+(done?' done':cur?' current':'')+'">'
         +'<div class="step-icon">'+(done?'✓':cur?'●':String(i+1))+'</div>'
-        +'<div class="step-info"><div class="step-label">'+s.label+'</div><div class="step-desc">'+s.desc+'</div></div>'
-        +'</div>';
+        +'<div><div class="step-label">'+s.label+'</div><div class="step-desc">'+s.desc+'</div></div></div>';
     }).join('');
     result.innerHTML='<div class="track-result">'
-      +'<div class="track-result-head"><div class="order-num">'+o.order_number+'</div><div class="order-status">'+o.order_status.toUpperCase()+'</div></div>'
+      +'<div class="track-result-head"><div class="order-num">'+o.order_number+'</div><div class="status-badge">'+o.order_status+'</div></div>'
       +'<div class="track-body">'
       +'<div class="track-info-grid">'
       +'<div class="track-info-item"><div class="label">Customer</div><div class="val">'+o.customer_name+'</div></div>'
       +'<div class="track-info-item"><div class="label">Phone</div><div class="val">'+o.customer_phone+'</div></div>'
       +'<div class="track-info-item"><div class="label">Delivery To</div><div class="val">'+o.shipping_city+', '+o.shipping_state+'</div></div>'
       +'<div class="track-info-item"><div class="label">Payment</div><div class="val">'+(o.payment_method||'').toUpperCase()+' — '+(o.payment_status||'').toUpperCase()+'</div></div>'
-      +(o.tracking_number?'<div class="track-info-item"><div class="label">Tracking Number</div><div class="val">'+o.tracking_number+'</div></div>':'')
       +'</div>'
       +'<div class="track-steps">'+stepsHtml+'</div>'
-      +'<div class="track-items"><h4>Order Items</h4>'
+      +'<div class="track-items-section"><h4>Order Items</h4>'
       +items.map(function(i){return '<div class="track-item"><span>'+i.name+' × '+i.quantity+'</span><span>₹'+(parseFloat(i.price||i.mrp||0)*i.quantity).toFixed(2)+'</span></div>';}).join('')
-      +'<div class="track-total"><span>Total Paid</span><span>₹'+parseFloat(o.total_amount).toFixed(2)+'</span></div>'
+      +'<div class="track-total-row"><span>Total Paid</span><span>₹'+parseFloat(o.total_amount).toFixed(2)+'</span></div>'
       +'<a href="'+API+'/api/invoice/'+o.order_number+'" target="_blank" class="invoice-link">📄 Download GST Invoice</a>'
       +'</div></div></div>';
   }catch(e){result.innerHTML='<div class="err-box">❌ Connection error. Please try again.</div>';}
 }
-
-// Auto-fill from URL
 var urlOrder=new URLSearchParams(window.location.search).get('order');
 if(urlOrder){document.getElementById('trackInput').value=urlOrder;trackOrder();}
 </script>
 <script src="/js/pwa.js"></script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js')
-      .then(function(reg) { console.log('SW registered'); })
-      .catch(function(err) { console.log('SW error:', err); });
-  });
-}
-</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}</script>
 </body>
 </html>

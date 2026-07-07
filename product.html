@@ -34,10 +34,11 @@
     :root{--gold:#C9830A;--gold-light:#E8A020;--gold-bg:#FFF8EE;--teal:#0D9B8A;--teal-light:#12B5A2;--teal-bg:#E8F8F6;--primary:#0D9B8A;--primary-light:#12B5A2;--primary-bg:#E8F8F6;--white:#FFFFFF;--off-white:#FAFAF8;--cream:#F7F3EE;--bg:#FAFAF8;--bg2:#FFFFFF;--bg3:#F7F3EE;--text:#1A1A1A;--text2:#555;--text3:#888;--border:#E8E4DC;--border2:#D4CFC5;--nav-bg:rgba(255,255,255,0.97);--footer-bg:#111;--font-serif:'Playfair Display',Georgia,serif;--font-sans:'Inter',sans-serif;--shadow:0 2px 12px rgba(0,0,0,0.08);--shadow-md:0 4px 24px rgba(0,0,0,0.12);}
     html{scroll-behavior:smooth;}
     body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:15px;}
+    .top-stripe{position:fixed;top:0;left:0;right:0;height:4px;z-index:1001;background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 30px,var(--gold) 30px,var(--gold) 60px,var(--terra-light) 60px,var(--terra-light) 90px,var(--cream3) 90px,var(--cream3) 120px);}
     a{text-decoration:none;color:inherit;}
 
     .announce{background:var(--gold);color:#fff;text-align:center;font-size:0.8rem;font-weight:600;padding:10px 20px;position:fixed;top:0;left:0;right:0;z-index:1000;}
-    .navbar{background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);position:fixed;top:36px;left:0;right:0;z-index:999;box-shadow:var(--shadow);}
+    .navbar{background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border2);position:fixed;top:4px;left:0;right:0;z-index:999;box-shadow:var(--shadow);}
     .nav-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px 32px;}
     .nav-logo-main{font-family:var(--font-serif);font-size:1.5rem;color:var(--text);font-weight:700;letter-spacing:2px;display:block;text-align:center;}
     .nav-logo-sub{font-size:0.6rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;text-align:center;display:block;}
@@ -152,7 +153,7 @@
     .toast.success{background:var(--primary);}
     .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);}
 
-    .site-footer{background:var(--footer-bg);color:#fff;padding:48px 0 20px;margin-top:40px;}
+    .site-footer{background:var(--brown);color:#fff;padding:48px 0 20px;margin-top:40px;}
     .footer-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px;}
     .footer-brand h3{font-family:var(--font-serif);font-size:1.2rem;color:var(--gold);margin-bottom:10px;}
     .footer-brand p{color:rgba(255,255,255,0.35);font-size:0.8rem;line-height:1.9;}
@@ -182,7 +183,7 @@
   <meta name="theme-color" content="#C4511A">
 </head>
 <body>
-<div class="announce" id="announceBar">🎉 Free Shipping on orders above ₹500!</div>
+<div class="top-stripe"></div>
 <nav class="navbar">
   <div class="nav-top">
     <a href="products.html" style="color:var(--primary);font-size:0.82rem;font-weight:500">← Back to Products</a>
