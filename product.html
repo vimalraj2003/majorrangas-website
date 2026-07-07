@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -221,6 +222,38 @@
   </div>
 </div>
 
+<div class="container" style="margin-top:40px">
+  <!-- REVIEWS -->
+  <div style="border-top:1px solid var(--border);padding:36px 0">
+    <h3 style="font-family:var(--font-serif);font-size:1.4rem;color:var(--text);margin-bottom:20px">Customer Reviews</h3>
+    <div id="ratingSummary" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;display:flex;align-items:center;gap:20px">
+      <div style="text-align:center;padding-right:20px;border-right:1px solid var(--border)">
+        <div id="avgRating" style="font-family:var(--font-serif);font-size:3rem;font-weight:700;color:var(--text);line-height:1">0</div>
+        <div id="avgStars" style="color:#FFB300;font-size:1.1rem;margin:4px 0">★★★★★</div>
+        <div id="totalReviews" style="color:var(--text3);font-size:0.78rem">0 reviews</div>
+      </div>
+      <div id="ratingBars" style="flex:1"></div>
+    </div>
+    <div id="reviewsList"></div>
+    <!-- Write Review -->
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:22px;margin-top:20px">
+      <h4 style="font-family:var(--font-serif);font-size:1.1rem;color:var(--text);margin-bottom:16px">Write a Review</h4>
+      <div id="starPicker" style="display:flex;gap:6px;margin-bottom:14px">
+        <button onclick="setRating(1)" style="background:none;border:none;font-size:1.8rem;cursor:pointer;color:#DDD;padding:0" id="star1">★</button>
+        <button onclick="setRating(2)" style="background:none;border:none;font-size:1.8rem;cursor:pointer;color:#DDD;padding:0" id="star2">★</button>
+        <button onclick="setRating(3)" style="background:none;border:none;font-size:1.8rem;cursor:pointer;color:#DDD;padding:0" id="star3">★</button>
+        <button onclick="setRating(4)" style="background:none;border:none;font-size:1.8rem;cursor:pointer;color:#DDD;padding:0" id="star4">★</button>
+        <button onclick="setRating(5)" style="background:none;border:none;font-size:1.8rem;cursor:pointer;color:#DDD;padding:0" id="star5">★</button>
+      </div>
+      <input id="reviewName" type="text" placeholder="Your name" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.85rem;color:var(--text);outline:none;background:var(--bg2);margin-bottom:10px;font-family:var(--font-sans)">
+      <input id="reviewTitle" type="text" placeholder="Review title (optional)" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.85rem;color:var(--text);outline:none;background:var(--bg2);margin-bottom:10px;font-family:var(--font-sans)">
+      <textarea id="reviewBody" rows="3" placeholder="Share your experience..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.85rem;color:var(--text);outline:none;background:var(--bg2);margin-bottom:10px;font-family:var(--font-sans);resize:vertical"></textarea>
+      <button onclick="submitReview()" style="background:var(--primary);color:#fff;border:none;padding:11px 28px;border-radius:25px;font-weight:600;font-size:0.85rem;cursor:pointer">Submit Review →</button>
+      <div id="reviewMsg" style="margin-top:10px;font-size:0.8rem;display:none"></div>
+    </div>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand"><h3>MAJOR RANGAS</h3><p>Authentic South Indian snacks, sweets & podis from Chennai.</p></div>
@@ -415,10 +448,14 @@ async function loadProduct(){
       +'</div>';
 
     loadRelated(all, product.category, product.id);
-    loadReviews(product.id);
-    var cust = JSON.parse(localStorage.getItem('mr_customer') || '{}');
-    if (cust.name) document.getElementById('reviewName').value = cust.name;
+    try { loadReviews(product.id); } catch(re){}
+    try {
+      var cust = JSON.parse(localStorage.getItem('mr_customer') || '{}');
+      var rn = document.getElementById('reviewName');
+      if (cust.name && rn) rn.value = cust.name;
+    } catch(ce){}
   }catch(e){
+    console.error('Product load error:', e);
     document.getElementById('pdGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px">Failed to load product</div>';
   }
 }
@@ -444,6 +481,85 @@ function loadRelated(all,cat,excludeId){
 updateCartCount();
 updateAccountNav();
 loadProduct();
+
+// REVIEWS
+var selectedRating = 0;
+
+function setRating(n) {
+  selectedRating = n;
+  for (var i = 1; i <= 5; i++) {
+    var s = document.getElementById('star' + i);
+    if (s) s.style.color = i <= n ? '#FFB300' : '#DDD';
+  }
+}
+
+async function loadReviews(productId) {
+  try {
+    var res = await fetch(API + '/api/reviews/product/' + productId);
+    var data = await res.json();
+    if (!data.success) return;
+    var summary = document.getElementById('ratingSummary');
+    if (data.total > 0 && summary) {
+      summary.style.display = 'flex';
+      document.getElementById('avgRating').textContent = data.average;
+      document.getElementById('avgStars').textContent = '★'.repeat(Math.round(data.average)) + '☆'.repeat(5 - Math.round(data.average));
+      document.getElementById('totalReviews').textContent = data.total + ' review' + (data.total !== 1 ? 's' : '');
+      var barsHtml = '';
+      [5,4,3,2,1].forEach(function(n) {
+        var count = data.counts[n] || 0;
+        var pct = data.total ? Math.round(count/data.total*100) : 0;
+        barsHtml += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">'
+          + '<span style="font-size:0.75rem;color:var(--text2);width:16px;text-align:right">'+n+'</span>'
+          + '<div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:#FFB300;border-radius:3px"></div></div>'
+          + '<span style="font-size:0.72rem;color:var(--text3);width:20px">'+count+'</span>'
+          + '</div>';
+      });
+      document.getElementById('ratingBars').innerHTML = barsHtml;
+    }
+    var list = document.getElementById('reviewsList');
+    if (!list) return;
+    if (!data.reviews.length) {
+      list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text3)"><div style="font-size:2rem;margin-bottom:8px">⭐</div><p>No reviews yet — be the first!</p></div>';
+      return;
+    }
+    list.innerHTML = data.reviews.map(function(r) {
+      var stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      var date = new Date(r.created_at).toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+      return '<div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px">'
+        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">'
+        + '<div><span style="font-weight:600;font-size:0.9rem;color:var(--text)">'+r.customer_name+'</span>'
+        + (r.is_verified ? '<span style="font-size:0.65rem;color:var(--primary);font-weight:600;background:var(--primary-bg);padding:2px 8px;border-radius:10px;margin-left:6px">✓ Verified</span>' : '')
+        + '<div style="color:#FFB300;font-size:0.85rem">'+stars+'</div></div>'
+        + '<span style="color:var(--text3);font-size:0.72rem">'+date+'</span></div>'
+        + (r.title ? '<div style="font-weight:600;font-size:0.88rem;color:var(--text);margin-bottom:5px">'+r.title+'</div>' : '')
+        + (r.body ? '<div style="color:var(--text2);font-size:0.85rem;line-height:1.7">'+r.body+'</div>' : '')
+        + '</div>';
+    }).join('');
+  } catch(e) { console.log('Reviews error:', e); }
+}
+
+async function submitReview() {
+  var msg = document.getElementById('reviewMsg');
+  if (!selectedRating) { msg.textContent='Please select a star rating'; msg.style.color='#E53935'; msg.style.display='block'; return; }
+  var name = document.getElementById('reviewName').value.trim();
+  var title = document.getElementById('reviewTitle').value.trim();
+  var body = document.getElementById('reviewBody').value.trim();
+  if (!name) { msg.textContent='Please enter your name'; msg.style.color='#E53935'; msg.style.display='block'; return; }
+  var token = localStorage.getItem('mr_customer_token');
+  var endpoint = token ? API+'/api/reviews' : API+'/api/reviews/guest';
+  var headers = {'Content-Type':'application/json'};
+  if (token) headers['Authorization'] = 'Bearer '+token;
+  try {
+    var res = await fetch(endpoint, { method:'POST', headers:headers, body:JSON.stringify({product_id:parseInt(productId), rating:selectedRating, title:title, body:body, customer_name:name}) });
+    var data = await res.json();
+    if (data.success) {
+      msg.textContent='✓ Review submitted! Thank you.'; msg.style.color='var(--primary)'; msg.style.display='block';
+      document.getElementById('reviewBody').value=''; document.getElementById('reviewTitle').value='';
+      selectedRating=0; for(var i=1;i<=5;i++){var s=document.getElementById('star'+i);if(s)s.style.color='#DDD';}
+      setTimeout(function(){ loadReviews(productId); }, 500);
+    } else { msg.textContent=data.error||'Failed to submit'; msg.style.color='#E53935'; msg.style.display='block'; }
+  } catch(e) { msg.textContent='Error submitting review'; msg.style.color='#E53935'; msg.style.display='block'; }
+}
 </script>
 <script src="/js/pwa.js"></script>
 <script>
