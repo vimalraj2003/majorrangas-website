@@ -49,13 +49,10 @@
       background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 30px,var(--gold) 30px,var(--gold) 60px,var(--terra-light) 60px,var(--terra-light) 90px,var(--cream3) 90px,var(--cream3) 120px);}
 
     /* ANNOUNCE */
-    .announce{position:fixed;top:4px;left:0;right:0;z-index:1000;
-      background:var(--brown);color:var(--cream);text-align:center;
-      font-size:0.72rem;font-weight:500;padding:8px 20px;letter-spacing:1px;}
-    .announce a{color:var(--gold-light);text-decoration:underline;margin-left:8px;}
+        .announce a{color:var(--gold-light);text-decoration:underline;margin-left:8px;}
 
     /* NAVBAR */
-    .navbar{position:fixed;top:36px;left:0;right:0;z-index:999;
+    .navbar{position:fixed;top:4px;left:0;right:0;z-index:999;
       background:var(--nav-bg);border-bottom:1px solid var(--border2);
       backdrop-filter:blur(8px);box-shadow:0 1px 8px rgba(44,21,6,0.06);}
     .nav-top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:12px 32px;}
@@ -75,7 +72,7 @@
     .nav-link:hover,.nav-link.active{color:var(--terra);border-bottom-color:var(--terra);}
 
     /* HERO — EDITORIAL SPLIT */
-    .hero{margin-top:100px;display:grid;grid-template-columns:1fr 1fr;min-height:90vh;max-height:700px;}
+    .hero{margin-top:68px;display:grid;grid-template-columns:1fr 1fr;min-height:90vh;max-height:700px;}
 
     /* LEFT TEXT */
     .hero-text{background:var(--cream);padding:60px 60px 60px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
@@ -269,7 +266,6 @@
 </head>
 <body>
 <div class="top-stripe"></div>
-<div class="announce" id="announceBar">🎉 Free Shipping on orders above ₹500 · No Preservatives · Pan India Delivery <a href="products.html">Shop Now →</a></div>
 
 <nav class="navbar">
   <div class="nav-top">
