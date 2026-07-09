@@ -19,8 +19,7 @@
   <link rel="apple-touch-icon" href="/images/logo.png">
   <link rel="icon" href="/images/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="/js/theme.js"></script>
-  <style>
+    <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{margin:0!important;padding:0!important;}
     :root{
@@ -454,13 +453,6 @@ var allProds=[],prodMap={},currentCat='All';
 var cart=JSON.parse(localStorage.getItem('mr_cart')||'[]');
 var wishlist=JSON.parse(localStorage.getItem('mr_wishlist')||'[]');
 
-}
-
-
-},100);}
-
-;box.style.position='relative';box.appendChild(img);}
-
 // SETTINGS
 async function loadSettings(){
   try{
@@ -624,7 +616,6 @@ function setSlideImg(id,url){
 buildDots();resetProg();
 
 </script>
-<script src="/js/pwa.js"></script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}
 </script>
