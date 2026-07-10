@@ -1,68 +1,43 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Major Rangas — Authentic South Indian Snacks, Sweets & Podis | Chennai</title>
-  <meta name="description" content="Shop authentic South Indian snacks, sweets and podis online. Murukku, Thattai, Laddu, Idly Podi and more — fresh from Chennai. Free shipping above ₹500.">
-  <meta name="keywords" content="south indian snacks online, murukku online, idly podi, thattai, south indian sweets, chennai snacks, buy south indian food online, major rangas">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Major Rangas — Authentic South Indian Snacks & Sweets">
-  <meta property="og:description" content="Traditional South Indian snacks, sweets & podis. Fresh from Chennai kitchen. No preservatives. Pan India delivery.">
-  <meta property="og:url" content="https://majorrangas.in/">
-  <meta property="og:image" content="https://majorrangas.in/images/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#C4511A">
-  <link rel="canonical" href="https://majorrangas.in/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Major Rangas — Authentic South Indian Snacks, Sweets & Podis</title>
+  <meta name="description" content="Shop authentic South Indian snacks, sweets and podis. Murukku, Thattai, Laddu, Idly Podi — fresh from Chennai. Free shipping above ₹500.">
+  <link rel="icon" href="/images/logo.png">
   <link rel="manifest" href="/manifest.json">
   <link rel="apple-touch-icon" href="/images/logo.png">
-  <link rel="icon" href="/images/logo.png">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
+  <meta name="theme-color" content="#C4511A">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     html,body{margin:0!important;padding:0!important;}
     :root{
       --terra:#C4511A;--terra-dark:#A03D10;--terra-light:#E8734A;
       --gold:#D4A017;--gold-light:#F0C040;
-      --cream:#FDF6EC;--cream2:#F5ECD8;--cream3:#EDD9B8;--cream4:#E0C89A;
-      --brown:#2C1506;--brown2:#5C3010;--brown3:#8B5E2A;
-      --text:#1A0800;--text2:#5C3010;--text3:#9B6B3A;
+      --cream:#FDF6EC;--cream2:#F5ECD8;--cream3:#EDD9B8;
+      --brown:#2C1506;--brown2:#5C3010;--text3:#9B6B3A;
+      --text:#1A0800;--text2:#5C3010;
       --border:#D4B896;--border2:#E8D5B4;
-      --white:#FFFDF8;--off:#FDF6EC;
+      --white:#FFFDF8;
       --font-serif:'Playfair Display',Georgia,serif;
       --font-sans:'Inter',sans-serif;
       --shadow:0 2px 12px rgba(44,21,6,0.08);
       --shadow-md:0 6px 28px rgba(44,21,6,0.14);
-      --teal:#C4511A;--teal-light:#E8734A;--teal-bg:rgba(196,81,26,0.08);
-      --primary:#C4511A;--primary-light:#E8734A;--primary-bg:rgba(196,81,26,0.08);
-      --bg:var(--cream);--bg2:var(--white);--bg3:var(--cream2);
-      --nav-bg:rgba(253,246,236,0.97);
     }
-
     body{background:var(--cream);color:var(--text);font-family:var(--font-sans);font-size:15px;line-height:1.6;}
-    a{text-decoration:none;color:inherit;}
-    img{max-width:100%;display:block;}
+    a{text-decoration:none;color:inherit;}img{max-width:100%;display:block;}
 
     /* TOP STRIPE */
-    .top-stripe{position:fixed;top:0;left:0;right:0;height:4px;z-index:1001;
-      background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 30px,var(--gold) 30px,var(--gold) 60px,var(--terra-light) 60px,var(--terra-light) 90px,var(--cream3) 90px,var(--cream3) 120px);}
-
-    /* ANNOUNCE */
-        .announce a{color:var(--gold-light);text-decoration:underline;margin-left:8px;}
+    .top-stripe{position:fixed;top:0;left:0;right:0;height:4px;z-index:1001;background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 30px,var(--gold) 30px,var(--gold) 60px,var(--terra-light) 60px,var(--terra-light) 90px,var(--cream3) 90px,var(--cream3) 120px);}
 
     /* NAVBAR */
-    .navbar{position:fixed;top:4px;left:0;right:0;z-index:999;
-      background:var(--nav-bg);border-bottom:1px solid var(--border2);
-      backdrop-filter:blur(8px);box-shadow:0 1px 8px rgba(44,21,6,0.06);}
+    .navbar{background:rgba(253,246,236,0.97);border-bottom:1px solid var(--border2);position:fixed;top:4px;left:0;right:0;z-index:999;backdrop-filter:blur(8px);box-shadow:0 1px 8px rgba(44,21,6,0.06);}
     .nav-top{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 32px;}
-    .nav-left-links{display:flex;gap:24px;list-style:none;}
-    .nav-left-links a{font-size:0.78rem;color:var(--text2);letter-spacing:1px;text-transform:uppercase;font-weight:500;transition:color 0.2s;}
-    .nav-left-links a:hover{color:var(--terra);}
-    .logo-wrap{text-align:center;}
-    .logo-img{height:42px;width:auto;display:block;margin:0 auto;background:#1A0800;padding:6px 18px;border-radius:8px;}
-    .nav-right{display:flex;align-items:center;gap:20px;justify-content:flex-end;}
-    .nav-icon-btn{background:none;border:none;cursor:pointer;color:var(--text2);font-size:0.8rem;font-family:var(--font-sans);display:flex;align-items:center;gap:5px;transition:color 0.2s;}
+    .logo-img{height:42px;width:auto;display:block;background:#1A0800;padding:6px 18px;border-radius:8px;}
+    .nav-right{display:flex;align-items:center;gap:20px;}
+    .nav-icon-btn{background:none;border:none;cursor:pointer;color:var(--text2);font-size:0.82rem;font-family:var(--font-sans);display:flex;align-items:center;gap:5px;transition:color 0.2s;}
     .nav-icon-btn:hover{color:var(--terra);}
     .cart-badge{background:var(--terra);color:#fff;width:18px;height:18px;border-radius:50%;font-size:0.6rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
     .nav-bottom{border-top:1px solid var(--border2);}
@@ -71,136 +46,93 @@
     .nav-link{padding:10px 16px;font-size:0.78rem;color:var(--text2);white-space:nowrap;font-weight:500;border-bottom:2px solid transparent;transition:all 0.2s;letter-spacing:0.5px;}
     .nav-link:hover,.nav-link.active{color:var(--terra);border-bottom-color:var(--terra);}
 
-    /* HERO — EDITORIAL SPLIT */
-    
+    /* HERO BANNER */
+    .hero-banner{margin-top:100px;width:100%;height:50vh;min-height:300px;max-height:520px;position:relative;overflow:hidden;background:var(--cream2);}
+    .hero-slides{display:flex;height:100%;transition:transform 0.7s cubic-bezier(0.77,0,0.175,1);}
+    .hero-slide{min-width:100%;height:100%;position:relative;overflow:hidden;flex-shrink:0;background:var(--cream2);}
+    .hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;display:block;}
+    .slide-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+    .ph-num{font-family:var(--font-serif);font-size:6rem;color:rgba(196,81,26,0.07);font-weight:900;line-height:1;}
+    .ph-lbl{font-size:0.72rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-top:8px;}
+    .hero-prev,.hero-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(253,246,236,0.85);border:1px solid var(--border);color:var(--brown);width:40px;height:40px;border-radius:50%;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.2s;}
+    .hero-prev:hover,.hero-next:hover{background:var(--terra);color:#fff;border-color:var(--terra);}
+    .hero-prev{left:16px;}.hero-next{right:16px;}
+    .hero-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:5;}
+    .hero-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.3s;}
+    .hero-dot.active{background:#fff;width:20px;border-radius:3px;}
+    .hero-prog{position:absolute;bottom:0;left:0;height:3px;background:var(--terra);z-index:5;transition:width 0.1s linear;}
 
-    /* LEFT TEXT */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    .btn-terra{background:var(--terra);color:#fff;padding:13px 30px;border-radius:4px;font-size:0.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;display:inline-block;}
-    .btn-terra:hover{background:var(--terra-dark);transform:translateY(-1px);}
-    .btn-outline{border:1.5px solid var(--border);color:var(--text2);padding:11px 24px;border-radius:4px;font-size:0.78rem;font-weight:500;transition:all 0.2s;display:inline-block;}
-    .btn-outline:hover{border-color:var(--terra);color:var(--terra);}
-    
-    
-    
-
-    /* RIGHT IMAGE */
-    
-    .hero-image img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
-    
-    
-    
-    
-    
-    
-    
-    /* Slider controls */
-    
-    
-    .hero-dot.active{background:var(--gold-light);height:18px;border-radius:3px;}
-    
-    .hero-prev:hover,.hero-next:hover{background:rgba(253,246,236,0.3);}
-    
-    
-    /* Slides */
-    
-    
-    
-    
-    
-    
-
-    /* MARQUEE */
-    
-    
-    
-    
-    100%{transform:translateX(-50%)}}
-
-    /* FEATURES STRIP */
+    /* FEATURES */
     .features-strip{border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);background:var(--white);}
     .features-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
-    .feature-item{padding:24px 20px;display:flex;align-items:center;gap:14px;border-right:1px solid var(--border2);}
+    .feature-item{padding:22px 20px;display:flex;align-items:center;gap:14px;border-right:1px solid var(--border2);}
     .feature-item:last-child{border-right:none;}
     .feature-icon{width:40px;height:40px;border-radius:50%;background:rgba(196,81,26,0.08);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
     .feature-title{font-weight:600;font-size:0.82rem;color:var(--text);margin-bottom:2px;}
     .feature-desc{font-size:0.72rem;color:var(--text3);line-height:1.5;}
 
-    /* SECTION HEADERS */
+    /* SECTION */
+    .container{max-width:1200px;margin:0 auto;padding:0 32px;}
     .section-header{text-align:center;margin-bottom:36px;}
     .section-tag{display:inline-block;font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--terra);margin-bottom:10px;font-weight:600;}
     .section-title{font-family:var(--font-serif);font-size:clamp(1.8rem,3vw,2.6rem);color:var(--brown);margin-bottom:8px;}
     .section-title em{color:var(--terra);font-style:italic;}
-    .section-subtitle{color:var(--text3);font-size:0.88rem;max-width:500px;margin:0 auto;}
+    .section-sub{color:var(--text3);font-size:0.88rem;max-width:500px;margin:0 auto;}
 
     /* CATEGORIES */
-    .categories-section{padding:70px 0;background:var(--cream);}
-    .categories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);}
-    .cat-card{background:var(--white);padding:40px 30px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;}
+    .categories-section{padding:60px 0;background:var(--cream);}
+    .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);}
+    .cat-card{background:var(--white);padding:36px 24px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden;}
     .cat-card::before{content:'';position:absolute;inset:0;background:var(--terra);transform:scaleY(0);transform-origin:bottom;transition:transform 0.3s;z-index:0;}
     .cat-card:hover::before{transform:scaleY(1);}
-    .cat-card:hover .cat-name,.cat-card:hover .cat-count,.cat-card:hover .cat-arrow{color:#fff!important;}
+    .cat-card:hover .cat-name,.cat-card:hover .cat-sub,.cat-card:hover .cat-arrow{color:#fff!important;}
     .cat-card:hover .cat-emoji{transform:scale(1.2);}
-    .cat-emoji{font-size:2.8rem;margin-bottom:16px;transition:transform 0.3s;position:relative;z-index:1;}
-    .cat-name{font-family:var(--font-serif);font-size:1.3rem;color:var(--brown);margin-bottom:5px;transition:color 0.3s;position:relative;z-index:1;}
-    .cat-count{font-size:0.72rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;transition:color 0.3s;position:relative;z-index:1;}
-    .cat-arrow{display:block;color:var(--terra);font-size:0.78rem;margin-top:14px;transition:color 0.3s;position:relative;z-index:1;}
+    .cat-emoji{font-size:2.5rem;margin-bottom:14px;transition:transform 0.3s;position:relative;z-index:1;display:block;}
+    .cat-name{font-family:var(--font-serif);font-size:1.2rem;color:var(--brown);margin-bottom:4px;transition:color 0.3s;position:relative;z-index:1;}
+    .cat-sub{font-size:0.72rem;color:var(--text3);letter-spacing:1px;transition:color 0.3s;position:relative;z-index:1;}
+    .cat-arrow{display:block;color:var(--terra);font-size:0.75rem;margin-top:12px;transition:color 0.3s;position:relative;z-index:1;letter-spacing:1px;}
 
     /* BESTSELLERS */
-    .bestsellers-section{padding:70px 0;background:var(--cream2);}
-    .container{max-width:1200px;margin:0 auto;padding:0 32px;}
-    .filter-tabs{display:flex;justify-content:center;gap:0;border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:36px;width:fit-content;margin-left:auto;margin-right:auto;}
+    .bestsellers-section{padding:60px 0;background:var(--cream2);}
+    .filter-tabs{display:flex;justify-content:center;border:1px solid var(--border);overflow:hidden;margin-bottom:32px;width:fit-content;margin-left:auto;margin-right:auto;}
     .ftab{padding:9px 24px;background:none;border:none;border-right:1px solid var(--border);color:var(--text3);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;font-family:var(--font-sans);}
     .ftab:last-child{border-right:none;}
     .ftab:hover{color:var(--terra);}
-    .ftab.active{background:var(--terra);color:#fff;font-weight:600;}
+    .ftab.active{background:var(--terra);color:#fff;font-weight:700;}
     .prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);}
-    .prod-card{background:var(--white);cursor:pointer;transition:all 0.2s;position:relative;}
+    .prod-card{background:var(--white);cursor:pointer;transition:background 0.2s;position:relative;}
     .prod-card:hover{background:var(--cream);}
     .prod-card-img{aspect-ratio:1;background:var(--cream2);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:3rem;}
     .prod-card-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform 0.4s;}
     .prod-card:hover .prod-card-img img{transform:scale(1.05);}
-    .prod-card-badge{position:absolute;top:10px;left:10px;background:var(--terra);color:#fff;font-size:0.62rem;font-weight:700;padding:3px 9px;z-index:2;}
-    .prod-wish{position:absolute;top:10px;right:10px;background:var(--white);border:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;font-size:0.85rem;box-shadow:var(--shadow);transition:all 0.2s;}
+    .prod-badge{position:absolute;top:10px;left:10px;background:var(--terra);color:#fff;font-size:0.62rem;font-weight:700;padding:3px 9px;z-index:2;}
+    .prod-wish{position:absolute;top:10px;right:10px;background:var(--white);border:none;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;font-size:0.85rem;box-shadow:var(--shadow);}
     .prod-wish.wished{color:#E53935;}
-    .prod-card-info{padding:16px;}
-    .prod-cat{font-size:0.62rem;color:var(--terra);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:4px;}
-    .prod-name{font-family:var(--font-serif);font-size:0.95rem;color:var(--brown);margin-bottom:3px;line-height:1.3;}
-    .prod-wt{font-size:0.72rem;color:var(--text3);margin-bottom:12px;}
+    .prod-info{padding:14px;}
+    .prod-cat{font-size:0.62rem;color:var(--terra);letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:3px;}
+    .prod-name{font-family:var(--font-serif);font-size:0.92rem;color:var(--brown);margin-bottom:3px;line-height:1.3;}
+    .prod-wt{font-size:0.72rem;color:var(--text3);margin-bottom:10px;}
     .prod-bottom{display:flex;align-items:center;justify-content:space-between;}
-    .prod-price{font-family:var(--font-serif);font-size:1.05rem;font-weight:700;color:var(--brown);}
+    .prod-price{font-family:var(--font-serif);font-size:1rem;font-weight:700;color:var(--brown);}
     .prod-price-old{font-size:0.72rem;color:var(--text3);text-decoration:line-through;margin-left:4px;}
     .prod-add{background:var(--terra);color:#fff;border:none;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;font-weight:700;transition:all 0.2s;}
     .prod-add:hover{background:var(--terra-dark);transform:scale(1.1);}
     .prod-add:disabled{background:var(--border);color:var(--text3);cursor:not-allowed;transform:none;}
-    .view-all-wrap{text-align:center;margin-top:36px;}
+    .view-all{text-align:center;margin-top:32px;}
+    .btn-outline{border:1.5px solid var(--border);color:var(--text2);padding:11px 28px;font-size:0.78rem;font-weight:500;transition:all 0.2s;display:inline-block;background:none;letter-spacing:1px;}
+    .btn-outline:hover{border-color:var(--terra);color:var(--terra);}
 
     /* STORY */
-    .story-section{background:var(--brown);padding:80px 0;position:relative;overflow:hidden;}
+    .story-section{background:var(--brown);padding:70px 0;text-align:center;position:relative;overflow:hidden;}
     .story-section::before{content:'';position:absolute;top:-80px;left:-80px;width:300px;height:300px;border-radius:50%;background:rgba(196,81,26,0.1);}
-    .story-section::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(212,160,23,0.08);}
-    .story-inner{max-width:680px;margin:0 auto;text-align:center;position:relative;z-index:1;padding:0 32px;}
-    .story-icon{font-size:2.5rem;margin-bottom:20px;}
-    .story-eyebrow{font-size:0.65rem;letter-spacing:5px;text-transform:uppercase;color:rgba(212,160,23,0.6);margin-bottom:16px;}
-    .story-quote{font-family:var(--font-serif);font-size:clamp(1.3rem,3vw,2rem);color:var(--cream);font-style:italic;line-height:1.5;margin-bottom:18px;}
-    .story-text{color:rgba(253,246,236,0.45);font-size:0.88rem;line-height:1.9;margin-bottom:24px;}
-    .story-sig{font-family:var(--font-serif);font-size:0.95rem;color:var(--gold-light);font-style:italic;}
-    .story-divider{display:flex;align-items:center;gap:14px;margin:22px 0;}
-    .story-div-line{flex:1;height:1px;background:rgba(253,246,236,0.1);}
-    .story-div-icon{color:var(--terra);font-size:0.8rem;}
+    .story-inner{max-width:640px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+    .story-icon{font-size:2.5rem;margin-bottom:18px;}
+    .story-eyebrow{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:rgba(212,160,23,0.5);margin-bottom:14px;}
+    .story-quote{font-family:var(--font-serif);font-size:clamp(1.2rem,3vw,1.8rem);color:var(--cream);font-style:italic;line-height:1.5;margin-bottom:16px;}
+    .story-text{color:rgba(253,246,236,0.4);font-size:0.85rem;line-height:1.9;margin-bottom:20px;}
+    .story-sig{font-family:var(--font-serif);font-size:0.9rem;color:var(--gold-light);font-style:italic;}
+    .story-div{display:flex;align-items:center;gap:14px;margin:18px 0;}
+    .story-div-line{flex:1;height:1px;background:rgba(253,246,236,0.08);}
 
     /* CART */
     .cart-overlay{position:fixed;inset:0;background:rgba(28,8,0,0.6);z-index:2000;opacity:0;pointer-events:none;transition:opacity 0.3s;}
@@ -211,10 +143,7 @@
     .cart-head h3{font-family:var(--font-serif);font-size:1.1rem;color:var(--brown);}
     .cart-body{flex:1;overflow-y:auto;padding:16px 20px;}
     .cart-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border2);}
-    .cart-item-img{width:62px;height:62px;border-radius:4px;background:var(--cream2);object-fit:cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
-    .cart-item-name{font-size:0.85rem;font-weight:600;color:var(--brown);margin-bottom:3px;}
-    .cart-item-price{font-size:0.82rem;color:var(--terra);font-weight:700;}
-    .cart-qty{display:flex;align-items:center;gap:8px;margin-top:8px;}
+    .cart-item-img{width:62px;height:62px;border-radius:4px;background:var(--cream2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;object-fit:cover;}
     .qty-btn{background:var(--cream2);border:1px solid var(--border);width:26px;height:26px;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
     .qty-btn:hover{background:var(--terra);color:#fff;border-color:var(--terra);}
     .cart-footer-box{padding:16px 20px;border-top:1px solid var(--border2);}
@@ -222,11 +151,11 @@
     .cart-row span:first-child{color:var(--text3);}
     .cart-total-row{display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border2);font-weight:700;font-size:1rem;color:var(--brown);margin-top:4px;}
     .free-ship-bar{background:rgba(196,81,26,0.07);border-radius:4px;padding:10px 14px;margin-bottom:10px;font-size:0.78rem;color:var(--terra);}
-    .checkout-btn{width:100%;background:var(--terra);color:#fff;border:none;padding:14px;border-radius:4px;font-weight:700;font-size:0.88rem;cursor:pointer;margin-top:12px;transition:background 0.2s;letter-spacing:1px;text-transform:uppercase;}
+    .checkout-btn{width:100%;background:var(--terra);color:#fff;border:none;padding:14px;font-weight:700;font-size:0.85rem;cursor:pointer;margin-top:12px;letter-spacing:1px;text-transform:uppercase;transition:background 0.2s;}
     .checkout-btn:hover{background:var(--terra-dark);}
 
     /* FOOTER */
-    .site-footer{background:var(--brown);color:#fff;padding:52px 0 20px;}
+    .site-footer{background:var(--brown);color:#fff;padding:52px 0 20px;margin-top:0;}
     .footer-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:32px;}
     .footer-brand h3{font-family:var(--font-serif);font-size:1.2rem;color:var(--gold-light);margin-bottom:10px;}
     .footer-brand p{color:rgba(253,246,236,0.35);font-size:0.8rem;line-height:1.9;}
@@ -235,61 +164,36 @@
     .footer-col a:hover{color:var(--gold-light);}
     .footer-bar{border-top:1px solid rgba(253,246,236,0.07);max-width:1200px;margin:0 auto;padding:16px 32px 0;display:flex;justify-content:space-between;}
     .footer-bar p{color:rgba(253,246,236,0.2);font-size:0.72rem;}
-
-    /* WA */
     .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s;}
     .wa-float:hover{transform:scale(1.1);}
-
-    /* TOAST */
     .toast{position:fixed;bottom:90px;right:28px;background:var(--brown);color:var(--cream);padding:12px 20px;border-radius:4px;border-left:3px solid var(--terra);font-size:0.82rem;z-index:6000;transform:translateY(80px);opacity:0;transition:all 0.3s;max-width:280px;}
     .toast.show{transform:translateY(0);opacity:1;}
     .toast.success{border-left-color:var(--gold);}
 
     @media(max-width:900px){
-      
-      
-      
-      .nav-top{grid-template-columns:auto 1fr;gap:12px;}
-      .nav-left-links{display:none;}
-      .nav-links-row{padding:0 16px;}
+      .hero-banner{height:45vw;min-height:220px;}
       .features-inner{grid-template-columns:1fr 1fr;}
-      .categories-grid{grid-template-columns:1fr;}
+      .cat-grid{grid-template-columns:1fr 1fr;}
       .prod-grid{grid-template-columns:repeat(2,1fr);}
       .footer-inner{grid-template-columns:1fr 1fr;padding:0 16px;}
       .container{padding:0 16px;}
+      .nav-top{padding:12px 16px;}
+      .nav-links-row{padding:0 16px;}
       .cart-drawer{width:100%;right:-100%;}
     }
     @media(max-width:480px){
       .prod-grid{grid-template-columns:1fr 1fr;}
+      .cat-grid{grid-template-columns:1fr;}
     }
-  
-    /* HERO BANNER */
-    .hero-banner{margin-top:100px;width:100%;height:50vh;min-height:320px;max-height:520px;position:relative;overflow:hidden;background:var(--cream2);}
-    .hero-slides{display:flex;height:100%;transition:transform 0.7s cubic-bezier(0.77,0,0.175,1);}
-    .hero-slide{min-width:100%;height:100%;position:relative;overflow:hidden;flex-shrink:0;background:var(--cream2);}
-    .hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;}
-    .slide-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--cream2);}
-    .ph-num{font-family:var(--font-serif);font-size:6rem;color:rgba(196,81,26,0.07);font-weight:900;line-height:1;}
-    .ph-lbl{font-size:0.72rem;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-top:8px;}
-    .hero-prev,.hero-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(253,246,236,0.8);border:1px solid var(--border);color:var(--brown);width:40px;height:40px;border-radius:50%;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.2s;}
-    .hero-prev:hover,.hero-next:hover{background:var(--terra);color:#fff;border-color:var(--terra);}
-    .hero-prev{left:16px;}.hero-next{right:16px;}
-    .hero-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:5;}
-    .hero-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.3s;}
-    .hero-dot.active{background:#fff;width:20px;border-radius:3px;}
-    .hero-prog{position:absolute;bottom:0;left:0;height:3px;background:var(--terra);z-index:5;transition:width 0.1s linear;}
-    @media(max-width:768px){.hero-banner{height:50vw;min-height:200px;}}
-
   </style>
 </head>
 <body>
+
 <div class="top-stripe"></div>
 
 <nav class="navbar">
   <div class="nav-top">
-    <a href="index.html" class="logo-wrap">
-      <img src="/images/logo.png" alt="Major Rangas" class="logo-img">
-    </a>
+    <a href="index.html"><img src="/images/logo.png" alt="Major Rangas" class="logo-img"></a>
     <div class="nav-right">
       <button class="nav-icon-btn" id="accountNavBtn" onclick="handleAccount()">👤 <span id="accountNavLabel">Login</span></button>
       <button class="nav-icon-btn" onclick="openCart()">🛒 <span class="cart-badge" id="cartCount">0</span></button>
@@ -308,11 +212,6 @@
   </div>
 </nav>
 
-
-
-</div>
-
-<!-- FEATURES -->
 <!-- HERO BANNER -->
 <div class="hero-banner">
   <div class="hero-slides" id="heroSlides">
@@ -327,6 +226,7 @@
   <div class="hero-prog" id="heroProgress"></div>
 </div>
 
+<!-- FEATURES -->
 <div class="features-strip">
   <div class="features-inner">
     <div class="feature-item"><div class="feature-icon">🏡</div><div><div class="feature-title">Homemade Taste</div><div class="feature-desc">Traditional recipes, generations old</div></div></div>
@@ -343,25 +243,10 @@
       <div class="section-tag">Browse By Category</div>
       <h2 class="section-title">What Are You <em>Craving?</em></h2>
     </div>
-    <div class="categories-grid">
-      <a href="products.html?cat=Snacks" class="cat-card">
-        <div class="cat-emoji">🥨</div>
-        <div class="cat-name">Snacks</div>
-        <div class="cat-count">Murukku · Thattai · Mixture</div>
-        <span class="cat-arrow">Explore Collection →</span>
-      </a>
-      <a href="products.html?cat=Sweets" class="cat-card">
-        <div class="cat-emoji">🍬</div>
-        <div class="cat-name">Sweets</div>
-        <div class="cat-count">Laddu · Chikki · Katli</div>
-        <span class="cat-arrow">Explore Collection →</span>
-      </a>
-      <a href="products.html?cat=Podis" class="cat-card">
-        <div class="cat-emoji">🌶️</div>
-        <div class="cat-name">Podis</div>
-        <div class="cat-count">Idly Podi · Paruppu · Coffee</div>
-        <span class="cat-arrow">Explore Collection →</span>
-      </a>
+    <div class="cat-grid">
+      <a href="products.html?cat=Snacks" class="cat-card"><span class="cat-emoji">🥨</span><div class="cat-name">Snacks</div><div class="cat-sub">Murukku · Thattai · Mixture</div><span class="cat-arrow">Explore Collection →</span></a>
+      <a href="products.html?cat=Sweets" class="cat-card"><span class="cat-emoji">🍬</span><div class="cat-name">Sweets</div><div class="cat-sub">Laddu · Chikki · Katli</div><span class="cat-arrow">Explore Collection →</span></a>
+      <a href="products.html?cat=Podis" class="cat-card"><span class="cat-emoji">🌶️</span><div class="cat-name">Podis</div><div class="cat-sub">Idly · Paruppu · Coffee</div><span class="cat-arrow">Explore Collection →</span></a>
     </div>
   </div>
 </section>
@@ -372,7 +257,7 @@
     <div class="section-header">
       <div class="section-tag">Customer Favourites</div>
       <h2 class="section-title">Our <em>Bestsellers</em></h2>
-      <p class="section-subtitle">The products our customers order again and again</p>
+      <p class="section-sub">The products our customers order again and again</p>
     </div>
     <div class="filter-tabs">
       <button class="ftab active" onclick="filterProds('All',this)">All</button>
@@ -380,22 +265,18 @@
       <button class="ftab" onclick="filterProds('Sweets',this)">Sweets</button>
       <button class="ftab" onclick="filterProds('Podis',this)">Podis</button>
     </div>
-    <div class="prod-grid" id="prodGrid">
-      <div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text3)">Loading...</div>
-    </div>
-    <div class="view-all-wrap">
-      <a href="products.html" class="btn-outline">View All Products →</a>
-    </div>
+    <div class="prod-grid" id="prodGrid"><div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text3)">Loading...</div></div>
+    <div class="view-all"><a href="products.html" class="btn-outline">View All Products →</a></div>
   </div>
 </section>
 
 <!-- BRAND STORY -->
-<section class="story-section">
+<section class="story-section" id="storySection">
   <div class="story-inner">
     <div class="story-icon">🪔</div>
     <div class="story-eyebrow">Our Story</div>
-    <p class="story-quote" id="storyQuote">"Named after a War Veteran"</p>
-    <div class="story-divider"><div class="story-div-line"></div><span class="story-div-icon">✦</span><div class="story-div-line"></div></div>
+    <p class="story-quote">"Named after a War Veteran"</p>
+    <div class="story-div"><div class="story-div-line"></div><span style="color:var(--terra);font-size:0.8rem">✦</span><div class="story-div-line"></div></div>
     <p class="story-text" id="storyText">Named after war veteran Major Karumatti Narasimhachar Rangaswamy, our brand carries the rich tradition of South Indian home cooking. Every product is crafted with the same love and care as it was in our ancestral kitchen.</p>
     <div class="story-sig">— Major Rangas, Chennai</div>
   </div>
@@ -404,39 +285,15 @@
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <h3>MAJOR RANGAS</h3>
-      <p>Authentic South Indian snacks, sweets & podis from Chennai. Crafted with love, delivered with care across India.</p>
-      <p style="color:rgba(212,160,23,0.3);font-size:0.65rem;margin-top:10px">GSTIN: 33AFNFS9165E1ZM</p>
-    </div>
-    <div class="footer-col">
-      <h4>Shop</h4>
-      <a href="products.html">All Products</a>
-      <a href="products.html?cat=Snacks">Snacks</a>
-      <a href="products.html?cat=Sweets">Sweets</a>
-      <a href="products.html?cat=Podis">Podis</a>
-      <a href="products.html?cat=Combos">Combos</a>
-    </div>
-    <div class="footer-col">
-      <h4>Help</h4>
-      <a href="track.html">Track Order</a>
-      <a href="account.html">My Account</a>
-      <a href="login.html">Login / Register</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a>📍 Chennai, Tamil Nadu</a>
-      <a>📧 orders@majorrangas.in</a>
-      <a>🌐 majorrangas.in</a>
-    </div>
+    <div class="footer-brand"><h3>MAJOR RANGAS</h3><p>Authentic South Indian snacks, sweets & podis from Chennai. Crafted with love, delivered with care across India.</p><p style="color:rgba(212,160,23,0.3);font-size:0.65rem;margin-top:8px">GSTIN: 33AFNFS9165E1ZM</p></div>
+    <div class="footer-col"><h4>Shop</h4><a href="products.html">All Products</a><a href="products.html?cat=Snacks">Snacks</a><a href="products.html?cat=Sweets">Sweets</a><a href="products.html?cat=Podis">Podis</a><a href="products.html?cat=Combos">Combos</a></div>
+    <div class="footer-col"><h4>Help</h4><a href="track.html">Track Order</a><a href="account.html">My Account</a><a href="login.html">Login / Register</a></div>
+    <div class="footer-col"><h4>Contact</h4><a>📍 Chennai, Tamil Nadu</a><a>📧 orders@majorrangas.in</a><a>🌐 majorrangas.in</a></div>
   </div>
-  <div class="footer-bar">
-    <p>© 2024 Major Rangas · Made in Chennai 🙏</p>
-    <p>Authentic South Indian Since Generations</p>
-  </div>
+  <div class="footer-bar"><p>© 2024 Major Rangas · Made in Chennai 🙏</p><p>Authentic South Indian Since Generations</p></div>
 </footer>
 
-<!-- CART -->
+<!-- CART DRAWER -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-head"><h3>Your Cart</h3><button onclick="closeCart()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--text3)">✕</button></div>
@@ -444,180 +301,224 @@
   <div class="cart-footer-box" id="cartFooterBox"></div>
 </div>
 
-<a href="https://wa.me/919500865686" target="_blank" class="wa-float" title="Chat on WhatsApp">💬</a>
+<a href="https://wa.me/919500865686" target="_blank" class="wa-float">💬</a>
 <div class="toast" id="toast"></div>
 
 <script>
-var API='https://majorrangas-backend-production.up.railway.app';
-var allProds=[],prodMap={},currentCat='All';
-var cart=JSON.parse(localStorage.getItem('mr_cart')||'[]');
-var wishlist=JSON.parse(localStorage.getItem('mr_wishlist')||'[]');
+var API = 'https://majorrangas-backend-production.up.railway.app';
+var allProds = [], prodMap = {}, currentCat = 'All';
+var cart = JSON.parse(localStorage.getItem('mr_cart') || '[]');
+var wishlist = JSON.parse(localStorage.getItem('mr_wishlist') || '[]');
 
-// SETTINGS
-async function loadSettings(){
-  try{
-    var res=await fetch(API+'/api/settings');
-    var data=await res.json();
-    if(!data.success)return;
-    var s=data.settings;
-    if(s.announcement_text)document.getElementById('announceBar').innerHTML='🎉 '+s.announcement_text+' <a href="products.html">Shop Now →</a>';
-    if(s.banner_slide_1_title)document.getElementById('heroLine1').textContent=s.banner_slide_1_title;
-    if(s.banner_slide_1_subtitle)document.getElementById('heroLine2').textContent=s.banner_slide_1_subtitle;
-    if(s.story_text)document.getElementById('storyText').textContent=s.story_text;
-    if(s.slider_autoplay_seconds)dur=parseInt(s.slider_autoplay_seconds)*1000;
-    
-    if(s.show_story_section==='false')document.querySelector('.story-section').style.display='none';
-    console.log("Banner URLs:",s.banner_image_1,s.banner_image_2);
-    setSlideImg('s1',s.banner_image_1);setSlideImg('s2',s.banner_image_2);setSlideImg('s3',s.banner_image_3);setSlideImg('s4',s.banner_image_4);
-    if(s.slider_autoplay_seconds)dur=parseInt(s.slider_autoplay_seconds)*1000;
-  }catch(e){}
+// ── SLIDER ──────────────────────────────────────
+var slide = 0, total = 4, progW = 0, progTimer, dur = 5000;
+
+function buildDots() {
+  var d = document.getElementById('heroDots');
+  for (var i = 0; i < total; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    (function(n){ dot.onclick = function(){ goSlide(n); }; })(i);
+    d.appendChild(dot);
+  }
 }
 
-// PRODUCTS
-function getEmoji(cat){return cat==='Sweets'?'🍬':cat==='Podis'?'🌶️':cat==='Combos'?'🎁':'🥨';}
-function createCard(p){
-  var price=parseFloat(p.sale_price||p.mrp),mrp=parseFloat(p.mrp);
-  var hasDisc=p.sale_price&&parseFloat(p.sale_price)<mrp;
-  var savePct=hasDisc?Math.round((1-price/mrp)*100):0;
-  var inStock=p.stock_qty>0;
-  var isWished=wishlist.includes(p.id);
-  var emoji=getEmoji(p.category);
+function goSlide(n) {
+  slide = n;
+  document.getElementById('heroSlides').style.transform = 'translateX(-' + n * 100 + '%)';
+  document.querySelectorAll('.hero-dot').forEach(function(d, i) { d.classList.toggle('active', i === n); });
+  resetProg();
+}
+
+function nextSlide() { goSlide((slide + 1) % total); }
+function prevSlide() { goSlide((slide - 1 + total) % total); }
+
+function resetProg() {
+  progW = 0;
+  var p = document.getElementById('heroProgress');
+  if (p) p.style.width = '0%';
+  clearInterval(progTimer);
+  progTimer = setInterval(function() {
+    progW += 100 / (dur / 100);
+    var p = document.getElementById('heroProgress');
+    if (p) p.style.width = progW + '%';
+    if (progW >= 100) { progW = 0; nextSlide(); }
+  }, 100);
+}
+
+function setSlideImg(id, url) {
+  if (!url || !url.trim()) return;
+  var box = document.getElementById(id);
+  if (!box) return;
+  var ph = box.querySelector('.slide-ph');
+  var existing = box.querySelector('img');
+  if (existing) existing.remove();
+  var img = document.createElement('img');
+  img.crossOrigin = 'anonymous';
+  img.src = url;
+  img.alt = 'Banner';
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;display:block;';
+  img.onerror = function() {
+    // Try GitHub raw URL as fallback
+    var ghUrl = 'https://raw.githubusercontent.com/vimalraj2003/majorrangas-website/main/images/banner1.jpg';
+    if (this.src !== ghUrl) {
+      this.src = ghUrl;
+    } else {
+      if (ph) ph.style.display = 'flex';
+      this.style.display = 'none';
+    }
+  };
+  if (ph) ph.style.display = 'none';
+  box.appendChild(img);
+}
+
+// ── SETTINGS ────────────────────────────────────
+async function loadSettings() {
+  try {
+    var res = await fetch(API + '/api/settings');
+    var data = await res.json();
+    if (!data.success) return;
+    var s = data.settings;
+    if (s.announcement_text) {
+      var bar = document.getElementById('announceBar');
+      if (bar) bar.innerHTML = '🎉 ' + s.announcement_text;
+    }
+    if (s.story_text) document.getElementById('storyText').textContent = s.story_text;
+    if (s.slider_autoplay_seconds) dur = parseInt(s.slider_autoplay_seconds) * 1000;
+    // Use admin URL or fallback to GitHub images
+    var b1 = s.banner_image_1 || 'https://raw.githubusercontent.com/vimalraj2003/majorrangas-website/main/images/banner1.jpg';
+    var b2 = s.banner_image_2 || 'https://raw.githubusercontent.com/vimalraj2003/majorrangas-website/main/images/banner2.jpg';
+    var b3 = s.banner_image_3 || b1;
+    var b4 = s.banner_image_4 || b2;
+    setSlideImg('s1', b1);
+    setSlideImg('s2', b2);
+    setSlideImg('s3', b3);
+    setSlideImg('s4', b4);
+  } catch(e) { console.log('Settings error:', e); }
+}
+
+// ── PRODUCTS ────────────────────────────────────
+function getEmoji(cat) { return cat==='Sweets'?'🍬':cat==='Podis'?'🌶️':cat==='Combos'?'🎁':'🥨'; }
+
+function createCard(p) {
+  var price = parseFloat(p.sale_price || p.mrp), mrp = parseFloat(p.mrp);
+  var hasDisc = p.sale_price && parseFloat(p.sale_price) < mrp;
+  var savePct = hasDisc ? Math.round((1 - price/mrp)*100) : 0;
+  var inStock = p.stock_qty > 0;
+  var isWished = wishlist.includes(p.id);
   return '<div class="prod-card" onclick="window.location.href=\'product.html?id='+p.id+'\'">'
     +'<div class="prod-card-img">'
     +(p.image_primary?'<img src="'+p.image_primary+'" alt="'+p.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'')
-    +'<span style="position:relative;z-index:1">'+(p.image_primary?'':emoji)+'</span>'
-    +(p.is_combo?'<div class="prod-card-badge">🎁 Combo</div>':hasDisc?'<div class="prod-card-badge">Save '+savePct+'%</div>':'')
+    +'<span style="position:relative;z-index:1">'+(p.image_primary?'':getEmoji(p.category))+'</span>'
+    +(p.is_combo?'<div class="prod-badge">🎁 Combo</div>':hasDisc?'<div class="prod-badge">Save '+savePct+'%</div>':'')
     +'<button class="prod-wish'+(isWished?' wished':'')+'" id="wish-'+p.id+'" onclick="event.stopPropagation();toggleWish('+p.id+')">'+(isWished?'♥':'♡')+'</button>'
     +'</div>'
-    +'<div class="prod-card-info">'
+    +'<div class="prod-info">'
     +'<div class="prod-cat">'+p.category+'</div>'
     +'<div class="prod-name">'+p.name+'</div>'
     +'<div class="prod-wt">'+(p.is_combo&&p.combo_items?p.combo_items:(p.weight?p.weight+p.unit:''))+'</div>'
-    +'<div class="prod-bottom">'
-    +'<div><span class="prod-price">₹'+price.toFixed(0)+'</span>'+(hasDisc?'<span class="prod-price-old">₹'+mrp.toFixed(0)+'</span>':'')+'</div>'
+    +'<div class="prod-bottom"><div><span class="prod-price">₹'+price.toFixed(0)+'</span>'+(hasDisc?'<span class="prod-price-old">₹'+mrp.toFixed(0)+'</span>':'')+'</div>'
     +(inStock?'<button class="prod-add" onclick="event.stopPropagation();addItem('+p.id+')">+</button>':'<button class="prod-add" disabled>✕</button>')
     +'</div></div></div>';
 }
-function addItem(id){var p=prodMap[id];if(!p)return;addToCart({id:p.id,name:p.name,mrp:parseFloat(p.sale_price||p.mrp),image_primary:p.image_primary,category:p.category,weight:p.weight,unit:p.unit});}
-function filterProds(cat,btn){
-  currentCat=cat;
-  document.querySelectorAll('.ftab').forEach(function(b){b.classList.remove('active');});
-  if(btn)btn.classList.add('active');
-  var filtered=cat==='All'?allProds:allProds.filter(function(p){return p.category===cat;});
-  var grid=document.getElementById('prodGrid');
-  grid.innerHTML=filtered.length?filtered.slice(0,8).map(createCard).join(''):'<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text3)">No products found</div>';
-}
-async function loadProds(){
-  try{
-    var res=await fetch(API+'/api/products');
-    var data=await res.json();
-    allProds=data.products||[];
-    allProds.forEach(function(p){prodMap[p.id]=p;});
-    filterProds('All',null);
-  }catch(e){document.getElementById('prodGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text3)">Failed to load. Please refresh.</div>';}
+
+function addItem(id) {
+  var p = prodMap[id]; if (!p) return;
+  addToCart({id:p.id, name:p.name, mrp:parseFloat(p.sale_price||p.mrp), image_primary:p.image_primary, category:p.category, weight:p.weight, unit:p.unit});
 }
 
-// WISHLIST
-function toggleWish(id){
-  var btn=document.getElementById('wish-'+id);
-  var token=localStorage.getItem('mr_customer_token');
-  var idx=wishlist.indexOf(id);
-  if(idx>-1){wishlist.splice(idx,1);if(btn){btn.textContent='♡';btn.classList.remove('wished');}showToast('Removed from wishlist');if(token)fetch(API+'/api/customers/wishlist/'+id,{method:'DELETE',headers:{'Authorization':'Bearer '+token}}).catch(function(){});}
-  else{wishlist.push(id);if(btn){btn.textContent='♥';btn.classList.add('wished');}showToast('Added to wishlist ♥','success');if(token)fetch(API+'/api/customers/wishlist',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({product_id:id})}).catch(function(){});}
-  localStorage.setItem('mr_wishlist',JSON.stringify(wishlist));
+function filterProds(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.ftab').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var filtered = cat==='All' ? allProds : allProds.filter(function(p){ return p.category===cat; });
+  var grid = document.getElementById('prodGrid');
+  grid.innerHTML = filtered.length ? filtered.slice(0,8).map(createCard).join('') : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text3)">No products found</div>';
 }
 
-// CART
-function saveCart(){localStorage.setItem('mr_cart',JSON.stringify(cart));updateCount();}
-function updateCount(){var t=cart.reduce(function(s,i){return s+i.quantity;},0);document.getElementById('cartCount').textContent=t;}
-function addToCart(p){var ex=cart.find(function(i){return i.id===p.id;});if(ex)ex.quantity++;else cart.push(Object.assign({},p,{quantity:1}));saveCart();renderCart();showToast(p.name+' added!','success');openCart();}
-function removeFromCart(id){cart=cart.filter(function(i){return i.id!==id;});saveCart();renderCart();}
-function updateQty(id,d){var it=cart.find(function(i){return i.id===id;});if(!it)return;it.quantity+=d;if(it.quantity<=0)removeFromCart(id);else{saveCart();renderCart();}}
-function renderCart(){
-  var c=document.getElementById('cartBody'),f=document.getElementById('cartFooterBox');
-  if(!c)return;
-  if(!cart.length){c.innerHTML='<div style="text-align:center;padding:50px 20px;color:var(--text3)"><div style="font-size:2.5rem;margin-bottom:12px">🛒</div><p>Your cart is empty</p><a href="products.html" style="color:var(--terra);font-weight:600;font-size:0.85rem">Browse Products →</a></div>';if(f)f.innerHTML='';return;}
-  c.innerHTML=cart.map(function(item){return '<div class="cart-item">'+(item.image_primary?'<img class="cart-item-img" src="'+item.image_primary+'" alt="" onerror="this.style.display=\'none\'">':'<div class="cart-item-img">'+getEmoji(item.category)+'</div>')+'<div style="flex:1"><div class="cart-item-name">'+item.name+'</div><div class="cart-item-price">₹'+(parseFloat(item.mrp)*item.quantity).toFixed(2)+'</div><div class="cart-qty"><button class="qty-btn" onclick="updateQty('+item.id+',-1)">−</button><span style="font-size:0.85rem;font-weight:600;min-width:20px;text-align:center">'+item.quantity+'</span><button class="qty-btn" onclick="updateQty('+item.id+',1)">+</button></div><button onclick="removeFromCart('+item.id+')" style="background:none;border:none;color:var(--text3);font-size:0.7rem;cursor:pointer;margin-top:4px">Remove</button></div></div>';}).join('');
+async function loadProds() {
+  try {
+    var res = await fetch(API + '/api/products');
+    var data = await res.json();
+    allProds = data.products || [];
+    allProds.forEach(function(p){ prodMap[p.id] = p; });
+    filterProds('All', null);
+  } catch(e) {
+    document.getElementById('prodGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text3)">Failed to load. Please refresh.</div>';
+  }
+}
+
+// ── WISHLIST ─────────────────────────────────────
+function toggleWish(id) {
+  var btn = document.getElementById('wish-'+id);
+  var token = localStorage.getItem('mr_customer_token');
+  var idx = wishlist.indexOf(id);
+  if (idx > -1) {
+    wishlist.splice(idx,1);
+    if (btn) { btn.textContent='♡'; btn.classList.remove('wished'); }
+    showToast('Removed from wishlist');
+    if (token) fetch(API+'/api/customers/wishlist/'+id, {method:'DELETE', headers:{'Authorization':'Bearer '+token}}).catch(function(){});
+  } else {
+    wishlist.push(id);
+    if (btn) { btn.textContent='♥'; btn.classList.add('wished'); }
+    showToast('Added to wishlist ♥','success');
+    if (token) fetch(API+'/api/customers/wishlist', {method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}, body:JSON.stringify({product_id:id})}).catch(function(){});
+  }
+  localStorage.setItem('mr_wishlist', JSON.stringify(wishlist));
+}
+
+// ── CART ─────────────────────────────────────────
+function saveCart() { localStorage.setItem('mr_cart', JSON.stringify(cart)); updateCount(); }
+function updateCount() { var t=cart.reduce(function(s,i){return s+i.quantity;},0); document.getElementById('cartCount').textContent=t; }
+function addToCart(p) { var ex=cart.find(function(i){return i.id===p.id;}); if(ex)ex.quantity++; else cart.push(Object.assign({},p,{quantity:1})); saveCart(); renderCart(); showToast(p.name+' added!','success'); openCart(); }
+function removeFromCart(id) { cart=cart.filter(function(i){return i.id!==id;}); saveCart(); renderCart(); }
+function updateQty(id,d) { var it=cart.find(function(i){return i.id===id;}); if(!it)return; it.quantity+=d; if(it.quantity<=0)removeFromCart(id); else{saveCart();renderCart();} }
+
+function renderCart() {
+  var c=document.getElementById('cartBody'), f=document.getElementById('cartFooterBox');
+  if (!c) return;
+  if (!cart.length) {
+    c.innerHTML='<div style="text-align:center;padding:50px 20px;color:var(--text3)"><div style="font-size:2.5rem;margin-bottom:12px">🛒</div><p>Your cart is empty</p><a href="products.html" style="color:var(--terra);font-weight:600;font-size:0.85rem">Browse Products →</a></div>';
+    if(f) f.innerHTML=''; return;
+  }
+  c.innerHTML = cart.map(function(item){
+    return '<div class="cart-item">'+(item.image_primary?'<img class="cart-item-img" src="'+item.image_primary+'" alt="" onerror="this.style.display=\'none\'">':'<div class="cart-item-img">'+getEmoji(item.category)+'</div>')
+      +'<div style="flex:1"><div style="font-size:0.85rem;font-weight:600;color:var(--brown);margin-bottom:3px">'+item.name+'</div>'
+      +'<div style="font-size:0.82rem;color:var(--terra);font-weight:700">₹'+(parseFloat(item.mrp)*item.quantity).toFixed(2)+'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-top:8px"><button class="qty-btn" onclick="updateQty('+item.id+',-1)">−</button><span style="font-weight:600;min-width:20px;text-align:center">'+item.quantity+'</span><button class="qty-btn" onclick="updateQty('+item.id+',1)">+</button></div>'
+      +'<button onclick="removeFromCart('+item.id+')" style="background:none;border:none;color:var(--text3);font-size:0.7rem;cursor:pointer;margin-top:4px">Remove</button></div></div>';
+  }).join('');
   var sub=cart.reduce(function(s,i){return s+parseFloat(i.mrp)*i.quantity;},0);
-  var ship=sub>=500?0:60;var pct=Math.min(100,Math.round(sub/500*100));
-  if(f)f.innerHTML=(sub<500?'<div class="free-ship-bar">Add ₹'+(500-sub).toFixed(0)+' more for FREE shipping!<div style="background:rgba(196,81,26,0.15);border-radius:3px;height:4px;margin-top:6px"><div style="background:var(--terra);height:4px;border-radius:3px;width:'+pct+'%"></div></div></div>':'<div class="free-ship-bar" style="color:#2D7A00">🎉 You have FREE shipping!</div>')
+  var ship=sub>=500?0:60, pct=Math.min(100,Math.round(sub/500*100));
+  if(f) f.innerHTML=(sub<500?'<div class="free-ship-bar">Add ₹'+(500-sub).toFixed(0)+' more for FREE shipping!<div style="background:rgba(196,81,26,0.15);border-radius:3px;height:4px;margin-top:6px"><div style="background:var(--terra);height:4px;border-radius:3px;width:'+pct+'%"></div></div></div>':'<div class="free-ship-bar">🎉 FREE shipping unlocked!</div>')
     +'<div class="cart-row"><span>Subtotal</span><span style="color:var(--brown)">₹'+sub.toFixed(2)+'</span></div>'
     +'<div class="cart-row"><span>Shipping</span><span style="color:var(--brown)">'+(ship===0?'FREE':'₹'+ship)+'</span></div>'
     +'<div class="cart-total-row"><span>Total</span><span>₹'+(sub+ship).toFixed(2)+'</span></div>'
     +'<button class="checkout-btn" onclick="window.location.href=\'checkout.html\'">Proceed to Checkout →</button>'
-    +'<button onclick="closeCart()" style="width:100%;background:none;border:1px solid var(--border);color:var(--text3);padding:9px;border-radius:4px;cursor:pointer;margin-top:8px;font-size:0.78rem;letter-spacing:1px;text-transform:uppercase">Continue Shopping</button>';
+    +'<button onclick="closeCart()" style="width:100%;background:none;border:1px solid var(--border);color:var(--text3);padding:9px;cursor:pointer;margin-top:8px;font-size:0.78rem;letter-spacing:1px;text-transform:uppercase">Continue Shopping</button>';
 }
-function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartDrawer').classList.add('open');renderCart();}
-function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartDrawer').classList.remove('open');}
 
-function handleAccount(){var token=localStorage.getItem('mr_customer_token');window.location.href=token?'account.html':'login.html';}
-function updateAccountNav(){var token=localStorage.getItem('mr_customer_token');var cust=JSON.parse(localStorage.getItem('mr_customer')||'{}');var label=document.getElementById('accountNavLabel');if(label&&token&&cust.name){label.textContent=cust.name.split(' ')[0];document.getElementById('accountNavBtn').title='My Account';}}
+function openCart() { document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); renderCart(); }
+function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); }
+function handleAccount() { var token=localStorage.getItem('mr_customer_token'); window.location.href=token?'account.html':'login.html'; }
+function updateAccountNav() { var token=localStorage.getItem('mr_customer_token'); var cust=JSON.parse(localStorage.getItem('mr_customer')||'{}'); var label=document.getElementById('accountNavLabel'); if(label&&token&&cust.name)label.textContent=cust.name.split(' ')[0]; }
+function showToast(msg,type) { var t=document.getElementById('toast'); t.textContent=msg; t.className='toast'+(type?' '+type:'')+' show'; setTimeout(function(){t.classList.remove('show');},3000); }
 
-function showToast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast'+(type?' '+type:'')+' show';setTimeout(function(){t.classList.remove('show');},3000);}
-
-// Schema
-var schemaScript=document.createElement('script');
-schemaScript.type='application/ld+json';
-schemaScript.text=JSON.stringify({"@context":"https://schema.org","@type":"Organization","name":"Major Rangas","url":"https://majorrangas.in","logo":"https://majorrangas.in/images/logo.png","description":"Authentic South Indian snacks, sweets and podis from Chennai","address":{"@type":"PostalAddress","addressLocality":"Chennai","addressRegion":"Tamil Nadu","addressCountry":"IN"}});
-document.head.appendChild(schemaScript);
-
-updateCount();updateAccountNav();loadSettings();loadProds();
-
-// BANNER SLIDER
-var slide=0,total=4,progW=0,progTimer,dur=5000;
-function buildDots(){
-  var d=document.getElementById('heroDots');
-  if(!d)return;
-  for(var i=0;i<total;i++){
-    var dot=document.createElement('div');
-    dot.className='hero-dot'+(i===0?' active':'');
-    dot.onclick=(function(n){return function(){goSlide(n);};})(i);
-    d.appendChild(dot);
-  }
-}
-function goSlide(n){
-  slide=n;
-  var s=document.getElementById('heroSlides');
-  if(s)s.style.transform='translateX(-'+n*100+'%)';
-  document.querySelectorAll('.hero-dot').forEach(function(d,i){d.classList.toggle('active',i===n);});
-  resetProg();
-}
-function nextSlide(){goSlide((slide+1)%total);}
-function prevSlide(){goSlide((slide-1+total)%total);}
-function resetProg(){
-  progW=0;
-  var p=document.getElementById('heroProgress');
-  if(p)p.style.width='0%';
-  clearInterval(progTimer);
-  progTimer=setInterval(function(){
-    progW+=100/(dur/100);
-    var p=document.getElementById('heroProgress');
-    if(p)p.style.width=progW+'%';
-    if(progW>=100){progW=0;nextSlide();}
-  },100);
-}
-function setSlideImg(id,url){
-  if(!url||!url.trim())return;
-  var box=document.getElementById(id);
-  if(!box)return;
-  var ph=box.querySelector('.slide-ph');
-  if(ph)ph.style.display='none';
-  // Remove existing img if any
-  var existing=box.querySelector('img');
-  if(existing)existing.remove();
-  var img=document.createElement('img');
-  img.src=url;
-  img.alt='Banner';
-  img.style.cssText='width:100%;height:100%;object-fit:cover;object-position:center top;position:absolute;inset:0;display:block;';
-  img.onerror=function(){if(ph)ph.style.display='flex';this.style.display='none';};
-  box.style.position='relative';
-  box.appendChild(img);
-}
-buildDots();resetProg();
-
+// ── INIT ─────────────────────────────────────────
+updateCount();
+updateAccountNav();
+buildDots();
+resetProg();
+loadSettings();
+loadProds();
 </script>
+
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
 </script>
 </body>
 </html>
