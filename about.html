@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>About Us — Major Rangas | Authentic South Indian Snacks</title>
+  <meta name="description" content="Learn about Major Rangas — named after war veteran Major Rangaswamy, bringing authentic South Indian snacks, sweets and podis from Chennai to your home.">
+  <link rel="icon" href="/images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}html,body{margin:0!important;padding:0!important;}
+    :root{--terra:#C4511A;--terra-dark:#A03D10;--gold:#D4A017;--gold-light:#F0C040;--cream:#FDF6EC;--cream2:#F5ECD8;--cream3:#EDD9B8;--brown:#2C1506;--brown2:#5C3010;--text:#1A0800;--text2:#5C3010;--text3:#9B6B3A;--border:#D4B896;--border2:#E8D5B4;--white:#FFFDF8;--font-serif:'Playfair Display',Georgia,serif;--font-sans:'Inter',sans-serif;--shadow:0 2px 12px rgba(44,21,6,0.08);}
+    body{background:var(--cream);color:var(--text);font-family:var(--font-sans);font-size:15px;line-height:1.7;}
+    a{text-decoration:none;color:inherit;}
+    .top-stripe{height:4px;background:repeating-linear-gradient(90deg,var(--terra) 0,var(--terra) 30px,var(--gold) 30px,var(--gold) 60px,#E8734A 60px,#E8734A 90px,var(--cream3) 90px,var(--cream3) 120px);}
+    .navbar{background:rgba(253,246,236,0.97);border-bottom:1px solid var(--border2);backdrop-filter:blur(8px);box-shadow:0 1px 8px rgba(44,21,6,0.06);}
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;}
+    .logo-img{height:40px;background:#1A0800;padding:5px 16px;border-radius:8px;}
+    .nav-links a{color:var(--text2);font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;margin-left:24px;font-weight:500;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--terra);}
+
+    /* HERO */
+    .page-hero{background:var(--brown);padding:70px 32px;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;top:-60px;left:-60px;width:250px;height:250px;border-radius:50%;background:rgba(196,81,26,0.1);}
+    .page-hero::after{content:'';position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(212,160,23,0.08);}
+    .page-hero-inner{max-width:700px;margin:0 auto;position:relative;z-index:1;}
+    .page-eyebrow{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:rgba(212,160,23,0.55);margin-bottom:12px;}
+    .page-title{font-family:var(--font-serif);font-size:clamp(2rem,5vw,3.2rem);color:var(--cream);font-weight:700;margin-bottom:12px;}
+    .page-title em{color:var(--terra-light,#E8734A);font-style:italic;}
+    .page-subtitle{color:rgba(253,246,236,0.45);font-size:0.92rem;line-height:1.8;}
+
+    /* CONTENT */
+    .page-content{max-width:900px;margin:0 auto;padding:60px 32px;}
+    .section{margin-bottom:56px;}
+    .section-tag{font-size:0.62rem;letter-spacing:5px;text-transform:uppercase;color:var(--terra);font-weight:600;margin-bottom:10px;display:block;}
+    .section h2{font-family:var(--font-serif);font-size:1.8rem;color:var(--brown);margin-bottom:18px;}
+    .section h2 em{color:var(--terra);font-style:italic;}
+    .section p{color:var(--text2);margin-bottom:14px;font-size:0.92rem;line-height:1.9;}
+    .divider{display:flex;align-items:center;gap:16px;margin:40px 0;}
+    .divider-line{flex:1;height:1px;background:var(--border2);}
+    .divider-icon{color:var(--terra);font-size:0.9rem;}
+
+    /* STORY CARD */
+    .story-card{background:var(--brown);padding:48px 44px;position:relative;overflow:hidden;margin-bottom:48px;}
+    .story-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(196,81,26,0.1);}
+    .story-card blockquote{font-family:var(--font-serif);font-size:clamp(1.2rem,2.5vw,1.6rem);color:var(--cream);font-style:italic;line-height:1.6;margin-bottom:16px;position:relative;z-index:1;}
+    .story-card blockquote::before{content:'"';font-size:4rem;color:rgba(196,81,26,0.2);line-height:0;position:absolute;top:20px;left:-10px;}
+    .story-card cite{color:rgba(212,160,23,0.55);font-size:0.82rem;font-style:normal;letter-spacing:2px;position:relative;z-index:1;}
+
+    /* VALUES GRID */
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);margin:28px 0;}
+    .value-card{background:var(--white);padding:28px 24px;text-align:center;}
+    .value-icon{font-size:2rem;margin-bottom:12px;display:block;}
+    .value-title{font-family:var(--font-serif);font-size:1rem;color:var(--brown);margin-bottom:6px;}
+    .value-desc{font-size:0.8rem;color:var(--text3);line-height:1.7;}
+
+    /* TEAM / FOUNDER */
+    .founder-card{background:var(--cream2);border:1px solid var(--border2);padding:32px;display:flex;gap:28px;align-items:flex-start;margin:28px 0;}
+    .founder-avatar{width:80px;height:80px;border-radius:50%;background:var(--terra);color:#fff;font-family:var(--font-serif);font-size:2rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .founder-name{font-family:var(--font-serif);font-size:1.1rem;color:var(--brown);margin-bottom:3px;}
+    .founder-role{font-size:0.72rem;color:var(--terra);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+    .founder-bio{font-size:0.88rem;color:var(--text2);line-height:1.8;}
+
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border2);border:1px solid var(--border2);margin:28px 0;}
+    .stat-box{background:var(--white);padding:24px;text-align:center;}
+    .stat-num{font-family:var(--font-serif);font-size:2rem;font-weight:700;color:var(--terra);display:block;}
+    .stat-lbl{font-size:0.7rem;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+
+    /* CTA */
+    .cta-section{background:var(--terra);padding:48px 32px;text-align:center;margin-top:40px;}
+    .cta-section h3{font-family:var(--font-serif);font-size:1.8rem;color:#fff;margin-bottom:10px;}
+    .cta-section p{color:rgba(255,255,255,0.7);margin-bottom:24px;font-size:0.92rem;}
+    .btn-white{background:#fff;color:var(--terra);padding:13px 32px;font-size:0.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:inline-block;transition:all 0.2s;}
+    .btn-white:hover{background:var(--cream);transform:translateY(-1px);}
+
+    /* FOOTER */
+    .site-footer{background:var(--brown);color:#fff;padding:48px 0 20px;}
+    .footer-inner{max-width:1100px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px;}
+    .footer-brand h3{font-family:var(--font-serif);font-size:1.1rem;color:var(--gold-light);margin-bottom:10px;}
+    .footer-brand p{color:rgba(253,246,236,0.35);font-size:0.78rem;line-height:1.9;}
+    .footer-col h4{font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:rgba(253,246,236,0.25);margin-bottom:12px;}
+    .footer-col a{display:block;color:rgba(253,246,236,0.45);font-size:0.78rem;margin-bottom:7px;transition:color 0.2s;}
+    .footer-col a:hover{color:var(--gold-light);}
+    .footer-bar{border-top:1px solid rgba(253,246,236,0.07);max-width:1100px;margin:0 auto;padding:16px 32px 0;display:flex;justify-content:space-between;}
+    .footer-bar p{color:rgba(253,246,236,0.18);font-size:0.72rem;}
+    .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
+    @media(max-width:768px){.values-grid{grid-template-columns:1fr 1fr;}.stats-row{grid-template-columns:1fr 1fr;}.footer-inner{grid-template-columns:1fr 1fr;}.founder-card{flex-direction:column;}.page-content{padding:40px 16px;}.nav-inner{padding:12px 16px;}.nav-links a{margin-left:12px;}}
+  </style>
+</head>
+<body>
+<div class="top-stripe"></div>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html"><img src="/images/logo.png" alt="Major Rangas" class="logo-img"></a>
+    <div class="nav-links">
+      <a href="products.html">Shop</a>
+      <a href="about.html" style="color:var(--terra)">About</a>
+      <a href="track.html">Track Order</a>
+      <a href="account.html">Account</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Our Story</div>
+    <h1 class="page-title">About <em>Major Rangas</em></h1>
+    <p class="page-subtitle">From a Chennai kitchen to homes across India — carrying forward the taste of generations</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <!-- STORY CARD -->
+  <div class="story-card">
+    <blockquote>Named after war veteran Major Karumatti Narasimhachar Rangaswamy — a man of honour, discipline and love for his family's traditions.</blockquote>
+    <cite>— THE STORY BEHIND THE NAME</cite>
+  </div>
+
+  <!-- WHO WE ARE -->
+  <div class="section">
+    <span class="section-tag">Who We Are</span>
+    <h2>Authentic Taste, <em>Modern Delivery</em></h2>
+    <p>Major Rangas (Sai Food Products) is a Chennai-based brand dedicated to bringing authentic South Indian snacks, sweets and podis to homes across India. We believe that the best food comes from traditional recipes, fresh ingredients and the love of a home kitchen.</p>
+    <p>Every product we make is crafted in small batches — no factories, no mass production, no preservatives. Just the same recipes your grandmother used, packed with care and delivered to your doorstep.</p>
+    <p>We are based in T.Nagar, Chennai — the heart of Tamil Nadu's food culture. Our products are certified by FSSAI and our brand is trademark registered under Class 30.</p>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-icon">🪔</span><div class="divider-line"></div></div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box"><span class="stat-num">43+</span><div class="stat-lbl">Products</div></div>
+    <div class="stat-box"><span class="stat-num">100%</span><div class="stat-lbl">Natural</div></div>
+    <div class="stat-box"><span class="stat-num">0</span><div class="stat-lbl">Preservatives</div></div>
+    <div class="stat-box"><span class="stat-num">Pan India</span><div class="stat-lbl">Delivery</div></div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+  <!-- VALUES -->
+  <div class="section">
+    <span class="section-tag">Our Values</span>
+    <h2>What We <em>Stand For</em></h2>
+    <div class="values-grid">
+      <div class="value-card"><span class="value-icon">🌿</span><div class="value-title">No Preservatives</div><div class="value-desc">Every product is made fresh with natural ingredients. No artificial colours, flavours or preservatives — ever.</div></div>
+      <div class="value-card"><span class="value-icon">🏡</span><div class="value-title">Homemade Taste</div><div class="value-desc">Small batch production ensures every product tastes like it was made in your own kitchen.</div></div>
+      <div class="value-card"><span class="value-icon">🙏</span><div class="value-title">Traditional Recipes</div><div class="value-desc">Recipes passed down through generations — unchanged, uncompromised, authentic.</div></div>
+      <div class="value-card"><span class="value-icon">✅</span><div class="value-title">Quality First</div><div class="value-desc">FSSAI certified. Every batch quality checked before it leaves our kitchen.</div></div>
+      <div class="value-card"><span class="value-icon">📦</span><div class="value-title">Fresh Delivery</div><div class="value-desc">Packed fresh and shipped pan India. Free shipping on orders above ₹500.</div></div>
+      <div class="value-card"><span class="value-icon">💛</span><div class="value-title">Made with Love</div><div class="value-desc">We care about what goes into every pack. Because you deserve the best.</div></div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="section">
+    <span class="section-tag">Certifications & Compliance</span>
+    <h2>Trusted & <em>Certified</em></h2>
+    <p>Major Rangas operates with full legal compliance and transparency:</p>
+    <p>🏛️ <strong>FSSAI Licensed</strong> — Food Safety and Standards Authority of India certified<br>
+    ™️ <strong>Trademark Registered</strong> — Application No. 14597530, Class 30<br>
+    🧾 <strong>GST Registered</strong> — GSTIN: 33AFNFS9165E1ZM<br>
+    📍 <strong>Based in Chennai</strong> — T.Nagar, Tamil Nadu</p>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section">
+    <span class="section-tag">Get In Touch</span>
+    <h2>We'd Love to <em>Hear From You</em></h2>
+    <p>Have a question, bulk order enquiry, or just want to say hello?</p>
+    <p>📧 <strong>Email:</strong> orders@majorrangas.in<br>
+    💬 <strong>WhatsApp:</strong> +91 95008 65686<br>
+    📍 <strong>Address:</strong> T.Nagar, Chennai, Tamil Nadu — 600017<br>
+    🕐 <strong>Hours:</strong> Monday–Saturday, 9 AM – 7 PM IST</p>
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h3>Taste the Difference</h3>
+  <p>43+ authentic South Indian products, made fresh, delivered to your door</p>
+  <a href="products.html" class="btn-white">Shop Now →</a>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><h3>MAJOR RANGAS</h3><p>Authentic South Indian snacks, sweets & podis from Chennai.</p><p style="color:rgba(212,160,23,0.3);font-size:0.65rem;margin-top:8px">GSTIN: 33AFNFS9165E1ZM</p></div>
+    <div class="footer-col"><h4>Shop</h4><a href="products.html">All Products</a><a href="products.html?cat=Snacks">Snacks</a><a href="products.html?cat=Sweets">Sweets</a><a href="products.html?cat=Podis">Podis</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="about.html">About Us</a><a href="shipping.html">Shipping Policy</a><a href="privacy.html">Privacy Policy</a></div>
+    <div class="footer-col"><h4>Help</h4><a href="track.html">Track Order</a><a href="account.html">My Account</a><a href="https://wa.me/919500865686">WhatsApp Us</a></div>
+  </div>
+  <div class="footer-bar"><p>© 2024 Major Rangas (Sai Food Products) · Made in Chennai 🙏</p><p>Authentic South Indian Since Generations</p></div>
+</footer>
+<a href="https://wa.me/919500865686" target="_blank" class="wa-float">💬</a>
+</body>
+</html>
