@@ -165,6 +165,13 @@
 <script src="js/config.js"></script>
 <script src="js/cart.js"></script>
 <script>
+// Configuration
+const CONFIG = {
+  API_URL: 'https://majorrangas-backend-production.up.railway.app',
+  FREE_SHIPPING_ABOVE: 500,
+  SHIPPING_CHARGE: 60
+};
+
 let selectedPayment = 'online';
 
 function selectPayment(method) {
