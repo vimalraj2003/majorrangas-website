@@ -65,6 +65,8 @@
     .wa-float{position:fixed;bottom:28px;right:28px;background:#25D366;color:#fff;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:5000;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;}
     @media(max-width:700px){.page{grid-template-columns:1fr;}.left-panel{display:none;}.right-panel{padding:32px 20px;}}
   </style>
+  <meta name="google-signin-client_id" content="703577695935-97sfgta8rkae8rutgq5ui291f6j64cem.apps.googleusercontent.com">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 <div class="top-stripe"></div>
@@ -109,7 +111,8 @@
         <div class="err-msg" id="loginErr"></div>
         <button class="btn-submit" onclick="doLogin()">Sign In →</button>
         <div class="or-div">OR</div>
-        <button class="btn-google" onclick="alert('Google Sign-In coming soon!')"><img src="https://www.google.com/favicon.ico" width="16" alt="G"> Continue with Google</button>
+        <div id="googleBtnContainer" style="width:100%;margin-bottom:4px"></div>
+        <div id="googleErr" style="color:var(--terra);font-size:0.75rem;margin-top:6px;padding:6px 10px;background:rgba(196,81,26,0.06);border-left:3px solid var(--terra);display:none"></div>
         <div class="form-footer">Don't have an account? <a href="#" onclick="switchTabByName('register')">Create one</a></div>
       </div>
       <!-- REGISTER -->
@@ -121,7 +124,8 @@
         <div class="err-msg" id="regErr"></div>
         <button class="btn-submit" onclick="doRegister()">Create Account →</button>
         <div class="or-div">OR</div>
-        <button class="btn-google" onclick="alert('Google Sign-In coming soon!')"><img src="https://www.google.com/favicon.ico" width="16" alt="G"> Continue with Google</button>
+        <div id="googleBtnContainer" style="width:100%;margin-bottom:4px"></div>
+        <div id="googleErr" style="color:var(--terra);font-size:0.75rem;margin-top:6px;padding:6px 10px;background:rgba(196,81,26,0.06);border-left:3px solid var(--terra);display:none"></div>
         <div class="form-footer">Already registered? <a href="#" onclick="switchTabByName('login')">Sign in</a></div>
       </div>
       <a href="index.html" class="back-link">← Back to Major Rangas</a>
@@ -138,6 +142,59 @@ function switchTab(tab,btn){document.querySelectorAll('.tab').forEach(function(t
 function switchTabByName(tab){var btn=document.querySelector('.tab:'+(tab==='login'?'first-child':'last-child'));switchTab(tab,btn);}
 function showErr(id,msg){var el=document.getElementById(id);el.textContent=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},4000);}
 function redirect(){var r=new URLSearchParams(window.location.search).get('redirect')||'account.html';window.location.href=r;}
+
+// Google Sign-In
+var GOOGLE_CLIENT_ID='703577695935-97sfgta8rkae8rutgq5ui291f6j64cem.apps.googleusercontent.com';
+function initGoogleSignIn(){
+  if(typeof google==='undefined')return;
+  google.accounts.id.initialize({
+    client_id:GOOGLE_CLIENT_ID,
+    callback:handleGoogleCallback,
+    auto_select:false
+  });
+  renderGoogleBtns();
+}
+function renderGoogleBtns(){
+  ['googleBtnContainer','googleBtnContainer2'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el||!google)return;
+    google.accounts.id.renderButton(el,{
+      theme:'outline',size:'large',width:el.offsetWidth||320,
+      text:'continue_with',shape:'rectangular',logo_alignment:'left'
+    });
+  });
+}
+async function handleGoogleCallback(response){
+  try{
+    var ge=document.getElementById('googleErr');
+    if(ge){ge.style.display='none';}
+    var res=await fetch('https://majorrangas-backend-production.up.railway.app/api/customers/google-auth',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({credential:response.credential})
+    });
+    var data=await res.json();
+    if(data.success){
+      localStorage.setItem('mr_customer_token',data.token);
+      localStorage.setItem('mr_customer',JSON.stringify(data.customer));
+      redirect();
+    }else{
+      if(ge){ge.textContent=data.error||'Google Sign-In failed';ge.style.display='block';}
+    }
+  }catch(e){
+    var ge=document.getElementById('googleErr');
+    if(ge){ge.textContent='Connection error. Please try email login.';ge.style.display='block';}
+  }
+}
+window.addEventListener('load',function(){
+  if(typeof google!=='undefined'){initGoogleSignIn();}
+  else{
+    var s=document.createElement('script');
+    s.src='https://accounts.google.com/gsi/client';
+    s.async=true;s.defer=true;
+    s.onload=function(){setTimeout(initGoogleSignIn,300);};
+    document.head.appendChild(s);
+  }
+});
 async function doLogin(){
   var email=document.getElementById('loginEmail').value.trim();
   var pass=document.getElementById('loginPass').value;
